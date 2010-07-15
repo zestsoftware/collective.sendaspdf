@@ -1,1 +1,184 @@
-<span tal:content="view/errors" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      lang="en"
+      i18n:domain="collective.sendaspdf">
+  <body>
+    <div metal:fill-slot="main">
+      <h1>
+        <span tal:replace="here/pretty_title_or_id"
+              class="documentFirstHeading">Title or id</span>
+      </h1>
+      <form method="POST"
+            tal:define="values view/get_values"
+            tal:attributes="action python: context.absolute_url() + '/send_as_pdf'">
+        <input type="hidden"
+               name="filename"
+               tal:attributes="value values/filename" />
+
+        <div id="field_name"
+             tal:attributes="class python: view.class_for_field('name')">
+          <label for="name"
+                 i18n:translate="label_name">Your name</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_name"
+               tal:condition="python: view.show_error_message('name')"
+               i18n:translate="error_empty_name">
+          You have to specify your name.</div>
+                    
+          <input type="text"
+                 id="name"
+                 name="name"
+                 size="25"
+                 tal:attributes="value values/name | nothing" />
+        </div>
+
+        <div id="field_email"
+             tal:attributes="class python: view.class_for_field('email')">
+          <label for="email"
+                 i18n:translate="label_email_address">Your e-mail</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_email"
+               tal:condition="python: view.show_error_message('email')"
+               i18n:translate="error_empty_email">
+          You have to specify your e-mail.</div>
+          
+          <div id="error_email_invalid"
+               tal:condition="python: view.show_error_message('invalid_email')"
+               i18n:translate="error_invalid_email">
+          This e-mail address is not valid.</div>
+          
+          <input type="text" id="email"
+                 name="email" size="25"
+                 tal:attributes="value values/email | nothing" />
+        </div>
+
+        <div id="field_name_recipient"
+             tal:attributes="class python: view.class_for_field('name_recipient')">
+          <label for="name_recipient"
+                 i18n:translate="label_name_recipient">Recipient's name</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_name_recipient"
+               tal:condition="python: view.show_error_message('name_recipient')"
+               i18n:translate="error_empty_name_recipient">
+          You have to specify the recipient's name.</div>
+                    
+          <input type="text"
+                 id="name_recipient"
+                 name="name_recipient"
+                 size="25"
+                 tal:attributes="value values/name_recipient | nothing" />
+        </div>
+
+
+        <div id="field_email_recipient"
+             tal:attributes="class python: view.class_for_field('email_recipient')">
+          <label for="email"
+                 i18n:translate="label_email_address_recipient">Recipient's e-mail</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_email_recipient"
+               tal:condition="python: view.show_error_message('email_recipient')"
+               i18n:translate="error_empty_email_recipient">
+          You have to specify the recipient's e-mail.</div>
+          
+          <div id="error_email_recipient_invalid"
+               tal:condition="python: view.show_error_message('invalid_email_recipient')"
+               i18n:translate="error_invalid_email">
+          This e-mail is not valid.</div>
+          
+          <input type="text" id="email_recipient"
+                 name="email_recipient" size="25"
+                 tal:attributes="value values/email_recipient | nothing" />
+        </div>
+
+        <div id="field_title"
+             tal:attributes="class python: view.class_for_field('title')">
+          <label for="title"
+                 i18n:translate="label_title">Mail's title</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_title"
+               tal:condition="python: view.show_error_message('title')"
+               i18n:translate="error_empty_title">
+          You have to specify a title for the e-mail.</div>
+                    
+          <input type="text"
+                 id="title"
+                 name="title"
+                 size="25"
+                 tal:attributes="value values/title | nothing" />
+        </div>
+
+        <div id="field_attachment">
+          <label i18n:translate="label_attachment">Attachments</label><br />
+          <img src="pdf_icon.gif" alt="pdf_file" /> <span tal:content="view/filename_in_mail" /><br />
+          <a class="discreet"
+             tal:attributes="href python: context.absolute_url() + '/send_as_pdf_download?pdf_name=' + values['filename']">
+            <span i18n:translate="label_click_here_to_download">Click here to preview the file</span>
+          </a>
+        </div>
+
+        <div id="field_content"
+             tal:attributes="class python: view.class_for_field('content')">
+          <label for="content"
+                 i18n:translate="label_content">Mail's body</label>
+          <span class="fieldRequired"
+                title="Required"
+                i18n:domain="plone"
+                i18n:translate="title_required">(Required)</span>
+          <br />
+
+          <div id="error_content"
+               tal:condition="python: view.show_error_message('content')"
+               i18n:translate="error_empty_content">
+          You have to specify a body for the e-mail.</div>
+                    
+          <tal:block tal:define="inputname string:content;
+                                 inputvalue values/content | nothing">
+            <tal:block metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox" />
+          </tal:block>
+        </div>
+
+        <div class="formControls">
+          <input type="submit"
+                 class="context"
+                 value="Send"
+                 name="form_submitted"
+                 i18n:attributes="value label_send"/>
+          <input class="standalone"
+                 type="submit"
+                 value="Cancel"
+                 name="form_cancelled"
+                 i18n:attributes="value label_cancel" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

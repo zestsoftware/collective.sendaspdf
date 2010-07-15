@@ -11,8 +11,24 @@
   <browser:page
       for="*"
       name="send_as_pdf"
-      class=".send.SendByMail"
+      class=".send.SendForm"
       template="templates/send_form.pt"
       permission="zope2.View"
       />
+
+  <browser:page
+      for="*"
+      name="send_as_pdf_download"
+      class=".send.DownloadPDF"
+      template="templates/download.pt"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
+      name="send_as_pdf_real_url"
+      class=".send.RealURLView"
+      permission="zope2.View"
+      />
+
 </configure>
