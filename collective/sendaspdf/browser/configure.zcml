@@ -1,0 +1,18 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="collective.sendaspdf">
+
+  <browser:resource
+      name="jquery.sendaspdf.js"
+      file="jscript/jquery.sendaspdf.js"
+      />
+
+  <browser:page
+      for="*"
+      name="send_as_pdf"
+      class=".send.SendByMail"
+      template="templates/send_form.pt"
+      permission="zope2.View"
+      />
+</configure>
