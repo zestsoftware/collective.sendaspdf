@@ -144,7 +144,11 @@ class BaseView(BrowserView):
         self.filename = filename
         url = self.context.absolute_url()
 
-        print_css = self.context.portal_type in self.pdf_tool.print_css_types
+        if self.pdf_tool.always_print_css:
+            print_css = True
+        else:
+            print_css = self.context.portal_type in \
+                        self.pdf_tool.print_css_types
 
         export_file, err = transform_module.html_to_pdf(source,
                                                         self.tempdir,

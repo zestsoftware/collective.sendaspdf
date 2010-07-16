@@ -65,6 +65,17 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                     default=u'Default body of e-mails'),
             ),
         ),
+    atapi.BooleanField(
+        name='always_print_css',
+        widget=atapi.BooleanWidget(
+            label=_(u'label_print_css_always',
+                    default=u'Always use print CSS'),
+            description=_(u'help_print_css_always',
+                          default=u'Always use the print CSS (only valid' + \
+                          'with wkhtmltopdf, xhtml2pdf will use the ' + \
+                          'print CSS whatever you chose')
+            ),
+        ),
     atapi.LinesField(
         name='print_css_types',
         widget=atapi.LinesWidget(
