@@ -39,7 +39,7 @@ class BaseView(BrowserView):
         self.filename_in_mail = 'screenshot.pdf'
         # We can use here any module name from collective.sendaspdf.transforms
         # (ok, for we just have the choice between 'pisa' and 'wk')
-        self.pdf_generator = 'pisa'
+        self.pdf_generator = 'wk'
 
         self.pdf_file = None
         self.filename = ''
