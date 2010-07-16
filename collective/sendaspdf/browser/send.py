@@ -114,12 +114,15 @@ class SendForm(BaseView):
                 msg = _(u'msg_error',
                         default=u'Errors appeared while processing your form')
                 msg_type = 'error'
+                
 
             self.context.plone_utils.addPortalMessage(
                 translate(msg,
                           target_language=self.get_lang()),
                 type=msg_type)
-            self.request.response.redirect(self.context.absolute_url())
+
+            if not self.errors:
+                self.request.response.redirect(self.context.absolute_url())
 
         elif 'form_cancelled' in form:
             # The user clicked on the 'cancel' button.
