@@ -30,16 +30,14 @@ class BaseView(BrowserView):
 
         # The list of errors found when checking the form.
         self.errors = []
-
-        # XXX - this should be changed in the future,
-        # using site properties so the users can manage this
-        # from the ZMI.
-        self.tempdir = '/tmp/' #XXX - use tempdir
-        self.salt = 'kikoo'
-        self.filename_in_mail = 'screenshot.pdf'
-        # We can use here any module name from collective.sendaspdf.transforms
-        # (ok, for we just have the choice between 'pisa' and 'wk')
-        self.pdf_generator = 'wk'
+        
+        # We get the configuration from the portal_sendaspdf
+        portal_send = getToolByName(self.context,
+                                    'portal_sendaspdf')
+        self.tempdir = portal_send.tempdir
+        self.salt = portal_send.salt
+        self.pdf_generator = portal_send.pdf_generator
+        self.filename_in_mail = portal_send.filename_in_mail
 
         self.pdf_file = None
         self.filename = ''
