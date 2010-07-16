@@ -35,6 +35,13 @@ class BaseView(BrowserView):
         self.pdf_file = None
         self.filename = ''
 
+    def get_lang(self):
+        """ Finds the language to use.
+        """
+        props = getToolByName(self.context,
+                              'portal_properties')
+        return props.site_properties.getProperty('default_language') or 'en'
+
     def get_user(self):
         """ Returns the currently logged-in user.
         """

@@ -1,9 +1,11 @@
+from zope.i18n import translate
 from AccessControl import Unauthorized
 from Products.validation import validation
 from Products.CMFCore.utils import getToolByName
 
 from collective.sendaspdf.emailer import send_message
 
+from collective.sendaspdf import SendAsPDFMessageFactory as _
 from collective.sendaspdf.browser.base import BaseView
 
 class SendForm(BaseView):
@@ -105,16 +107,23 @@ class SendForm(BaseView):
             self.check_form()
             if not self.errors:
                 self.process_form()
-
-                #XXX - show success messafe
+                msg = _(u'msg_success',
+                        default=u'The e-mail has been sent')
+                msg_type = 'info'
             else:
-                #XXX - show error message
-                pass
+                msg = _(u'msg_error',
+                        default=u'Errors appeared while processing your form')
+                msg_type = 'error'
+
+            self.context.plone_utils.addPortalMessage(
+                translate(msg,
+                          target_language=self.get_lang()),
+                type=msg_type)
+            self.request.response.redirect(self.context.absolute_url())
+
         elif 'form_cancelled' in form:
             # The user clicked on the 'cancel' button.
-
-            #XXX - redirect to the previous page.
-            pass
+            self.request.response.redirect(self.context.absolute_url())
         else:
             # The user clicked on the 'send by mail'
             # link.
