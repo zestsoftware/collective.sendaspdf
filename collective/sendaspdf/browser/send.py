@@ -1,18 +1,18 @@
 import os
 from datetime import datetime
 
-import ho.pisa as pisa
-
 from AccessControl import Unauthorized
 from Products.validation import validation
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 
 from jquery.pyproxy.plone import jquery, JQueryProxy
 from jquery.pyproxy.base import clean_string
 
-from collective.sendaspdf.utils import md5_hash, extract_from_url
+from collective.sendaspdf import transforms
+from collective.sendaspdf.utils import md5_hash
+from collective.sendaspdf.utils import extract_from_url
+from collective.sendaspdf.utils import find_filename
 from collective.sendaspdf.emailer import send_message
 
 class BaseView(BrowserView):
@@ -37,6 +37,9 @@ class BaseView(BrowserView):
         self.tempdir = '/tmp/' #XXX - use tempdir
         self.salt = 'kikoo'
         self.filename_in_mail = 'screenshot.pdf'
+        # We can use here any module name from collective.sendaspdf.transforms
+        # (ok, for we just have the choice between 'pisa' and 'wk')
+        self.pdf_generator = 'pisa'
 
         self.pdf_file = None
         self.filename = ''
@@ -198,30 +201,8 @@ class SendForm(BaseView):
         # enough for our needs.
         timestamp = ''.join([str(x) for x in now.timetuple()])
         filename = prefix + timestamp
-
-        try:
-            files = os.listdir(self.tempdir)
-        except:
-            # This shall not happen, except if the tempdir has not
-            # been set correctly.
-            return
-
-        # We check the file name is not already used in the tempdir.
-        # If so, we try to prepend a number at the end.
-        if filename + '.pdf' in files:
-            postfix = 0
-            while postfix <= RENAME_AFTER_CREATION_ATTEMPTS:
-                if '%s_%s.pdf' % (filename, postfix) in files:
-                    postfix += 1
-                    continue
-
-                filename = '%s_%s' % (filename, postfix)
-                break
-
-            if postfix > RENAME_AFTER_CREATION_ATTEMPTS:
-                return
-
-        return filename + '.pdf'
+        return find_filename(self.tempdir,
+                             filename)
 
     def generate_pdf_file(self, source):
         """ Generates a PDF file from the given source
@@ -231,24 +212,26 @@ class SendForm(BaseView):
         if not filename:
             self.errors.append('filename_generation_failed')
             return
-        
-        file_path = '%s/%s' % (self.tempdir, filename)
-        self.pdf_file = file(file_path, "wb")
+
+        try:
+            transform_module = getattr(transforms, self.pdf_generator)
+        except AttributeError:
+            self.errors.append('wrong_generator_configuration')
+            return
+
         self.filename = filename
-
         url = self.context.absolute_url()
-        pdf = pisa.CreatePDF(
-            str(source.encode('ascii', 'replace')),
-            self.pdf_file,
-            log_warn = 1,
-            log_err = 1,
-            path = url,
-            link_callback = pisa.pisaLinkLoader(url).getFileName,
-            )
-        self.pdf_file.close()
 
-        if pdf.err:
+        export_file, err = transform_module.html_to_pdf(source,
+                                                        self.tempdir,
+                                                        filename,
+                                                        original_url = url)
+        if err:
             self.errors.append('pdf_creation_failed')
+            return
+
+        self.pdf_file = export_file
+        self.pdf_file.close()
 
     def check_form(self):
         """ Checks the form submitted when the user clicks on
@@ -298,7 +281,6 @@ class SendForm(BaseView):
                              form['email'])
         mto = '%s <%s>' % (form['name_recipient'],
                            form['email_recipient'])
-
         self.pdf_file = file('%s/%s' % (self.tempdir,
                                         form['filename']),
                              'r')

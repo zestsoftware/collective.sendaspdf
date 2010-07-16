@@ -1,4 +1,7 @@
 import re
+import os
+
+from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 
 try:
     # Python 2.6 (maybe 2.5 too)
@@ -111,6 +114,7 @@ def extract_from_url(url, context_url):
     ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/')
     ('require_login',
      {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})    
+
     """
     if not url.startswith(context_url):
         return None, None
@@ -145,3 +149,64 @@ def extract_from_url(url, context_url):
             except:
                 pass
     return view_name, get_params
+
+def find_filename(path, filename, extension='pdf'):
+    """ Finds a non-conflicting filename in the
+    directory given by path.
+
+    >>> import os
+    >>> from collective.sendaspdf.utils import find_filename
+
+    If the path is not correct, returns nothing.
+    If this test fails, I'm not responsible for the fact that you
+    have a 'kikoolol' directory in the root of your system ;)
+    >>> find_filename('/kikoolol', '')
+
+    Some faking for the tests.
+    >>> def fake_listdir(path):
+    ...     return ['file.pdf', 'file1.pdf', 'file2.pdf', 'file3.pdf',
+    ...             'file.html', 'file1.html', 'file2.html']
+
+    >>> os.old_listdir = os.listdir
+    >>> os.listdir = fake_listdir
+
+    A example without conflict.
+    >>> find_filename('', 'my_file')
+    'my_file.pdf'
+
+    No conflict and a custom extension.
+    >>> find_filename('', 'my_file', 'html')
+    'my_file.html'
+
+    If there is a conflict, the function adds a number
+    at the end.
+    >>> find_filename('', 'file')
+    'file4.pdf'
+
+    >>> find_filename('', 'file', 'html')
+    'file3.html'
+
+    """
+    try:
+        files = os.listdir(path)
+    except:
+        # This shall not happen, except if the path has not
+        # been set correctly.
+        return
+
+    # We check the file name is not already used in the directory.
+    # If so, we try to prepend a number at the end.
+    if filename + '.' + extension in files:
+        postfix = 1
+        while postfix <= RENAME_AFTER_CREATION_ATTEMPTS:
+            if '%s%s.%s' % (filename, postfix, extension) in files:
+                postfix += 1
+                continue
+
+            filename = '%s%s' % (filename, postfix)
+            break
+
+        if postfix > RENAME_AFTER_CREATION_ATTEMPTS:
+            return
+
+    return filename + '.' + extension
