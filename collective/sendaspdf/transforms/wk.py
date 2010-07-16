@@ -27,8 +27,10 @@ def html_to_pdf(source, export_dir, filename, original_url):
             '%s/%s' % (export_dir, filename),
             '--disable-javascript',
             '--ignore-load-errors']
+
     p = subprocess.Popen(args)
+    p.wait()
 
     pdf_file = file('%s/%s' % (export_dir, filename),
-                    'wb')
+                    'r')
     return pdf_file, None

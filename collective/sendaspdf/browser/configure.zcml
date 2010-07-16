@@ -8,6 +8,7 @@
       file="jscript/jquery.sendaspdf.js"
       />
 
+  <!-- Page called when clicking on 'Send as PDF' -->
   <browser:page
       for="*"
       name="send_as_pdf"
@@ -16,18 +17,30 @@
       permission="zope2.View"
       />
 
+  <!-- Page called when clicking on 'Download as PDF' -->
   <browser:page
       for="*"
-      name="send_as_pdf_download"
-      class=".send.DownloadPDF"
+      name="download_as_pdf"
+      class=".download.PreDownloadPDF"
       template="templates/download.pt"
       permission="zope2.View"
       />
 
+  <!-- Page allowing downloading the document. -->
+  <browser:page
+      for="*"
+      name="send_as_pdf_download"
+      class=".download.DownloadPDF"
+      template="templates/download.pt"
+      permission="zope2.View"
+      />
+
+  <!-- Page used in portal actons to get the real url
+      of the current page (including GET parameters). -->
   <browser:page
       for="*"
       name="send_as_pdf_real_url"
-      class=".send.RealURLView"
+      class=".realurl.RealURLView"
       permission="zope2.View"
       />
 
