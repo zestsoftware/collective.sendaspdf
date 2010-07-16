@@ -23,24 +23,12 @@ class DownloadPDF(BaseView):
     """
     def __call__(self):
         form = self.request.form
-        if not 'pdf_name' in form:
-            # Should not happen.
-            self.errors.append('file_not_specified')
-            return self.index()
+        self.check_pdf_accessibility()
+        if self.errors:
+             return self.index()
 
-        filename = form['pdf_name']
-
-        prefix = self.generate_filename_prefix()
-        if not filename.startswith(prefix):
-            # The user should not be able to see this file.
-            raise Unauthorized()
-
-        if not filename in os.listdir(self.tempdir):
-            self.errors.append('file_not_found')
-            self.request.response.setStatus(404)
-            return self.index()
-
-        self.pdf_file = file('%s/%s' % (self.tempdir, filename),
+        self.pdf_file = file('%s/%s' % (self.tempdir,
+                                        form['pdf_name']),
                              'r')
         self.request.response.setHeader("Content-type",
                                         "application/pdf")

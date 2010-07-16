@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from Products.Five.browser import BrowserView
@@ -24,12 +25,12 @@ class BaseView(BrowserView):
         self.errors = []
         
         # We get the configuration from the portal_sendaspdf
-        portal_send = getToolByName(self.context,
+        self.pdf_tool = getToolByName(self.context,
                                     'portal_sendaspdf')
-        self.tempdir = portal_send.tempdir
-        self.salt = portal_send.salt
-        self.pdf_generator = portal_send.pdf_generator
-        self.filename_in_mail = portal_send.filename_in_mail
+        self.tempdir = self.pdf_tool.tempdir
+        self.salt = self.pdf_tool.salt
+        self.pdf_generator = self.pdf_tool.pdf_generator
+        self.filename_in_mail = self.pdf_tool.filename_in_mail
 
         self.pdf_file = None
         self.filename = ''
@@ -176,3 +177,24 @@ class BaseView(BrowserView):
             if self.show_error_message(error_name):
                 return base_class + error_class
         return base_class
+
+    def check_pdf_accessibility(self):
+        """ Check that the filename given in the request
+        can be accessed by the user.
+        """
+        if not 'pdf_name' in self.request.form:
+            # Should not happen.
+            self.errors.append('file_not_specified')
+            return
+
+        filename = self.request.form['pdf_name']
+        prefix = self.generate_filename_prefix()
+        if not filename.startswith(prefix):
+            # The user should not be able to see this file.
+            self.errors.append('file_unauthorized')
+            return
+
+        if not filename in os.listdir(self.tempdir):
+            self.errors.append('file_not_found')
+            self.request.response.setStatus(404)
+            return

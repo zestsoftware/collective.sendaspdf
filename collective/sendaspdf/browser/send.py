@@ -20,19 +20,25 @@ class SendForm(BaseView):
     """
     error_mapping = {'email': ['email', 'invalid_email'],
                      'email_recipient': ['email_recipient',
-                                         'invalid_email_recipient']}
+                                         'invalid_email_recipient'],
+                     'pdf_name': ['file_not_found',
+                                  'file_not_specified',
+                                  'file_unauthorized']}
 
     def check_form(self):
         """ Checks the form submitted when the user clicks on
         the 'send by mail' button.
         """
         form = self.request.form
-        fields = ['name',
-                  'name_recipient',
-                  'email',
+        user = self.get_user()
+        self.check_pdf_accessibility()
+
+        fields = ['name_recipient',
                   'email_recipient',
                   'title',
                   'content']
+        if user:
+            fields.extend(['name', 'email'])
 
         # All fields are mandatory
         for field in fields:
@@ -40,12 +46,16 @@ class SendForm(BaseView):
                 self.errors.append(field)
 
         # We check that emails are real emails.
-        mail_validator = validation.validatorFor('isEmail')
-        for field in ['email', 'email_recipient']:
+        email_validator = validation.validatorFor('isEmail')
+        email_fields = ['email_recipient']
+        if not user:
+            email_fields.append('email')
+
+        for field in email_fields:
             value = form.get(field)
             if not value:
                 continue
-            if not mail_validator(value) == 1:
+            if not email_validator(value) == 1:
                 self.errors.append('invalid_' + field)
 
     def get_values(self):
@@ -54,20 +64,27 @@ class SendForm(BaseView):
         if self.errors:
             return self.request.form
 
-        values = {'filename': self.filename}
+        values = {'pdf_name': self.filename}
         if self.get_user():
             values['name'] = self.get_user_fullname()
             values['email'] = self.get_user_email()
 
+        values['title'] = self.pdf_tool.mail_title
+        values['content'] = self.pdf_tool.mail_content
         return values
 
     def process_form(self):
         """
         """
-        form = self.request.form
+        form = self.request.form        
 
-        mfrom = '%s <%s>' % (form['name'],
-                             form['email'])
+        if self.get_user():
+            mfrom = '%s <%s>' % (self.get_user_fullname(),
+                                 self.get_user_email())
+        else:
+            mfrom = '%s <%s>' % (form['name'],
+                                 form['email'])
+
         mto = '%s <%s>' % (form['name_recipient'],
                            form['email_recipient'])
         self.pdf_file = file('%s/%s' % (self.tempdir,
