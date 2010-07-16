@@ -1,13 +1,17 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = open(os.path.join("collective",
+                            "sendaspdf",
+                            "version.txt")).read()
 
 setup(name='collective.sendaspdf',
       version=version,
       description="",
       long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+                       open(os.path.join("collective",
+                                         "sendaspdf",
+                                         "HISTORY.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[

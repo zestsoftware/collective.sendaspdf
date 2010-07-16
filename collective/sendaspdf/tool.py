@@ -109,7 +109,7 @@ class SendAsPDFTool(ImmutableId, ATDocument):
     - the default body of the mail
     """
     security = ClassSecurityInfo()
-    __implements__ = (atapi.BaseFolder.__implements__, )
+    __implements__ = ()
 
     id = 'portal_sendaspdf'
     typeDescription = "Configure send as pdf"
@@ -117,7 +117,6 @@ class SendAsPDFTool(ImmutableId, ATDocument):
     schema = sendAsPDFSchema
 
     def __init__(self, *args, **kwargs):
-        super(SendAsPDFTool, self).__init__(*args, **kwargs)
         self.setTitle('Send as PDF configuration')
 
     security.declareProtected(ModifyPortalContent, 'indexObject')
