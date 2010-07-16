@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel"
+        meta_type="Plone Control Panel Tool">
+ <configlet title="Send as PDF"
+            action_id="sendaspdf"
+            appId="collective.sendaspdf"
+            category="Plone"
+            condition_expr=""
+            icon_expr="string:${portal_url}/pdf_icon.gif"
+            url_expr="string:${portal_url}/portal_sendaspdf"
+            visible="True">
+  <permission>Manage portal</permission>
+ </configlet>
+</object>
