@@ -6,7 +6,7 @@ import subprocess
 from collective.sendaspdf.utils import find_filename
 from collective.sendaspdf.emailer import su, get_charset
 
-def html_to_pdf(source, export_dir, filename, original_url):
+def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     # First we need to store the source in a temporary
     # file.
     html_filename = find_filename(export_dir,
@@ -27,6 +27,8 @@ def html_to_pdf(source, export_dir, filename, original_url):
             '%s/%s' % (export_dir, filename),
             '--disable-javascript',
             '--ignore-load-errors']
+    if use_print_css:
+        args.append('--print-media-type')
 
     p = subprocess.Popen(args)
     p.wait()

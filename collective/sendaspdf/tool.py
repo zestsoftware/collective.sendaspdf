@@ -65,6 +65,20 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                     default=u'Default body of e-mails'),
             ),
         ),
+    atapi.LinesField(
+        name='print_css_types',
+        widget=atapi.LinesWidget(
+            label=_(u'label_print_css',
+                    default=u'Portal types using print css'),
+            description=_(u'help_print_css',
+                          default=u'You can register here a list of portal ' + \
+                          'types for which the system must use the print ' + \
+                          'CSS instead of the scrren one (currently only ' + \
+                          'working if you use wkhtmltopdf. xhtml2pdf uses ' + \
+                          'the print CSS by default). One type per line'),
+        ),
+    ),
+
 ))
 
 for field in ['title', 'description', 'text']:

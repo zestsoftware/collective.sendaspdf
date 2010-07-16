@@ -144,10 +144,13 @@ class BaseView(BrowserView):
         self.filename = filename
         url = self.context.absolute_url()
 
+        print_css = self.context.portal_type in self.pdf_tool.print_css_types
+
         export_file, err = transform_module.html_to_pdf(source,
                                                         self.tempdir,
                                                         filename,
-                                                        original_url = url)
+                                                        url,
+                                                        print_css)
         if err:
             self.errors.append('pdf_creation_failed')
             return
