@@ -33,6 +33,7 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     p = subprocess.Popen(args)
     p.wait()
 
+    os.remove('%s/%s' % (export_dir, html_filename))
     pdf_file = file('%s/%s' % (export_dir, filename),
                     'r')
     return pdf_file, None

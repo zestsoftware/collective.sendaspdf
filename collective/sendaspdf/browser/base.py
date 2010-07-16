@@ -159,6 +159,7 @@ class BaseView(BrowserView):
             self.errors.append('pdf_creation_failed')
             return
 
+        self.pdf_tool.registerPDF(filename)
         self.pdf_file = export_file
         self.pdf_file.close()
 
