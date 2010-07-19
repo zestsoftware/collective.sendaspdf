@@ -7,6 +7,7 @@ import logging
 from email.MIMEText import MIMEText
 from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
+from email import Encoders
 from smtplib import SMTPException
 import pkg_resources
 import socket
@@ -68,7 +69,7 @@ def get_mail_host():
         return mail_host
 
 
-def prepare_mail_message(msg, attachment):
+def prepare_mail_message(msg, attachment, filename):
     """ Creates the message
     """
     html = msg
@@ -102,22 +103,32 @@ def prepare_mail_message(msg, attachment):
     text_part = MIMEText(plain, 'plain', body_charset)
     html_part = MIMEText(html, 'html', body_charset)
 
+    # As we have plain text, html and attachment, we need to do
+    # two multiparts:
+    # - the first one contains the message
+    # the second one includes the previous one and the attachment.
+    email_content = MIMEMultipart('alternative')
+    email_content.epilogue = ''
+    email_content.attach(text_part)
+    email_content.attach(html_part)
+
     # Now the attachment.
     attach = MIMEBase('application', 'pdf')
     attach.set_payload(attachment.read())
+    Encoders.encode_base64(attach)
+    attach.add_header('Content-Disposition',
+                      'attachment; filename="%s"' % filename)
 
-    # Okay, we send both plain text and html
-    email_msg = MIMEMultipart('alternative')
-    email_msg.epilogue = ''
-    email_msg.attach(text_part)
-    email_msg.attach(html_part)
+    # We attach everything to the mail.
+    email_msg = MIMEMultipart()
+    email_msg.attach(email_content)
     email_msg.attach(attach)
     return email_msg
 
-def send_message(mfrom, mto, subject, message, attachment):
+def send_message(mfrom, mto, subject, message, attachment, filename):
     """ 
     """
-    message = prepare_mail_message(message, attachment)
+    message = prepare_mail_message(message, attachment, filename)
 
     mail_host = get_mail_host()
     if mail_host is None:
@@ -132,7 +143,7 @@ def send_message(mfrom, mto, subject, message, attachment):
         if USE_SECURE_SEND:
             mail_host.secureSend(message=message,
                                  mto=mto,
-                                 mfrom=mto,
+                                 mfrom=mfrom,
                                  subject=subject,
                                  charset=header_charset)
         else:

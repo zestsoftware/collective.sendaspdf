@@ -39,7 +39,7 @@ class SendForm(BaseView):
                   'email_recipient',
                   'title',
                   'content']
-        if user:
+        if not user:
             fields.extend(['name', 'email'])
 
         # All fields are mandatory
@@ -89,14 +89,15 @@ class SendForm(BaseView):
 
         mto = '%s <%s>' % (form['name_recipient'],
                            form['email_recipient'])
-        self.pdf_file = file('%s/%s' % (self.tempdir,
-                                        form['filename']),
-                             'r')
+        pdf_file = file('%s/%s' % (self.tempdir,
+                                   form['pdf_name']),
+                        'r')
         send_message(mfrom,
                      mto,
                      form['title'],
                      form['content'],
-                     self.pdf_file)
+                     pdf_file,
+                     self.pdf_tool.filename_in_mail)
 
     def __call__(self):
         form = self.request.form

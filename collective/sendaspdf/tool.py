@@ -46,19 +46,12 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         ),
     atapi.StringField(
-        name = 'filename_in_mail',
-        default='screenshot.pdf',
-        widget=atapi.StringWidget(
-            label=_(u'label_filename_title',
-                    default=u'Name of the PDF file in the mail'),
-            ),
-        ),
-    atapi.StringField(
         name = 'mail_title',
         widget=atapi.StringWidget(
             label=_(u'label_mail_title',
                     default=u'Default title of e-mails'),
             ),
+        schemata='mail',
         ),
     atapi.TextField(
         name = 'mail_content',
@@ -66,6 +59,16 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             label=_(u'label_mail_content',
                     default=u'Default body of e-mails'),
             ),
+        schemata='mail',
+        ),
+    atapi.StringField(
+        name = 'filename_in_mail',
+        default='screenshot.pdf',
+        widget=atapi.StringWidget(
+            label=_(u'label_filename_title',
+                    default=u'Name of the PDF file in the mail'),
+            ),
+        schemata='mail',
         ),
     atapi.BooleanField(
         name='always_print_css',
@@ -75,8 +78,9 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             description=_(u'help_print_css_always',
                           default=u'Always use the print CSS (only valid' + \
                           'with wkhtmltopdf, xhtml2pdf will use the ' + \
-                          'print CSS whatever you chose')
+                          'print CSS whatever you chose)')
             ),
+        schemata='wk',
         ),
     atapi.LinesField(
         name='print_css_types',
@@ -90,14 +94,22 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                           'working if you use wkhtmltopdf. xhtml2pdf uses ' + \
                           'the print CSS by default). One type per line'),
         ),
+        schemata='wk',
     ),
 
 ))
 
+# Hides the default fields.
 for field in ['title', 'description', 'text']:
     if field in sendAsPDFSchema:
         sendAsPDFSchema[field].widget.visible={'edit': 'invisible',
                                                'view': 'invisible'}
+
+# Hides the fields other than the ones we defined.
+for key in sendAsPDFSchema.keys():
+    if sendAsPDFSchema[key].schemata not in ['default', 'mail', 'wk']:
+        sendAsPDFSchema[key].widget.visible={'edit': 'invisible',
+                                             'view': 'invisible'}
 
 class SendAsPDFTool(ImmutableId, ATDocument):
     """ Tool for sendaspdf product.
