@@ -4,4 +4,9 @@ Changelog
 1.0dev (unreleased)
 -------------------
 
-- Initial release
+- added view to send by mail and download the page. [vincent]
+
+- added document actions to send the page by mail and download as
+  pdf. [vincent]
+
+- Added sendaspdf tool to manage preferences. [vincent]

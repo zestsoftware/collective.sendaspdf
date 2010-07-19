@@ -3,7 +3,7 @@ import os
 
 version = open(os.path.join("collective",
                             "sendaspdf",
-                            "version.txt")).read()
+                            "version.txt")).read().strip()
 
 setup(name='collective.sendaspdf',
       version=version,
