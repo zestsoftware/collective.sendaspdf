@@ -2,9 +2,19 @@
 # http://code.google.com/p/wkhtmltopdf/
 import os
 import subprocess
+import logging
 
 from collective.sendaspdf.utils import find_filename
 from collective.sendaspdf.emailer import su, get_charset
+
+logger = logging.getLogger('collective.sendaspdf')
+
+wk_command = os.environ.get('WKHTMLTOPDF_PATH')
+if wk_command:
+    logger.info('wkhtmltopdf found at  %s: ' % wk_command)
+else:
+    wk_command = 'wkhtmltopdf'
+    logger.warn("wkhtmltopdf path unknown, hope it's in the path")
 
 def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     # First we need to store the source in a temporary
@@ -22,7 +32,7 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     html_file.close()
 
     # Run the wkhtmltopdf command.
-    args = ['wkhtmltopdf',
+    args = [wk_command,
             'file://%s/%s' % (export_dir, html_filename),
             '%s/%s' % (export_dir, filename),
             '--disable-javascript',

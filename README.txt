@@ -35,6 +35,37 @@ pisa and html5lib. With the last releases (when writing this README
 To install wkhtmltopdf, go to the projects page and download an
 executable version for your OS. Install it so the command
 'wkhtmltopdf' is in the PATH.
+You can also update your buildout to automatically download 
+wkhtmltopdf and have if use by your instance using the following
+recipes:
+
+[buildout]
+parts =
+    ...
+    wkhtmltopdf
+    wkhtmltopdf_executable
+
+[instance]
+...
+environment-vars =
+    ...
+    WKHTMLTOPDF_PATH ${wkhtmltopdf:location}/wkhtmltopdf
+
+[wkhtmltopdf]
+recipe = hexagonit.recipe.download
+url = http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.9.9-static-amd64.tar.bz2
+
+[wkhtmltopdf_executable]
+recipe = collective.recipe.cmd
+on_install = true
+on_update = true
+cmds =
+     cd ${buildout:directory}/parts/wkhtmltopdf
+     mv wkhtmltopdf-amd64 wkhtmltopdf
+     chmod +x wkhtmltopdf
+
+You might have some changes to do depending on the architecture you
+are using (this example is for the amd64 architecture)
 
 Configuring
 ===========
