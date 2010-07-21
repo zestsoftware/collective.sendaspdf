@@ -4,6 +4,8 @@ Changelog
 1.0dev (unreleased)
 -------------------
 
+- added Dutch and French translations [vincent+mark]
+
 - added view to send by mail and download the page. [vincent]
 
 - added document actions to send the page by mail and download as
