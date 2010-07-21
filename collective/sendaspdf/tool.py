@@ -90,7 +90,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             description=_(u'help_print_css',
                           default=u'You can register here a list of portal ' + \
                           'types for which the system must use the print ' + \
-                          'CSS instead of the scrren one (currently only ' + \
+                          'CSS instead of the screen one (currently only ' + \
                           'working if you use wkhtmltopdf. xhtml2pdf uses ' + \
                           'the print CSS by default). One type per line'),
         ),
@@ -149,7 +149,7 @@ class SendAsPDFTool(ImmutableId, ATDocument):
                 ('pisa',
                  _(u'label_pisa',
                    default=u'XHTML2PDF: HTML/CSS to PDF converter written ' + \
-                   'in Python (http://www.xhtml2pdf.com/')),
+                   'in Python (http://www.xhtml2pdf.com/)')),
                 ('wk',
                  _(u'label_wk',
                    default=u'wkhtmltopdf: Simple shell utility to convert ' + \
