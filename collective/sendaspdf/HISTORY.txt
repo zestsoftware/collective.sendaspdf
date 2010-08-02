@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.1 (unreleased)
-----------------
+1.0.2 (2010-08-02)
+------------------
 
 - updated egg information in setup.py (author and description). [mark]
 
