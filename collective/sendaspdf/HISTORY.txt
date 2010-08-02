@@ -4,7 +4,7 @@ Changelog
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- updated egg information in setup.py (author and description). [mark]
 
 
 1.0.1 (2010-08-02)
