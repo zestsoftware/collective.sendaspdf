@@ -4,6 +4,8 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+- translated the "download as PDF" action. [mark]
+
 - registered the translations so they are applied. [mark]
 
 
