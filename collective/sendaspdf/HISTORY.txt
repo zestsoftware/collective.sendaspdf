@@ -4,7 +4,7 @@ Changelog
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- registered the translations so they are applied. [mark]
 
 
 1.0 (2010-07-21)
