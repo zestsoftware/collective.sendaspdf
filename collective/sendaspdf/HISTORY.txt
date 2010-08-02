@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.1 (unreleased)
-----------------
+1.0.3 (2010-08-02)
+------------------
 
 - Fix broken release with missing files. (Now released with setuptools-git
   installed.) [mark]
