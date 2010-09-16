@@ -40,8 +40,14 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     if use_print_css:
         args.append('--print-media-type')
 
-    p = subprocess.Popen(args)
-    p.wait()
+    try:
+        p = subprocess.Popen(args)
+        p.wait()
+    except:
+        logger.error('Running wkhtmltopdf failed. Please check that ' + \
+                     'you use a version compatible with your OS and ' + \
+                     'the version is 0.9.')
+        return None, ['pdf_generation_failed']
 
     os.remove('%s/%s' % (export_dir, html_filename))
     pdf_file = file('%s/%s' % (export_dir, filename),

@@ -13,10 +13,6 @@
               class="documentFirstHeading">Title or id</span>
       </h1>
       <div class="field error">
-        <p i18n:translate="error_no_source"
-           tal:condition="python: 'no_source' in view.errors">
-          An error occured when generating the PDF, please try again.</p>
-
         <p i18n:translate="error_file_not_found"
            tal:condition="python: 'file_not_found' in view.errors">
           The file you requested does not exist.</p>
@@ -24,6 +20,10 @@
         <p i18n:translate="error_file_not_specified"
            tal:condition="python: 'file_not_specified' in view.errors">
           You did not specify which PDF you wanted to download</p>
+
+        <p i18n:translate="error_pdf_creation"
+           tal:condition="python: view.errors and not ('file_not_found' in view.errors or 'file_not_specified' in view.errors)">
+          An error occured while generating the PDF file, please contact the site administrator.</p>
       </div>
     </div>
   </body>

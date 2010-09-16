@@ -4,6 +4,9 @@ Changelog
 1.1 (unreleased)
 ----------------
 
+- when the PDF generation failed in the page to send by mail, we
+  display an error page instead of failing. [vincent]
+
 - bugfix in send page - it was impossible to load the Wysiwyg for
   anonymous users. Stole some code from POI to solve it. [vincent]
 
