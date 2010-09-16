@@ -2,6 +2,7 @@ from zope.i18n import translate
 from AccessControl import Unauthorized
 from Products.validation import validation
 from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 from collective.sendaspdf.emailer import send_message
 
@@ -134,5 +135,9 @@ class SendForm(BaseView):
             # The user clicked on the 'send by mail'
             # link.
             self.make_pdf()
+            if self.errors:
+                # The PDF generation did not work, we render the page
+                # used when errors are found when sending the mail.
+                self.index = ZopeTwoPageTemplateFile('templates/download.pt')
 
         return self.index()
