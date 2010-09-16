@@ -180,9 +180,23 @@
                i18n:translate="error_empty_content">
           You have to specify a body for the e-mail.</div>
           
-          <tal:block tal:define="inputname string:content;
-                                 inputvalue values/content">
-            <tal:block metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox" />
+
+          <tal:comment replace="nothing">
+            The tal:defines below are here so that both kupu and
+            FCKeditor work.  Partly it is taken from FCKeditor.
+          </tal:comment>
+          <tal:block
+              define="inputname string:content;
+                      inputvalue values/content;
+                      default_editor context/portal_memberdata/wysiwyg_editor|string:plone_wysiwyg;
+                      member python:context.portal_membership.getAuthenticatedMember();
+                      editor python:member.getProperty('wysiwyg_editor', default_editor).lower();
+                      portal_url context/portal_url;
+                      portal context/portal_url/getPortalObject;
+                      here_url context/portal_url;
+                      support python: path('nocall:here/%s_wysiwyg_support|here/%s/wysiwyg_support|here/portal_skins/plone_wysiwyg/wysiwyg_support' % (editor, editor));"
+              on-error="string:$editor not installed correctly: ${error/value}">
+            <metal:block use-macro="support/macros/wysiwygEditorBox" />
           </tal:block>
         </div>
 

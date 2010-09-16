@@ -4,7 +4,8 @@ Changelog
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- bugfix in send page - it was impossible to load the Wysiwyg for
+  anonymous users. Stole some code from POI to solve it. [vincent]
 
 
 1.0 (2010-07-21)

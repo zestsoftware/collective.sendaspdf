@@ -67,12 +67,14 @@ class SendForm(BaseView):
             return self.request.form
 
         values = {'pdf_name': self.filename}
+
+        values['title'] = self.pdf_tool.mail_title
+        values['content'] = self.pdf_tool.mail_content
+
         if self.get_user():
             values['name'] = self.get_user_fullname()
             values['email'] = self.get_user_email()
 
-        values['title'] = self.pdf_tool.mail_title
-        values['content'] = self.pdf_tool.mail_content
         return values
 
     def process_form(self):
