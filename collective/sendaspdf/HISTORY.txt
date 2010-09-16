@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1 (unreleased)
+1.1 (2010-09-16)
 ----------------
 
 - when the PDF generation failed in the page to send by mail, we
