@@ -16,7 +16,7 @@
    </property>
    <property name="visible">True</property>
   </object>
-  <object name="copy_of_sendto" meta_type="CMF Action" i18n:domain="plone">
+  <object name="copy_of_sendto" meta_type="CMF Action" i18n:domain="collective.sendaspdf">
    <property name="title" i18n:translate="">Download as PDF</property>
    <property name="description" i18n:translate=""></property>
    <property

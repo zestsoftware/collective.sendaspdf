@@ -8,6 +8,27 @@ Changelog
   anonymous users. Stole some code from POI to solve it. [vincent]
 
 
+1.0.3 (2010-08-02)
+------------------
+
+- Fix broken release with missing files. (Now released with setuptools-git
+  installed.) [mark]
+
+
+1.0.2 (2010-08-02)
+------------------
+
+- updated egg information in setup.py (author and description). [mark]
+
+
+1.0.1 (2010-08-02)
+------------------
+
+- translated the "download as PDF" action. [mark]
+
+- registered the translations so they are applied. [mark]
+
+
 1.0 (2010-07-21)
 ----------------
 

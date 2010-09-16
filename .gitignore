@@ -1,3 +1,6 @@
-*.pyc
-*.mo
 *.egg-info
+*.mo
+*.pyc
+Paste*
+PasteDeploy*
+PasteScript*
