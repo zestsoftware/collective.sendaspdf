@@ -16,186 +16,186 @@ msgstr ""
 
 #: ./profiles/default/actions.xml
 msgid "Download as PDF"
-msgstr "Downloaden als PDF"
+msgstr "Telecharger en PDF"
 
 #: ./profiles/default/actions.xml
 msgid "Send as PDF"
-msgstr "Verzenden als PDF"
+msgstr "Envoyer en PDF"
 
 #. Default: "You have to specify a body for the e-mail."
 #: ./browser/templates/send_form.pt:178
 msgid "error_empty_content"
-msgstr "U moet een bericht opgeven."
+msgstr "Vous devez écrire un message pour votre e-mail."
 
 #. Default: "You have to specify your e-mail."
 #: ./browser/templates/send_form.pt:52
 msgid "error_empty_email"
-msgstr "U moet uw e-mailadres opgeven."
+msgstr "Vous devez donner votre adresse e-mail."
 
 #. Default: "You have to specify the recipient's e-mail."
 #: ./browser/templates/send_form.pt:100
 msgid "error_empty_email_recipient"
-msgstr "U moet een e-mailadres van de ontvanger opgeven."
+msgstr "Vous devez donner l'adresse e-mail de votre correspondant."
 
 #. Default: "You have to specify your name."
 #: ./browser/templates/send_form.pt:29
 msgid "error_empty_name"
-msgstr "U moet uw naam opgeven."
+msgstr "Vous devez donner votre nom."
 
 #. Default: "You have to specify the recipient's name."
 #: ./browser/templates/send_form.pt:77
 msgid "error_empty_name_recipient"
-msgstr "U moet de naam van de ontvanger opgeven."
+msgstr "Vous devez donner le nom de votre correspondant."
 
 #. Default: "You have to specify a title for the e-mail."
 #: ./browser/templates/send_form.pt:125
 msgid "error_empty_title"
-msgstr "U moet een titel opgeven."
+msgstr "Vous devez donner un titre pour votre e-mail."
 
 #. Default: "The file you requested does not exist."
 #: ./browser/templates/download.pt:16
 #: ./browser/templates/send_form.pt:154
 msgid "error_file_not_found"
-msgstr "Het opgevraagde bestand bestaat niet."
+msgstr "Le fichier demandé n'existe pas."
 
 #. Default: "You did not specify which PDF you wanted to download"
 #: ./browser/templates/download.pt:20
 #: ./browser/templates/send_form.pt:144
 msgid "error_file_not_specified"
-msgstr "U heeft niet opgegeven welke PDF u wilt downloaden."
+msgstr "Vous n'avez pas précisé quel fichier PDF devait être envoyé."
 
 #. Default: "You do not have the right to access this file."
 #: ./browser/templates/send_form.pt:149
 msgid "error_file_unauthorized"
-msgstr "U heeft niet het recht om dit bestand te bekijken."
+msgstr "Vous n'avez pas la permission d'envoyer ce fichier."
 
 #. Default: "This e-mail address is not valid."
 #: ./browser/templates/send_form.pt:57
 msgid "error_invalid_email"
-msgstr "Dit e-mailadres is niet geldig."
+msgstr "Cette adresse e-mail n'est pas valide."
 
 #. Default: "An error occured while generating the PDF file, please contact the site administrator."
 #: ./browser/templates/download.pt:24
 msgid "error_pdf_creation"
-msgstr "Er is een fout opgetreden tijdens het maken van de PDF, neem contact op met Websitebeheerder."
+msgstr "Une erreur est apparue lors de la génération du fichier PDF, veuillez contacter l'admnistrateur du site."
 
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
 #: ./tool.py:90
 msgid "help_print_css"
-msgstr "U kan hier registreren welke typen de printbare versie moeten gebruiken (momenteel werkt dit alleen als u wkhtmltopdf gebruikt). Een type per regel."
+msgstr "Vous pouvez spécifier ici une liste de types pour lesquels le système utilisera la version imprimable lors de la génération du fichier PDF (à l'heure actuelle, ce choix n'est pris en compte que si vous utilisez wkhtmltopdf). Spécifiez un type de document par ligne."
 
 #. Default: "Always use the print CSS (only validwith wkhtmltopdf, xhtml2pdf will use the print CSS whatever you chose)"
 #: ./tool.py:78
 msgid "help_print_css_always"
-msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebruikt)"
+msgstr "Toujours utiliser la version imprimable lors de la génération des PDFs."
 
 #. Default: "Attachments"
 #: ./browser/templates/send_form.pt:139
 msgid "label_attachment"
-msgstr "Bijlagen"
+msgstr "Fichier joints."
 
 #. Default: "Cancel"
 #: ./browser/templates/send_form.pt:209
 msgid "label_cancel"
-msgstr "Annuleren"
+msgstr "Annuler"
 
 #. Default: "Click here to preview the file"
 #: ./browser/templates/send_form.pt:163
 msgid "label_click_here_to_download"
-msgstr "Klik hier voor een voorbeeld"
+msgstr "Cliquez ici pour voir le fichier."
 
 #. Default: "Mail's body"
 #: ./browser/templates/send_form.pt:170
 msgid "label_content"
-msgstr "Bericht"
+msgstr "Contenu de l'e-mail."
 
 #. Default: "Your e-mail"
 #: ./browser/templates/send_form.pt:44
 msgid "label_email_address"
-msgstr "Uw e-mailadres"
+msgstr "Votre e-mail"
 
 #. Default: "Recipient's e-mail"
 #: ./browser/templates/send_form.pt:92
 msgid "label_email_address_recipient"
-msgstr "E-mailadres van de ontvanger"
+msgstr "E-mail de votre correspondant"
 
 #. Default: "Directory where PDF files will be stored"
 #: ./tool.py:36
 msgid "label_export_dir"
-msgstr "Folder waar de PDF opgeslagen wordt"
+msgstr "Dossier où seront stockés les fichiers PDF"
 
 #. Default: "Name of the PDF file in the mail"
 #: ./tool.py:68
 msgid "label_filename_title"
-msgstr "De naam van het PDF-bestand in de e-mail."
+msgstr "Nom du fichier PDF dans l'email"
 
 #. Default: "Default body of e-mails"
 #: ./tool.py:59
 msgid "label_mail_content"
-msgstr "Standaard bericht"
+msgstr "Contenu par défaut des e-mails"
 
 #. Default: "Default title of e-mails"
 #: ./tool.py:51
 msgid "label_mail_title"
-msgstr "Standaard titel"
+msgstr "Titre par défaut des e-mails"
 
 #. Default: "Your name"
 #: ./browser/templates/send_form.pt:21
 msgid "label_name"
-msgstr "Uw naam"
+msgstr "Votre nom"
 
 #. Default: "Recipient's name"
 #: ./browser/templates/send_form.pt:69
 msgid "label_name_recipient"
-msgstr "Naam van de ontvanger"
+msgstr "Nom de votre correspondant"
 
 #. Default: "PDF generator"
 #: ./tool.py:27
 msgid "label_pdf_generator"
-msgstr "PDF generator"
+msgstr "Outil de génération des fichiers PDF"
 
 #. Default: "XHTML2PDF: HTML/CSS to PDF converter written in Python (http://www.xhtml2pdf.com/)"
 #: ./tool.py:150
 msgid "label_pisa"
-msgstr "XHTML2PDF: HTML/CSS naar PDF omvormer geschreven in Python (http://www.xhtml2pdf.com/)"
+msgstr "XHTML2PDF: convertisseur HTML/CSS vers PDF écrit en Python (http://www.xhtml2pdf.com/)"
 
 #. Default: "Portal types using print css"
 #: ./tool.py:88
 msgid "label_print_css"
-msgstr "Typen die de printbare versie gebruiken"
+msgstr "Types de documents rendu en version imprimable"
 
 #. Default: "Always use print CSS"
 #: ./tool.py:76
 msgid "label_print_css_always"
-msgstr "Altijd de printbare versie gebruiken"
+msgstr "Toujours utiliser la version imprimable des documents"
 
 #. Default: "SALT used when hasing users' e-mails"
 #: ./tool.py:44
 msgid "label_salt"
-msgstr "Sleutel voor het versleutelen van de e-mailadressen van de gebruikers"
+msgstr "SALT utilisé lors de la transformation des adresses e-mail"
 
 #. Default: "Send"
 #: ./browser/templates/send_form.pt:204
 msgid "label_send"
-msgstr "Verzenden"
+msgstr "Envoyer"
 
 #. Default: "Mail's title"
 #: ./browser/templates/send_form.pt:117
 msgid "label_title"
-msgstr "Titel"
+msgstr "Titre de l'e-mail"
 
 #. Default: "wkhtmltopdf: Simple shell utility to convert html to pdf using the webkit (Safari, Chrome) rendering engine (http://code.google.com/p/wkhtmltopdf/)"
 #: ./tool.py:154
 msgid "label_wk"
-msgstr "wkhtmltopdf: gebruik WebKit (Safari, Chrome) om HTML naar PDF om te zetten (http://code.google.com/p/wkhtmltopdf/)"
+msgstr "wkhtmltopdf: utilitaire utilisant WebKit (Safari, Chrome) pour transformer une page web en fichier PDF (http://code.google.com/p/wkhtmltopdf/)"
 
 #. Default: "Errors appeared while processing your form"
 #: ./browser/send.py:118
 msgid "msg_error"
-msgstr "Er zijn fouten opgetreden bij het verwerken van het formulier"
+msgstr "Des erreurs sont apparues lors de la génération du fichier PDF."
 
 #. Default: "The e-mail has been sent"
 #: ./browser/send.py:114
 msgid "msg_success"
-msgstr "De e-mail is verzonden"
+msgstr "L'e-mail a été envoyé"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-08-02 07:02+0000\n"
+"POT-Creation-Date: 2010-09-16 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,13 +53,13 @@ msgid "error_empty_title"
 msgstr ""
 
 #. Default: "The file you requested does not exist."
-#: ./browser/templates/download.pt:20
+#: ./browser/templates/download.pt:16
 #: ./browser/templates/send_form.pt:154
 msgid "error_file_not_found"
 msgstr ""
 
 #. Default: "You did not specify which PDF you wanted to download"
-#: ./browser/templates/download.pt:24
+#: ./browser/templates/download.pt:20
 #: ./browser/templates/send_form.pt:144
 msgid "error_file_not_specified"
 msgstr ""
@@ -74,9 +74,9 @@ msgstr ""
 msgid "error_invalid_email"
 msgstr ""
 
-#. Default: "An error occured when generating the PDF, please try again."
-#: ./browser/templates/download.pt:16
-msgid "error_no_source"
+#. Default: "An error occured while generating the PDF file, please contact the site administrator."
+#: ./browser/templates/download.pt:24
+msgid "error_pdf_creation"
 msgstr ""
 
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
@@ -95,7 +95,7 @@ msgid "label_attachment"
 msgstr ""
 
 #. Default: "Cancel"
-#: ./browser/templates/send_form.pt:195
+#: ./browser/templates/send_form.pt:209
 msgid "label_cancel"
 msgstr ""
 
@@ -175,7 +175,7 @@ msgid "label_salt"
 msgstr ""
 
 #. Default: "Send"
-#: ./browser/templates/send_form.pt:190
+#: ./browser/templates/send_form.pt:204
 msgid "label_send"
 msgstr ""
 
@@ -190,12 +190,12 @@ msgid "label_wk"
 msgstr ""
 
 #. Default: "Errors appeared while processing your form"
-#: ./browser/send.py:115
+#: ./browser/send.py:118
 msgid "msg_error"
 msgstr ""
 
 #. Default: "The e-mail has been sent"
-#: ./browser/send.py:111
+#: ./browser/send.py:114
 msgid "msg_success"
 msgstr ""
 
