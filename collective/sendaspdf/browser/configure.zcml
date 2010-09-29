@@ -58,7 +58,7 @@
   <browser:page
       for="*"
       name="jq_get_send_as_pdf_form"
-      class=".ajax.SendFormAjax"
+      class=".ajax.SendAsPDFAjax"
       attribute="show_send_form"
       permission="zope2.View"
       />
@@ -67,8 +67,17 @@
   <browser:page
       for="*"
       name="jq_send_as_pdf"
-      class=".ajax.SendFormAjax"
+      class=".ajax.SendAsPDFAjax"
       attribute="send_mail"
+      permission="zope2.View"
+      />
+
+  <!-- Page called using Ajax to download as pdf. -->
+  <browser:page
+      for="*"
+      name="jq_download_as_pdf"
+      class=".ajax.SendAsPDFAjax"
+      attribute="download"
       permission="zope2.View"
       />
 

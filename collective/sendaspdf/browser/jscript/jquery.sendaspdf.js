@@ -25,6 +25,10 @@ jQuery(document).ready(function() {
 	    return parent;
 	}
 
+	$.fn.redirect = function(url) {
+	    window.location = url;
+	}
+
 	/* Custom simple lightbox.
 	 */
 	$.fn.send_as_pdf_lightbox = function() {
@@ -127,18 +131,27 @@ jQuery(document).ready(function() {
 	
 	/* Gets the content of the current page and sends it
 	   using pyproxy to the server so it generates the pdf. */
-	function show_send_form (e) {
+	function show_send_form(e) {
 	    e.preventDefault();
 	    $.pyproxy_call('jq_get_send_as_pdf_form',
 			   {page: get_page_source() })
 	};
+
+	function download_pdf(e) {
+	    e.preventDefault();
+	    $.pyproxy_call('jq_download_as_pdf',
+			   {page: get_page_source() })
+	};
+
 	
 	/* Bind the send_as_pdf link with a pyproxy call.
 	 * XXX - I do not like the selection based on the URL,
 	 * so if you have a solution to give an ID or at least
 	 * a CSS class to a portal_action, feel free to help :)
 	 */
-	$('.documentActions a[href*=send_as_pdf?page_url=]').live(
-	    'click', show_send_form);
+	$('.documentActions a[href*=send_as_pdf?page_url=]').click(show_send_form);
+
+	$('.documentActions a[href*=download_as_pdf?page_url=]').click(download_pdf);
+
     })(jQuery)
 });

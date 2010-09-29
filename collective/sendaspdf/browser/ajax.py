@@ -8,7 +8,7 @@ from jquery.pyproxy.base import clean_string
 from collective.sendaspdf import SendAsPDFMessageFactory as _
 from collective.sendaspdf.browser.send import SendForm
 
-class SendFormAjax(SendForm):
+class SendAsPDFAjax(SendForm):
     """ This class contains a set of methods that are called
     with jquery.pyproxy.
     """
@@ -19,13 +19,20 @@ class SendFormAjax(SendForm):
         """
         return self.request.form.get('page', '')
 
-    def _show_send_form(self):
-        form = self.request.form
-
-        jq = JQueryProxy()
+    def add_popup(self, jq):
         jq.extend_grammar({'send_as_pdf_lightbox': []});
 
-        if not 'page' in form:
+        jq('#send_as_pdf_popup').remove()
+        jq('body').append('<div id="send_as_pdf_popup"></div>')
+        jq('#send_as_pdf_popup').html(clean_string(self.index()))
+        jq('#send_as_pdf_popup').send_as_pdf_lightbox()
+
+        return jq
+
+    def _show_send_form(self):
+        jq = JQueryProxy()
+
+        if not 'page' in self.request.form:
             # This should not happen.
             return jq
 
@@ -35,10 +42,7 @@ class SendFormAjax(SendForm):
         else:
             self.index = ZopeTwoPageTemplateFile('templates/send_form.pt')
         
-        jq('#send_as_pdf_popup').remove()
-        jq('body').append('<div id="send_as_pdf_popup"></div>')
-        jq('#send_as_pdf_popup').html(clean_string(self.index()))
-        jq('#send_as_pdf_popup').send_as_pdf_lightbox()
+        jq = self.add_popup(jq)
         return jq
 
     @jquery
@@ -83,3 +87,25 @@ class SendFormAjax(SendForm):
     @jquery
     def send_mail(self):
         return self._send_mail()
+
+    def _download(self):
+        if not 'page' in self.request.form:
+            # This should not happen.
+            return jq
+        jq = JQueryProxy()
+        jq.extend_grammar({'redirect': [[str, unicode]]})
+
+        self.make_pdf()
+        if self.errors:
+            self.index = ZopeTwoPageTemplateFile('templates/ajax.pt')
+            return self.add_popup(jq)
+
+        jq('').redirect('%s/send_as_pdf_download?pdf_name=%s' % (
+            self.context.absolute_url(),
+            self.filename))
+        return jq
+
+    @jquery
+    def download(self):
+        return self._download()
+    
