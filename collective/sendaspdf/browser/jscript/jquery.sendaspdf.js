@@ -5,6 +5,8 @@
  */
 
 jQuery(document).ready(function() {
+    return;
+
     (function($) {
 	/* Plone 3 is using jQuery 1.2, so we can not use parentUntil which
 	 * was defined in jQuery 1.4.

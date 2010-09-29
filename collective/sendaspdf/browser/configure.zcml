@@ -12,8 +12,17 @@
   <browser:page
       for="*"
       name="send_as_pdf"
-      class=".send.SendForm"
+      class="Products.Five.browser.BrowserView"
       template="templates/send_page.pt"
+      permission="zope2.View"
+      />
+
+  <!-- Content of the previous page -->
+  <browser:page
+      for="*"
+      name="send_as_pdf_form"
+      class=".send.SendForm"
+      template="templates/send_form.pt"
       permission="zope2.View"
       />
 
