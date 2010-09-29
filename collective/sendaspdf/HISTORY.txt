@@ -4,6 +4,8 @@ Changelog
 1.2 (unreleased)
 ----------------
 
+- added Ajax version of the "Send as PDF" link. [vincent]
+
 - Removed the '-C' parameter. [yuri + vincent]
 
 

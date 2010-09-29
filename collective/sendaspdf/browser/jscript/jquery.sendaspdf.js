@@ -5,8 +5,6 @@
  */
 
 jQuery(document).ready(function() {
-    return;
-
     (function($) {
 	/* Plone 3 is using jQuery 1.2, so we can not use parentUntil which
 	 * was defined in jQuery 1.4.
@@ -25,6 +23,49 @@ jQuery(document).ready(function() {
 		found = (parent[0].nodeName.toLowerCase() == 'form');
 	    }
 	    return parent;
+	}
+
+	/* Custom simple lightbox.
+	 */
+	$.fn.send_as_pdf_lightbox = function() {
+	    /* Create a background */
+	    $('body').append('<div id="send_as_pdf_lighbox_background"></div>');
+	    $('#send_as_pdf_lighbox_background').css(
+		{'position': 'absolute',
+		 'z-index': '10000',
+		 'top': '0px',
+		 'left': '0px',
+		 'width': $(document).width() + 'px',
+		 'height': $(document).height() + 'px',
+		 'opacity': '0.75',
+		 'background': '#000000'}).show();
+
+	    return $(this).each(function() {
+		var element = $(this);
+
+		function close_lightbox(e) {
+		    e.preventDefault();
+		    $('#send_as_pdf_lighbox_background').hide();
+		    element.hide();
+		}
+
+		$(this).css(
+		    {'position': 'absolute',
+		     'z-index': '100001',
+		     'top': '10px',
+		     'right': (($(document).width() - 500) / 2) + 'px',
+		     'width' : '500px',
+		     'background': '#FFFFFF',
+		     'padding': '20px'});
+		     
+		element.find('input[name=form_cancelled]').click(close_lightbox);
+		element.find('a.send_as_pdf_close').live('click', close_lightbox);
+
+		element.find('input[name=form_submitted]').pyproxy(
+		    'click',
+		    'jq_send_as_pdf',
+		    '#send_as_pdf_popup');
+	    });
 	}
 
 	/* Checks all forms elements and sets their

@@ -63,4 +63,13 @@
       permission="zope2.View"
       />
 
+  <!-- Page called using Ajax that sends the mail. -->
+  <browser:page
+      for="*"
+      name="jq_send_as_pdf"
+      class=".ajax.SendFormAjax"
+      attribute="send_mail"
+      permission="zope2.View"
+      />
+
 </configure>

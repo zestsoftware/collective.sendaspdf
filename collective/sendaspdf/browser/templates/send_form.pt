@@ -13,7 +13,7 @@
     <br />
 
     <div id="error_name"
-         tal:condition="python: view.show_error_message('name')"
+         tal:attributes="class python: view.show_error_message('name') and '' or 'dont-show'"
          i18n:translate="error_empty_name">
     You have to specify your name.</div>
     
@@ -36,12 +36,12 @@
     <br />
 
     <div id="error_email"
-         tal:condition="python: view.show_error_message('email')"
+         tal:attributes="class python: view.show_error_message('email') and '' or 'dont-show'"
          i18n:translate="error_empty_email">
     You have to specify your e-mail.</div>
     
     <div id="error_email_invalid"
-         tal:condition="python: view.show_error_message('invalid_email')"
+         tal:attributes="class python: view.show_error_message('invalid_email') and '' or 'dont-show'"
          i18n:translate="error_invalid_email">
     This e-mail address is not valid.</div>
     
@@ -61,7 +61,7 @@
     <br />
 
     <div id="error_name_recipient"
-         tal:condition="python: view.show_error_message('name_recipient')"
+         tal:attributes="class python: view.show_error_message('name_recipient') and '' or 'dont-show'"
          i18n:translate="error_empty_name_recipient">
     You have to specify the recipient's name.</div>
     
@@ -84,12 +84,12 @@
     <br />
 
     <div id="error_email_recipient"
-         tal:condition="python: view.show_error_message('email_recipient')"
+         tal:attributes="class python: view.show_error_message('email_recipient') and '' or 'dont-show'"
          i18n:translate="error_empty_email_recipient">
     You have to specify the recipient's e-mail.</div>
     
-    <div id="error_email_recipient_invalid"
-         tal:condition="python: view.show_error_message('invalid_email_recipient')"
+    <div id="error_invalid_email_recipient"
+         tal:attributes="class python: view.show_error_message('invalid_email_recipient') and '' or 'dont-show'"
          i18n:translate="error_invalid_email">
     This e-mail is not valid.</div>
     
@@ -109,7 +109,7 @@
     <br />
 
     <div id="error_title"
-         tal:condition="python: view.show_error_message('title')"
+         tal:attributes="class python: view.show_error_message('title') and '' or 'dont-show'"
          i18n:translate="error_empty_title">
     You have to specify a title for the e-mail.</div>
     
@@ -128,17 +128,17 @@
            tal:attributes="value values/pdf_name" />
 
     <div id="error_attachment_not_specified"
-         tal:condition="python: view.show_error_message('file_not_specified')"
+         tal:attributes="class python: view.show_error_message('file_not_specified') and '' or 'dont-show'"
          i18n:translate="error_file_not_specified">
     There is not attachment reference provided.</div>
 
     <div id="error_attachment_unauthorized"
-         tal:condition="python: view.show_error_message('file_unauthorized')"
+         tal:attributes="class python: view.show_error_message('file_unauthorized') and '' or 'dont-show'"
          i18n:translate="error_file_unauthorized">
     You do not have the right to access this file.</div>
 
     <div id="error_attachment_not_found"
-         tal:condition="python: view.show_error_message('file_not_found')"
+         tal:attributes="class python: view.show_error_message('file_not_found') and '' or 'dont-show'"
          i18n:translate="error_file_not_found">
     The attachment can not be found.</div>
 
@@ -162,7 +162,7 @@
     <br />
 
     <div id="error_content"
-         tal:condition="python: view.show_error_message('content')"
+         tal:attributes="class python: view.show_error_message('content') and '' or 'dont-show'"
          i18n:translate="error_empty_content">
     You have to specify a body for the e-mail.</div>
     

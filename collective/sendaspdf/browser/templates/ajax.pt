@@ -1,0 +1,17 @@
+<tal:block i18n:domain="collective.sendaspdf">
+  <div tal:condition="view/errors">
+    <p i18n:translate="error_pdf_creation">
+    An error occured while generating the PDF file, please contact the site administrator.</p>
+
+    <a href="#"
+       class="send_as_pdf_close"
+       i18n:translate="msg_close">Click here to close</a>
+  </div>
+
+  <div tal:condition="not: view/errors">
+    <p i18n:translate="msg_success"></p>
+    <a href="#"
+       class="send_as_pdf_close"
+       i18n:translate="msg_close">Click here to close</a>
+  </div>
+</tal:block>
