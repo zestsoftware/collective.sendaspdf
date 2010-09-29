@@ -13,7 +13,7 @@
       for="*"
       name="send_as_pdf"
       class=".send.SendForm"
-      template="templates/send_form.pt"
+      template="templates/send_page.pt"
       permission="zope2.View"
       />
 
