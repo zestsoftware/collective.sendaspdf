@@ -87,6 +87,10 @@ class BaseView(BrowserView):
         that the URL of the page is contained in the form under
         the 'page_url' key.
         """
+        if not 'page_url' in self.request.form:
+            self.errors.append('no_source')
+            return
+
         url = self.request.form['page_url']
         context_url = self.context.absolute_url()
 
@@ -166,10 +170,8 @@ class BaseView(BrowserView):
     def make_pdf(self):
         """ Fetches the page source and generates a PDF.
         """
-        if not 'page_url' in self.request.form:
-            self.errors.append('no_source')
-        else:
-            source = self.get_page_source()
+        source = self.get_page_source()
+        if not self.errors:
             self.generate_pdf_file(source)
 
     def show_error_message(self, error_name):

@@ -44,4 +44,14 @@
       permission="zope2.View"
       />
 
+  <!-- Page called using Ajax that generates the PDF file and
+       shows the Ajax send form. -->
+  <browser:page
+      for="*"
+      name="jq_get_send_as_pdf_form"
+      class=".ajax.SendFormAjax"
+      attribute="show_send_form"
+      permission="zope2.View"
+      />
+
 </configure>
