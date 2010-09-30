@@ -32,35 +32,34 @@ jQuery(document).ready(function() {
 	/* Custom simple lightbox.
 	 */
 	$.fn.send_as_pdf_lightbox = function() {
+	    function close_lightbox(e) {
+		e.preventDefault();
+		$('#send_as_pdf_lighbox_background').hide();
+		$('#send_as_pdf_popup').remove();
+	    }
+
 	    /* Create a background */
 	    $('body').append('<div id="send_as_pdf_lighbox_background"></div>');
-	    $('#send_as_pdf_lighbox_background').css(
-		{'position': 'absolute',
-		 'z-index': '10000',
-		 'top': '0px',
-		 'left': '0px',
-		 'width': $(document).width() + 'px',
-		 'height': $(document).height() + 'px',
-		 'opacity': '0.75',
-		 'background': '#000000'}).show();
+	    $('#send_as_pdf_lighbox_background').
+		css({width: $(document).width() + 'px',
+		     height: $(document).height() + 'px',
+		    }).
+		show();
+
+	    /* Close the lightbox when hitting 'ESC' */
+	    $(document).keyup(function(e) {
+		if (e.keyCode == 27) {
+		    close_lightbox(e);
+		}
+	    });
 
 	    return $(this).each(function() {
 		var element = $(this);
 
-		function close_lightbox(e) {
-		    e.preventDefault();
-		    $('#send_as_pdf_lighbox_background').hide();
-		    element.hide();
-		}
-
-		$(this).css(
-		    {'position': 'absolute',
-		     'z-index': '100001',
-		     'top': '10px',
-		     'right': (($(document).width() - 500) / 2) + 'px',
-		     'width' : '500px',
-		     'background': '#FFFFFF',
-		     'padding': '20px'});
+		$(this).css({
+		    top: '10px',
+		    right: (($(document).width() - 500) / 2) + 'px',
+		});
 		     
 		element.find('input[name=form_cancelled]').click(close_lightbox);
 		element.find('a.send_as_pdf_close').live('click', close_lightbox);

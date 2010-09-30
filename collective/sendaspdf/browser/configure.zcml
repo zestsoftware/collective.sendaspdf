@@ -8,6 +8,11 @@
       file="jscript/jquery.sendaspdf.js"
       />
 
+  <browser:resource
+      name="sendaspdf.css"
+      file="css/sendaspdf.css"
+      />
+
   <!-- Page called when clicking on 'Send as PDF' -->
   <browser:page
       for="*"

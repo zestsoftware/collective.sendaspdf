@@ -1,0 +1,16 @@
+#send_as_pdf_lighbox_background {
+    position: absolute;
+    z-index: 10000;
+    top: 0px;
+    left: 0px;
+    opacity: 0.75;
+    background: #000000;
+}
+
+#send_as_pdf_popup {
+    position: absolute;
+    z-index: 100001;
+    width : 500px;
+    background: #FFFFFF;
+    padding: 20px;
+}
