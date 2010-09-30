@@ -60,7 +60,7 @@ class SendAsPDFAjax(SendForm):
         if not self.errors:
             self.process_form()
             self.index = ZopeTwoPageTemplateFile('templates/ajax.pt')
-            jq('#send_as_pdf_popup').html(clean_string(self.index()))
+            jq('#send_as_pdf_popup').html(clean_string(self.index(self)))
         else:
             print self.errors
             # First update the fields class.

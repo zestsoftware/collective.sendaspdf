@@ -12,7 +12,7 @@ class PreDownloadPDF(BaseView):
     def __call__(self):
         self.make_pdf()
         if self.errors:
-            return self.index()
+            return self.index(self)
 
         self.request.form['pdf_name'] = self.filename
         return self.context.restrictedTraverse('@@send_as_pdf_download')()
@@ -25,7 +25,7 @@ class DownloadPDF(BaseView):
         form = self.request.form
         self.check_pdf_accessibility()
         if self.errors:
-             return self.index()
+             return self.index(self)
 
         self.pdf_file = file('%s/%s' % (self.tempdir,
                                         form['pdf_name']),

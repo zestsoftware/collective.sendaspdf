@@ -14,3 +14,7 @@
     background: #FFFFFF;
     padding: 20px;
 }
+
+.dont-show {
+    display: none;
+}

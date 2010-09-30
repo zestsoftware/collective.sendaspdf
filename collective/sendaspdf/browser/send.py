@@ -140,4 +140,5 @@ class SendForm(BaseView):
                 # used when errors are found when sending the mail.
                 self.index = ZopeTwoPageTemplateFile('templates/download.pt')
 
-        return self.index()
+        # We need the self parameter for Plone 4
+        return self.index(self)
