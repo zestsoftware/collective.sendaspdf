@@ -24,7 +24,10 @@ class SendAsPDFAjax(SendForm):
 
         jq('#send_as_pdf_popup').remove()
         jq('body').append('<div id="send_as_pdf_popup"></div>')
-        jq('#send_as_pdf_popup').html(clean_string(self.index()))
+
+        # the self.index(self) looks really weird, but it does
+        # not work in plone 4 with just self.index().
+        jq('#send_as_pdf_popup').html(clean_string(self.index(self)))
         jq('#send_as_pdf_popup').send_as_pdf_lightbox()
 
         return jq
@@ -42,8 +45,7 @@ class SendAsPDFAjax(SendForm):
         else:
             self.index = ZopeTwoPageTemplateFile('templates/send_form.pt')
         
-        jq = self.add_popup(jq)
-        return jq
+        return self.add_popup(jq)
 
     @jquery
     def show_send_form(self):

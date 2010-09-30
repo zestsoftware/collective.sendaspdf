@@ -17,7 +17,6 @@
   <browser:page
       for="*"
       name="send_as_pdf"
-      class="Products.Five.browser.BrowserView"
       template="templates/send_page.pt"
       permission="zope2.View"
       />
