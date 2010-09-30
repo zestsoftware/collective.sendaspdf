@@ -6,6 +6,11 @@
 
 jQuery(document).ready(function() {
     (function($) {
+	if (typeof($().pyproxy) != 'function') {
+	    /* jquery.pyproxy javascript file has not been set correctly.*/
+	    return;
+	}
+
 	/* Plone 3 is using jQuery 1.2, so we can not use parentUntil which
 	 * was defined in jQuery 1.4.
 	 * This method will give an equivalent of $('bla').parentUntil('form')
