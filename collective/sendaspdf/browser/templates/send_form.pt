@@ -1,4 +1,5 @@
 <form method="POST"
+      i18n:domain="collective.sendaspdf"
       tal:define="values view/get_values"
       tal:attributes="action python: context.absolute_url() + '/send_as_pdf'">
   <div id="field_name"

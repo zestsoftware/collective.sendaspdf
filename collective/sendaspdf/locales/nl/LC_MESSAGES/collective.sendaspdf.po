@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-09-16 16:38+0000\n"
+"POT-Creation-Date: 2010-10-11 16:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,58 +23,59 @@ msgid "Send as PDF"
 msgstr "Verzenden als PDF"
 
 #. Default: "You have to specify a body for the e-mail."
-#: ./browser/templates/send_form.pt:178
+#: ./browser/templates/send_form.pt:165
 msgid "error_empty_content"
 msgstr "U moet een bericht opgeven."
 
 #. Default: "You have to specify your e-mail."
-#: ./browser/templates/send_form.pt:52
+#: ./browser/templates/send_form.pt:39
 msgid "error_empty_email"
 msgstr "U moet uw e-mailadres opgeven."
 
 #. Default: "You have to specify the recipient's e-mail."
-#: ./browser/templates/send_form.pt:100
+#: ./browser/templates/send_form.pt:87
 msgid "error_empty_email_recipient"
 msgstr "U moet een e-mailadres van de ontvanger opgeven."
 
 #. Default: "You have to specify your name."
-#: ./browser/templates/send_form.pt:29
+#: ./browser/templates/send_form.pt:16
 msgid "error_empty_name"
 msgstr "U moet uw naam opgeven."
 
 #. Default: "You have to specify the recipient's name."
-#: ./browser/templates/send_form.pt:77
+#: ./browser/templates/send_form.pt:64
 msgid "error_empty_name_recipient"
 msgstr "U moet de naam van de ontvanger opgeven."
 
 #. Default: "You have to specify a title for the e-mail."
-#: ./browser/templates/send_form.pt:125
+#: ./browser/templates/send_form.pt:112
 msgid "error_empty_title"
 msgstr "U moet een titel opgeven."
 
 #. Default: "The file you requested does not exist."
 #: ./browser/templates/download.pt:16
-#: ./browser/templates/send_form.pt:154
+#: ./browser/templates/send_form.pt:141
 msgid "error_file_not_found"
 msgstr "Het opgevraagde bestand bestaat niet."
 
 #. Default: "You did not specify which PDF you wanted to download"
 #: ./browser/templates/download.pt:20
-#: ./browser/templates/send_form.pt:144
+#: ./browser/templates/send_form.pt:131
 msgid "error_file_not_specified"
 msgstr "U heeft niet opgegeven welke PDF u wilt downloaden."
 
 #. Default: "You do not have the right to access this file."
-#: ./browser/templates/send_form.pt:149
+#: ./browser/templates/send_form.pt:136
 msgid "error_file_unauthorized"
 msgstr "U heeft niet het recht om dit bestand te bekijken."
 
 #. Default: "This e-mail address is not valid."
-#: ./browser/templates/send_form.pt:57
+#: ./browser/templates/send_form.pt:44
 msgid "error_invalid_email"
 msgstr "Dit e-mailadres is niet geldig."
 
 #. Default: "An error occured while generating the PDF file, please contact the site administrator."
+#: ./browser/templates/ajax.pt:3
 #: ./browser/templates/download.pt:24
 msgid "error_pdf_creation"
 msgstr "Er is een fout opgetreden tijdens het maken van de PDF, neem contact op met Websitebeheerder."
@@ -90,32 +91,32 @@ msgid "help_print_css_always"
 msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebruikt)"
 
 #. Default: "Attachments"
-#: ./browser/templates/send_form.pt:139
+#: ./browser/templates/send_form.pt:126
 msgid "label_attachment"
 msgstr "Bijlagen"
 
 #. Default: "Cancel"
-#: ./browser/templates/send_form.pt:209
+#: ./browser/templates/send_form.pt:193
 msgid "label_cancel"
 msgstr "Annuleren"
 
 #. Default: "Click here to preview the file"
-#: ./browser/templates/send_form.pt:163
+#: ./browser/templates/send_form.pt:150
 msgid "label_click_here_to_download"
 msgstr "Klik hier voor een voorbeeld"
 
 #. Default: "Mail's body"
-#: ./browser/templates/send_form.pt:170
+#: ./browser/templates/send_form.pt:157
 msgid "label_content"
 msgstr "Bericht"
 
 #. Default: "Your e-mail"
-#: ./browser/templates/send_form.pt:44
+#: ./browser/templates/send_form.pt:31
 msgid "label_email_address"
 msgstr "Uw e-mailadres"
 
 #. Default: "Recipient's e-mail"
-#: ./browser/templates/send_form.pt:92
+#: ./browser/templates/send_form.pt:79
 msgid "label_email_address_recipient"
 msgstr "E-mailadres van de ontvanger"
 
@@ -140,12 +141,12 @@ msgid "label_mail_title"
 msgstr "Standaard titel"
 
 #. Default: "Your name"
-#: ./browser/templates/send_form.pt:21
+#: ./browser/templates/send_form.pt:8
 msgid "label_name"
 msgstr "Uw naam"
 
 #. Default: "Recipient's name"
-#: ./browser/templates/send_form.pt:69
+#: ./browser/templates/send_form.pt:56
 msgid "label_name_recipient"
 msgstr "Naam van de ontvanger"
 
@@ -175,12 +176,12 @@ msgid "label_salt"
 msgstr "Sleutel voor het versleutelen van de e-mailadressen van de gebruikers"
 
 #. Default: "Send"
-#: ./browser/templates/send_form.pt:204
+#: ./browser/templates/send_form.pt:188
 msgid "label_send"
 msgstr "Verzenden"
 
 #. Default: "Mail's title"
-#: ./browser/templates/send_form.pt:117
+#: ./browser/templates/send_form.pt:104
 msgid "label_title"
 msgstr "Titel"
 
@@ -189,13 +190,19 @@ msgstr "Titel"
 msgid "label_wk"
 msgstr "wkhtmltopdf: gebruik WebKit (Safari, Chrome) om HTML naar PDF om te zetten (http://code.google.com/p/wkhtmltopdf/)"
 
+#. Default: "Click here to close"
+#: ./browser/templates/ajax.pt:6
+msgid "msg_close"
+msgstr "Klik hier om te sluiten"
+
 #. Default: "Errors appeared while processing your form"
-#: ./browser/send.py:118
+#: ./browser/send.py:135
 msgid "msg_error"
 msgstr "Er zijn fouten opgetreden bij het verwerken van het formulier"
 
 #. Default: "The e-mail has been sent"
-#: ./browser/send.py:114
+#: ./browser/send.py:131
+#: ./browser/templates/ajax.pt:12
 msgid "msg_success"
 msgstr "De e-mail is verzonden"
 
