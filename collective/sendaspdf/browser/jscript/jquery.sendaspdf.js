@@ -138,7 +138,14 @@ jQuery(document).ready(function() {
 	function show_send_form(e) {
 	    e.preventDefault();
 	    $.pyproxy_call('jq_get_send_as_pdf_form',
-			   {page: get_page_source() })
+			   {page: get_page_source() },
+			   function() {
+			       /* Load TinyMCE */
+			       if (typeof(TinyMCEConfig) != 'undefined') {
+				   var config = new TinyMCEConfig('text');
+				   config.init();
+			       }
+			   })
 	};
 
 	function download_pdf(e) {
