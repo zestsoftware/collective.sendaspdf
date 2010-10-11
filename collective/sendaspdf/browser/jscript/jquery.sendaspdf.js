@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
 		var element = $(this);
 
 		$(this).css({
-		    top: '10px',
+		    top: ($(window).scrollTop() + 10) + 'px',
 		    right: (($(document).width() - 500) / 2) + 'px',
 		});
 		     
