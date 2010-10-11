@@ -165,18 +165,15 @@
          tal:attributes="class python: view.show_error_message('content') and '' or 'dont-show'"
          i18n:translate="error_empty_content">
     You have to specify a body for the e-mail.</div>
-    
 
     <tal:comment replace="nothing">
       The tal:defines below are here so that both kupu and
       FCKeditor work.  Partly it is taken from FCKeditor.
     </tal:comment>
     <tal:block
-        define="inputname string:content;
-                inputvalue values/content;
-                default_editor context/portal_memberdata/wysiwyg_editor|string:plone_wysiwyg;
-                member python:context.portal_membership.getAuthenticatedMember();
-                editor python:member.getProperty('wysiwyg_editor', default_editor).lower();
+        define="inputname string:text;
+                inputvalue values/text;
+                editor view/get_editor;
                 portal_url context/portal_url;
                 portal context/portal_url/getPortalObject;
                 here_url context/portal_url;

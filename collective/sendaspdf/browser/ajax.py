@@ -67,7 +67,7 @@ class SendAsPDFAjax(SendForm):
             for field in ['name_recipient',
                           'email_recipient',
                           'title',
-                          'content',
+                          'text',
                           'name',
                           'email']:
 

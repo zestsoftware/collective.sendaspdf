@@ -39,7 +39,7 @@ class SendForm(BaseView):
         fields = ['name_recipient',
                   'email_recipient',
                   'title',
-                  'content']
+                  'text']
         if not user:
             fields.extend(['name', 'email'])
 
@@ -70,7 +70,7 @@ class SendForm(BaseView):
         values = {'pdf_name': self.filename}
 
         values['title'] = self.pdf_tool.mail_title
-        values['content'] = self.pdf_tool.mail_content
+        values['text'] = self.pdf_tool.mail_content
 
         if self.get_user():
             values['name'] = self.get_user_fullname()
@@ -98,9 +98,26 @@ class SendForm(BaseView):
         send_message(mfrom,
                      mto,
                      form['title'],
-                     form['content'],
+                     form['text'],
                      pdf_file,
                      self.pdf_tool.filename_in_mail)
+
+    def get_editor(self):
+        """ Get's the editor to use in the send form.
+        """
+        memberdata = getToolByName(self.context,
+                                   'portal_memberdata')
+        default_editor = memberdata.get('wysiwyg_editor', None)
+        if not default_editor:
+            default_editor = 'plone_wysiwyg'
+
+        portal_membership = getToolByName(self.context,
+                                          'portal_membership')
+        member = portal_membership.getAuthenticatedMember()
+        if member:
+            return  member.getProperty('wysiwyg_editor',
+                                       default_editor).lower()
+        return default_editor
 
     def __call__(self):
         form = self.request.form
