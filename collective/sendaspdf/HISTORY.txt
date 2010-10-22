@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2 (unreleased)
+2.0 (2010-10-22)
 ----------------
 
 - compatibility fixes with Plone4. [vincent]
