@@ -4,7 +4,8 @@ Changelog
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix in jquery.sendaspdf.js - removed one comma that was causing
+  an error in IE. [vincent]
 
 
 2.0 (2010-10-22)

@@ -47,7 +47,7 @@ jQuery(document).ready(function() {
 	    $('body').append('<div id="send_as_pdf_lighbox_background"></div>');
 	    $('#send_as_pdf_lighbox_background').
 		css({width: $(document).width() + 'px',
-		     height: $(document).height() + 'px',
+		     height: $(document).height() + 'px'
 		    }).
 		show();
 
