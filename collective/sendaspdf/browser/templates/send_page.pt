@@ -6,6 +6,9 @@
       xml:lang="en"
       lang="en"
       i18n:domain="collective.sendaspdf">
+  <metal:headslot fill-slot="head_slot">
+    <meta name="robots" content="noindex" />
+  </metal:headslot>
   <body>
     <div metal:fill-slot="main">
       <h1>

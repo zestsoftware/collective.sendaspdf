@@ -4,6 +4,8 @@ Changelog
 2.1 (unreleased)
 ----------------
 
+- also added meta tag robots:noindex on the forms. [vincent]
+
 - Added header 'X-Robots-Tag': 'noindex' in downloaded file to avoid
   having it indexed by search engines. [vincent]
 
