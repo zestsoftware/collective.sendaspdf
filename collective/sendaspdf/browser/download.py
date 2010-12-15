@@ -32,4 +32,6 @@ class DownloadPDF(BaseView):
                              'r')
         self.request.response.setHeader("Content-type",
                                         "application/pdf")
+        self.request.response.setHeader("X-Robots-Tag",
+                                        "noindex")
         return self.pdf_file.read()

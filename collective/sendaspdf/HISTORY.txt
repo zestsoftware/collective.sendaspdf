@@ -4,6 +4,9 @@ Changelog
 2.1 (unreleased)
 ----------------
 
+- Added header 'X-Robots-Tag': 'noindex' in downloaded file to avoid
+  having it indexed by search engines. [vincent]
+
 - Bugfix when sumbitting the Ajax form with TinyMCE. [vincent]
 
 
