@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1 (unreleased)
+2.1 (2010-12-15)
 ----------------
 
 - also added meta tag robots:noindex on the forms. [vincent]
