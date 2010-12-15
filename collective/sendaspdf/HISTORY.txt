@@ -4,7 +4,7 @@ Changelog
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix when sumbitting the Ajax form with TinyMCE. [vincent]
 
 
 2.0.1 (2010-11-11)

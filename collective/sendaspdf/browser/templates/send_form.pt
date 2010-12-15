@@ -152,9 +152,9 @@
     </tal:block>
   </div>
 
-  <div id="field_content"
-       tal:attributes="class python: view.class_for_field('content')">
-    <label for="content"
+  <div id="field_text"
+       tal:attributes="class python: view.class_for_field('text')">
+    <label for="text"
            i18n:translate="label_content">Mail's body</label>
     <span class="fieldRequired"
           title="Required"
@@ -162,8 +162,8 @@
           i18n:translate="title_required">(Required)</span>
     <br />
 
-    <div id="error_content"
-         tal:attributes="class python: view.show_error_message('content') and '' or 'dont-show'"
+    <div id="error_text"
+         tal:attributes="class python: view.show_error_message('text') and '' or 'dont-show'"
          i18n:translate="error_empty_content">
     You have to specify a body for the e-mail.</div>
 

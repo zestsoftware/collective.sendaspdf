@@ -11,6 +11,16 @@ jQuery(document).ready(function() {
 	    return;
 	}
 
+	function submit_send_form(e) {
+	    e.preventDefault();
+
+	    if (typeof(tinymce) != 'indefined') {
+		tinymce.EditorManager.activeEditor.save();
+	    }
+
+	    $.pyproxy_call('jq_send_as_pdf', '#send_as_pdf_popup');
+	};
+
 	/* Plone 3 is using jQuery 1.2, so we can not use parentUntil which
 	 * was defined in jQuery 1.4.
 	 * This method will give an equivalent of $('bla').parentUntil('form')
@@ -69,10 +79,8 @@ jQuery(document).ready(function() {
 		element.find('input[name=form_cancelled]').click(close_lightbox);
 		element.find('a.send_as_pdf_close').live('click', close_lightbox);
 
-		element.find('input[name=form_submitted]').pyproxy(
-		    'click',
-		    'jq_send_as_pdf',
-		    '#send_as_pdf_popup');
+		element.find('input[name=form_submitted]').live('click',
+								submit_send_form);
 	    });
 	}
 
@@ -82,7 +90,7 @@ jQuery(document).ready(function() {
 	function update_form_fields() {
 	    $('input:checked[type=checkbox]').each(function() {
 		/* Ok, this looks silly, but $(':checked').attr('checked', 'checked')
-		 * does not update the cjeck attribute.
+		 * does not update the check attribute.
 		 * jQuery is a bit too smart here...
 		 */
 		this.setAttribute('checked', 'checked');
@@ -161,8 +169,6 @@ jQuery(document).ready(function() {
 	 * a CSS class to a portal_action, feel free to help :)
 	 */
 	$('.documentActions a[href*=send_as_pdf?page_url=]').click(show_send_form);
-
 	$('.documentActions a[href*=download_as_pdf?page_url=]').click(download_pdf);
-
     })(jQuery)
 });

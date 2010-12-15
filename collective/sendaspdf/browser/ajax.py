@@ -62,7 +62,6 @@ class SendAsPDFAjax(SendForm):
             self.index = ZopeTwoPageTemplateFile('templates/ajax.pt')
             jq('#send_as_pdf_popup').html(clean_string(self.index(self)))
         else:
-            print self.errors
             # First update the fields class.
             for field in ['name_recipient',
                           'email_recipient',
