@@ -146,6 +146,7 @@
     <tal:block tal:condition="python: not 'error' in view.class_for_field('pdf_name')">
       <img src="pdf_icon.gif" alt="pdf_file" /> <span tal:content="view/filename_in_mail" /><br />
       <a class="discreet"
+         target="_blank"
          tal:attributes="href python: context.absolute_url() + '/send_as_pdf_download?pdf_name=' + values['pdf_name']">
         <span i18n:translate="label_click_here_to_download">Click here to preview the file</span>
       </a>

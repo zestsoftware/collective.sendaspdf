@@ -4,6 +4,12 @@ Changelog
 2.2 (unreleased)
 ----------------
 
+- added a target (sic :/) attributes on the link to preview the PDF so
+  it opens in a new window. That's prety ugly, but the fact is that if
+  a user clicks on the link with IE and Acrobat reader installed, it
+  will open the PDF in the same window. Hitting the 'back' button will
+  display the page without the Ajax form. [vincent]
+
 - in the Ajax popup, we do not try to initialize tinymce is an error
   happenned. [vincent]
 
