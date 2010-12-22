@@ -3,8 +3,11 @@
     z-index: 10000;
     top: 0px;
     left: 0px;
-    opacity: 0.75;
     background: #000000;
+
+    opacity: 0.75;
+    filter: alpha(opacity=50);
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 }
 
 #send_as_pdf_popup {

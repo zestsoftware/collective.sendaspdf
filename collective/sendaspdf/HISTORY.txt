@@ -4,7 +4,10 @@ Changelog
 2.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- in the Ajax popup, we do not try to initialize tinymce is an error
+  happenned. [vincent]
+
+- another IE bugfix due to an extra comma + CSS opacity fix [vincent]
 
 
 2.1 (2010-12-15)

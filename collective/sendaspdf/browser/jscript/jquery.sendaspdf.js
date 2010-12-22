@@ -73,7 +73,7 @@ jQuery(document).ready(function() {
 
 		$(this).css({
 		    top: ($(window).scrollTop() + 10) + 'px',
-		    right: (($(document).width() - 500) / 2) + 'px',
+		    right: (($(document).width() - 500) / 2) + 'px'
 		});
 		     
 		element.find('input[name=form_cancelled]').click(close_lightbox);
@@ -115,7 +115,7 @@ jQuery(document).ready(function() {
 		this.setAttribute('selected', 'selected');
 	    });
 	    
-	    /* The list of test types. */
+	    /* The list of text input. */
 	    var text_types = ['text', 'email', 'url', 'number', 'range', 'search', 'color'];
 	    for (i=0; i<text_types.length; i++) {
 		$('input[type=' + text_types[i] + ']').each(
@@ -148,6 +148,11 @@ jQuery(document).ready(function() {
 	    $.pyproxy_call('jq_get_send_as_pdf_form',
 			   {page: get_page_source() },
 			   function() {
+			       if ($('#field_text').length == 0) {
+				   /* The form did not load correctly (for example missconfiguration
+				    of wkhtmltopdf), we can not start editors.*/
+				   return;
+			       }
 			       /* Load TinyMCE */
 			       if (typeof(TinyMCEConfig) != 'undefined') {
 				   var config = new TinyMCEConfig('text');
