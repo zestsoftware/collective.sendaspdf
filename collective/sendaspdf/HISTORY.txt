@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.2 (unreleased)
-----------------
+2.1.1 (2010-12-23)
+------------------
 
 - added a target (sic :/) attributes on the link to preview the PDF so
   it opens in a new window. That's prety ugly, but the fact is that if
