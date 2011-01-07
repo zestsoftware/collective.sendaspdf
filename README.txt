@@ -97,8 +97,3 @@ For wkhtmltopdf user, two extra options are available:
  - use the print CSS for a given set of objects.
 
 xhtml2pdf always use the print CSS.
-
-TODO
-====
-
-- a buildout recipe to install wkhtmltopdf
