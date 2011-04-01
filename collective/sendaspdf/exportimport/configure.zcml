@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="collective.sendaspdf">
+
+  <adapter factory=".setuphandler.SendAsPdfToolXMLAdapter"/>
+
+
+  <genericsetup:importStep
+      name="sendaspdfconfig"
+      title="SendAsPDF configuration"
+      description="Import SendAsPDF configuration."
+      handler=".setuphandler.importProviders">
+    <depends name="componentregistry"/>
+  </genericsetup:importStep>
+
+  <genericsetup:exportStep
+      name="sendaspdfconfig"
+      title="SendAsPDF configuration"
+      description="Export SendAsPDF configuration."
+      handler=".setuphandler.exportProviders"
+      />
+
+
+</configure>

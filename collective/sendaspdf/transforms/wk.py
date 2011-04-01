@@ -29,8 +29,9 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
 
     html_file = file('%s/%s' % (export_dir, html_filename),
                      'wb')
-    html_file.write(str(safe_unicode(source).encode('ascii',
-                                                    'ignore')))
+
+    html_file.write(source)
+
     html_file.close()
 
     # Run the wkhtmltopdf command.

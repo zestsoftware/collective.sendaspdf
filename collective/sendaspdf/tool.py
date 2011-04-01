@@ -13,10 +13,14 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
 from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.document import ATDocumentSchema
-
+from zope.interface import Interface, implements
 import config
 
 from collective.sendaspdf import SendAsPDFMessageFactory as _
+
+class ISendAsPDFTool(Interface):
+    """send as pdf tool marker interface"""
+
 
 sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
     atapi.StringField(
@@ -122,7 +126,8 @@ class SendAsPDFTool(ImmutableId, ATDocument):
     """
     security = ClassSecurityInfo()
     __implements__ = ()
-
+    implements(ISendAsPDFTool)
+    
     id = 'portal_sendaspdf'
     typeDescription = "Configure send as pdf"
     typeDescMsgId = 'description_edit_sendaspdftool'
@@ -226,6 +231,7 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         self.setPDFList(pdfs)
         metadata = self._getMetadata()
         metadata['last_clean'] = now
+
 
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

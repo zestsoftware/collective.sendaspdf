@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="portal_sendaspdf" meta_type="SendAsPDFTool">
+ <property name="mail_title" value=""/>
+ <property name="filename_in_mail" value="attachment.pdf"/>
+ <property name="mail_content" value=""/>
+ <property name="print_css_types" value=""/>
+ <property name="pdf_generator" value="wk"/>
+ <property name="tempdir"
+    value="/home/mlupo/clienti/assolombarda/sito/zinstance/var"/>
+ <property name="always_print_css" value="True"/>
+ <property name="salt" value="salt_as_pdf"/>
+</object>
