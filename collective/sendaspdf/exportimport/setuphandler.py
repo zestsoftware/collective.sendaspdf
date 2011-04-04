@@ -75,9 +75,9 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
             if name in self.exportfield:
                 deserialize = self.exportfield[name][1]
                 value = deserialize(child.getAttribute('value'))
-                out[name] = value
+                out[str(name)] = value
 
-            self.context.update(**out)
+        self.context.update(**out)
 
 def importProviders(context):
     """Import actions tool.
