@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.2 (unreleased)
+2.2 (2011-04-05)
 ----------------
 
 - Fixed encoding to avoid being limitated to ASCII. [mauriziolupo]
