@@ -147,12 +147,13 @@ def send_message(mfrom, mto, subject, message, attachment, filename):
                                  subject=subject,
                                  charset=header_charset)
         else:
-            mail_host.send(message,
-                           mto=address,
-                           mfrom=mto,
-                           subject=subject,
-                           immediate=True,
-                           charset=header_charset)
+           mail_host.send(message,
+                          mto=mto,
+                          mfrom=mfrom,
+                          subject=subject,
+                          immediate=True,
+                          charset=header_charset)
+
     except (socket.error, SMTPException):
         logger.warn('Could not send email to %s with subject %s',
                     address, subject)

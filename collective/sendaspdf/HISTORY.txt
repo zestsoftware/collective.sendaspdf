@@ -4,7 +4,9 @@ Changelog
 2.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix when not using secure mail host. [Yuri]
+
+- Bugfix with wk transforms for encoding. [Khairil Yusof]
 
 
 2.2 (2011-04-05)

@@ -27,6 +27,7 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     if not html_filename:
         return None, ['no_filename_temp_html']
 
+    source = source.encode('utf8')
     html_file = file('%s/%s' % (export_dir, html_filename),
                      'wb')
 
@@ -36,12 +37,12 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
 
     # Run the wkhtmltopdf command.
     args = [wk_command,
-            'file://%s/%s' % (export_dir, html_filename),
-            '%s/%s' % (export_dir, filename),
             '--disable-javascript',
-            '--ignore-load-errors']
+            'file://%s/%s' % (export_dir, html_filename),
+            '%s/%s' % (export_dir, filename)]
+
     if use_print_css:
-        args.append('--print-media-type')
+        args.insert(2, '--print-media-type')
 
     try:
         p = subprocess.Popen(args)
