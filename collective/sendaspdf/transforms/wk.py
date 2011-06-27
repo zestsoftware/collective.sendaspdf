@@ -27,7 +27,13 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
     if not html_filename:
         return None, ['no_filename_temp_html']
 
-    source = source.encode('utf8')
+    try:
+        source = source.encode('utf8')
+    except UnicodeDecodeError:
+        # When the source is sent through Ajax, it's already decoded
+        # and causes an error here.
+        pass
+
     html_file = file('%s/%s' % (export_dir, html_filename),
                      'wb')
 

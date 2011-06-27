@@ -4,7 +4,7 @@ Changelog
 2.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix with Unicode (again) and Ajax. [vincent]
 
 
 2.3 (2011-05-25)
