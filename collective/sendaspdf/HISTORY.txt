@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.4 (unreleased)
-----------------
+2.3.1 (2011-06-27)
+------------------
 
 - Bugfix with Unicode (again) and Ajax. [vincent]
 
