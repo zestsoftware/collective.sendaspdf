@@ -34,4 +34,6 @@ class DownloadPDF(BaseView):
                                         "application/pdf")
         self.request.response.setHeader("X-Robots-Tag",
                                         "noindex")
+        disposition = 'attachment; filename="%s.pdf"' % self.context.title
+        self.request.response.addHeader('content-disposition', disposition)
         return self.pdf_file.read()
