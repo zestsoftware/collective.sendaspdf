@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<object name="portal_skins" allow_any="True" cookie_persistence="False"
+  default_skin="sendaspdf_tests_skin">
+
+ <object name="sendaspdf_tests"
+    meta_type="Filesystem Directory View"
+    directory="collective.sendaspdf:skins/sendaspdf_tests"/>
+
+ <skin-path name="sendaspdf_tests_skin"
+            remove="True" />
+ <skin-path name="sendaspdf_tests_skin" based-on="Plone Default"
+            purge="True">
+   <layer name="sendaspdf_tests"
+          insert-after="custom"/>
+ </skin-path>
+</object>

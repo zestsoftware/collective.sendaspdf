@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      xml:lang="en"
+      lang="en">
+  <body>
+    <div metal:fill-slot="main">
+      <h1>
+        <span tal:replace="here/Title|nothing"
+              class="documentFirstHeading">Title or id</span>
+      </h1>
+      
+      <form method="POST">
+        <input type="hidden" name="answer" value="42" />
+        <label>
+          Some text input:
+          <input type="text" name="text" />
+        </label>
+        <input type="submit" value="Hop" name="submit" />
+      </form>
+      
+      <br class="clear" />
+      
+      <div metal:use-macro="here/document_actions/macros/document_actions">
+        Document actions (print, sendto etc)
+      </div>
+    </div>
+  </body>
+</html>
