@@ -18,14 +18,24 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
     name = 'sendaspdftool'
 
     exportfield = {
-        'pdf_generator': (lambda x : str(x), lambda x : x),
-        'tempdir':(lambda x : str(x), lambda x : x),
-        'salt':(lambda x : str(x), lambda x : x),
-        'mail_title':(lambda x : str(x), lambda x : x),
-        'mail_content':(lambda x : str(x), lambda x : x),
-        'filename_in_mail':(lambda x : str(x), lambda x : x),
-        'always_print_css':(lambda x : str(x), lambda x : bool(x)),
-        'print_css_types':(lambda x : ';'.join(x), lambda x : tuple(x.split(';')))
+        'pdf_generator': (lambda x : str(x),
+                          lambda x : x),
+        'tempdir':(lambda x : str(x),
+                   lambda x : x),
+        'excluded_browser_attachment': (lambda x : ';'.join(x),
+                                        lambda x : tuple(x.split(';'))),
+        'salt':(lambda x : str(x),
+                lambda x : x),
+        'mail_title':(lambda x : str(x),
+                      lambda x : x),
+        'mail_content':(lambda x : str(x),
+                        lambda x : x),
+        'filename_in_mail':(lambda x : str(x),
+                            lambda x : x),
+        'always_print_css':(lambda x : str(x),
+                            lambda x : bool(x)),
+        'print_css_types':(lambda x : ';'.join(x),
+                           lambda x : tuple(x.split(';')))
         }
 
 

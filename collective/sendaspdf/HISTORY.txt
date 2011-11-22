@@ -4,6 +4,12 @@ Changelog
 2.4 (unreleased)
 ----------------
 
+- Added a setting in send as PDF tool so we can exclude some browser
+  when forcing file name. This will mainly usefull for Chrome, as this
+  one considers PDF generated with the tool as potentially harmful
+  files.
+  The same problem will certainly appear with Chromium. [vincent]
+
 - Display a file name based on the context's title when downloading
   the page. [Giacomo Spettoli]
 

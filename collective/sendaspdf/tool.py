@@ -33,6 +33,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         vocabulary = '_generatorVocabulary'
         ),
+
     atapi.StringField(
         name = 'tempdir',
         default='/tmp',
@@ -41,6 +42,23 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                     default=u'Directory where PDF files will be stored'),
             ),
         ),
+
+    atapi.LinesField(
+        name = 'excluded_browser_attachment',
+        default=[],
+        widget=atapi.LinesWidget(
+            label=_(u'label_excluded_browsersattachments',
+                    default=u'List of browsers for which PDF ' + \
+                    'filename will not be forced'),
+            description=_(u'label_help_excluded_attachments',
+                          default=u'Browsers might warn the user ' +\
+                          'that downloading the PDF might harm their computer. ' +\
+                          'You can set here a list of browser for which the system will ' + \
+                          'not force the download. We recommend to have Chrome in the list')
+            ),
+        ),
+
+
     atapi.StringField(
         name = 'salt',
         default='salt_as_pdf',
@@ -49,6 +67,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                     default=u'SALT used when hasing users\' e-mails'),
             ),
         ),
+
     atapi.StringField(
         name = 'mail_title',
         widget=atapi.StringWidget(
@@ -57,6 +76,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         schemata='mail',
         ),
+
     atapi.TextField(
         name = 'mail_content',
         widget=atapi.RichWidget(
@@ -65,6 +85,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         schemata='mail',
         ),
+
     atapi.StringField(
         name = 'filename_in_mail',
         default='screenshot.pdf',
@@ -74,6 +95,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         schemata='mail',
         ),
+
     atapi.BooleanField(
         name='always_print_css',
         widget=atapi.BooleanWidget(
@@ -86,6 +108,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         schemata='wk',
         ),
+
     atapi.LinesField(
         name='print_css_types',
         widget=atapi.LinesWidget(
@@ -232,6 +255,16 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         metadata = self._getMetadata()
         metadata['last_clean'] = now
 
+    def is_browser_excluded(self, browser_name):
+        """ Returns True if the browser id (got from
+        the user agent) falls under a rule in
+        'excluded_browser_attachment'
+        """
+        for excluded in self.excluded_browser_attachment:
+            if excluded in browser_name:
+                return True
+
+        return False
 
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

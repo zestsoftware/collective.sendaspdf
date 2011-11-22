@@ -24,6 +24,7 @@ class DownloadPDF(BaseView):
     def __call__(self):
         form = self.request.form
         self.check_pdf_accessibility()
+
         if self.errors:
              return self.index(self)
 
@@ -34,6 +35,9 @@ class DownloadPDF(BaseView):
                                         "application/pdf")
         self.request.response.setHeader("X-Robots-Tag",
                                         "noindex")
-        disposition = 'attachment; filename="%s.pdf"' % self.context.title
-        self.request.response.addHeader('content-disposition', disposition)
+
+        if not self.pdf_tool.is_browser_excluded(self.request['HTTP_USER_AGENT']):
+            disposition = 'attachment; filename="%s.pdf"' % self.context.title
+            self.request.response.setHeader('Content-Disposition', disposition)
+
         return self.pdf_file.read()

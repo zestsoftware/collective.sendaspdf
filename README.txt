@@ -97,3 +97,9 @@ For wkhtmltopdf user, two extra options are available:
  - use the print CSS for a given set of objects.
 
 xhtml2pdf always use the print CSS.
+
+Testing
+=======
+
+If you want to run the sendaspdf test suite, you need to add
+'pdfminer' in the list of eggs in the buildout.
