@@ -19,7 +19,13 @@ def display_pdf(content):
     outfp = StringIO()
     device = TextConverter(
         rsrcmgr, outfp, codec=codec, laparams=laparams)
-    process_pdf(rsrcmgr, device, fp)
+
+    try:
+        process_pdf(rsrcmgr, device, fp)
+    except:
+        print 'Unable to process the PDF file'
+        print content
+
     device.close()
 
     print '------------------'

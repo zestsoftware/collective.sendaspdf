@@ -18,6 +18,14 @@ class SendAsPDFHtmlParser(HTMLParser):
         self.in_dl_as_pdf_action = False
         self.in_send_as_pdf_action = False
 
+    def get_document_actions(self):
+        """ Returns self.document_actions but casts everything
+        to str to avoid errors in tests due to a difference
+        like u'blabla' instead of 'blabla'.
+        """
+        return [dict([(str(k), str(v)) for k, v in action.items()])
+                for action in self.document_actions]
+
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
 

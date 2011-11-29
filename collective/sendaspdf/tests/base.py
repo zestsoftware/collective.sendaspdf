@@ -1,12 +1,24 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 import doctest
 
-#from zope.testing import doctestunit
-#from zope.component import testing
 from Testing import ZopeTestCase as ztc
 
+try:
+    from Zope2.App import zcml
+except ImportError:
+    # Plone 3
+    from Products.Five import  zcml
+
+try:
+    from Testing.testbrowser import Browser
+except ImportError:
+    # Plone 3
+    from Products.Five.testbrowser import Browser
+
 import transaction
-from Products.Five import fiveconfigure, zcml
+from Products.Five import fiveconfigure
 from Products.PloneTestCase import PloneTestCase as ptc
 from Products.PloneTestCase.layer import PloneSite
 ptc.setupPloneSite()
@@ -14,13 +26,13 @@ ptc.setupPloneSite()
 from zope.component import getSiteManager
 from Acquisition import aq_base
 from Products.MailHost.interfaces import IMailHost
-from Products.PasswordResetTool.tests.utils import MockMailHost
+
 
 import collective.sendaspdf
 from collective.sendaspdf.tests.sendaspdf_parser import SendAsPDFHtmlParser
+from collective.sendaspdf.tests.utils import MockMailHost
 
-OPTIONFLAGS = (doctest.ELLIPSIS |
-               doctest.NORMALIZE_WHITESPACE)
+OPTIONFLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
 
 class SendAsPDFTestCase(ptc.FunctionalTestCase):
     # We'll use those pages taken from Wikipedia pages about Plone
@@ -29,7 +41,7 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
     # because it mixes normal and accentued characters and Japanese
     # for the use of non-latin characters.
     # (my apologies to Japanese people if I make the text sound weird
-    # by cutting it at 80 characters, I don;t really have a clue about
+    # by cutting it at 80 characters, I don't really have a clue about
     # what the text means).
     data = {'en': """
             <p>Plone is a free and open source content management system
@@ -128,7 +140,6 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
             ptc.default_password)
 
     def install_products(self):
-        from Products.Five.testbrowser import Browser
         self.browser = Browser()
 
         fiveconfigure.debug_mode = True
@@ -141,7 +152,6 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         self.addProfile('collective.sendaspdf:default')
         self.addProfile('collective.sendaspdf:tests')
         self.addProduct('collective.sendaspdf')
-
 
     def create_page(self, language):
         self.login_as_manager()
@@ -160,9 +170,9 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         """
         parser = SendAsPDFHtmlParser()
         parser.feed(self.browser.contents)
-        return parser.document_actions
+        return parser.get_document_actions()
 
-    def list_available_controls(self, form_name, before = None):
+    def list_available_controls(self, form_name, before = None, hidden=[]):
         """
         Before can be used to print something before the form
         That can be usefull for example when the first line printed
@@ -179,6 +189,9 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         for ctrl in form.mech_form.controls:
             try:
                 control = self.browser.getControl(name=ctrl.name)
+                if control.name in hidden:
+                    continue
+
                 print "%s: %s (%s)" % (control.name,
                                        control.value,
                                        control.type)

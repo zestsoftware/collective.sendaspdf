@@ -101,8 +101,12 @@ collective.sendaspdf allows some settings in the plone control panel:
 
     >>> self.browser.open('http://nohost/plone/')
     >>> self.browser.getLink('Site Setup').click()
-    >>> self.browser.url
-    'http://nohost/plone/plone_control_panel'
+
+The URL differs in Plone 3 and 4, but this should be ok to check we
+really are in the control panel:
+    >>> self.browser.url in ['http://nohost/plone/plone_control_panel',
+    ...                      'http://nohost/plone/@@overview-controlpanel']
+    True
 
     >>> 'Send as PDF' in self.browser.contents
     True
@@ -113,7 +117,8 @@ collective.sendaspdf allows some settings in the plone control panel:
 
 Now we'll check the default settings are there and correct:
 
-    >>> self.list_available_controls(form_name='edit_form')
+    >>> self.list_available_controls(form_name='edit_form',
+    ...                              hidden=['mail_content_text_format:default'])
     id: portal_sendaspdf (hidden)
     pdf_generator: ['wk'] (select)
     [<ItemControl name='pdf_generator' type='select' optionValue='pisa' selected=False>,
@@ -124,7 +129,6 @@ Now we'll check the default settings are there and correct:
     mail_title:  (text)
     mail_content_text_format: text/html (hidden)
     mail_content:  (textarea)
-    mail_content_text_format:default: text/html (hidden)
     mail_content_file: None (file)
     filename_in_mail: attachment.pdf (text)
     always_print_css:boolean: True (checkbox)
@@ -177,6 +181,7 @@ Same thing for the French page:
     ------------------
     ...
     P lone est un système de gestion de contenu Web...
+    ...considéré comme étant...
     ...
 
     >>> self.browser.headers.get('content-disposition')

@@ -79,6 +79,8 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
 
     atapi.TextField(
         name = 'mail_content',
+        default_content_type='text/html',
+        allowable_content_types=('text/html', ),
         widget=atapi.RichWidget(
             label=_(u'label_mail_content',
                     default=u'Default body of e-mails'),
@@ -260,7 +262,7 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         the user agent) falls under a rule in
         'excluded_browser_attachment'
         """
-        for excluded in self.excluded_browser_attachment:
+        for excluded in self.getExcluded_browser_attachment():
             if excluded in browser_name:
                 return True
 

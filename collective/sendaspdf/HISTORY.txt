@@ -4,7 +4,12 @@ Changelog
 2.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Bugfix when checking if the attachment name should be providen,
+  'self.excluded_browser_attachment' does not seem to work on every
+  instances, used 'self.getExcluded_browser_attachment()'
+  instead. [vincent]
+
+- Fixed test runners for Plone 4. [vincent]
 
 
 2.4 (2011-11-22)
