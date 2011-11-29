@@ -172,14 +172,13 @@
       The tal:defines below are here so that both kupu and
       FCKeditor work.  Partly it is taken from FCKeditor.
     </tal:comment>
-    <tal:block
-        define="inputname string:text;
-                inputvalue values/text;
-                editor view/get_editor;
-                portal_url context/portal_url;
-                portal context/portal_url/getPortalObject;
-                here_url context/portal_url;
-                support python: path('nocall:here/%s_wysiwyg_support|here/%s/wysiwyg_support|here/portal_skins/plone_wysiwyg/wysiwyg_support' % (editor, editor));"
+    <tal:block define="inputname string:text;
+                       inputvalue values/text;
+                       editor view/get_editor;
+                       portal_url context/portal_url;
+                       portal context/portal_url/getPortalObject;
+                       here_url context/portal_url;
+                       support python: path('nocall:here/%s_wysiwyg_support|here/%s/wysiwyg_support|here/portal_skins/plone_wysiwyg/wysiwyg_support' % (editor, editor));"
         on-error="string:$editor not installed correctly: ${error/value}">
       <metal:block use-macro="support/macros/wysiwygEditorBox" />
     </tal:block>

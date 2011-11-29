@@ -108,16 +108,25 @@ class SendForm(BaseView):
         memberdata = getToolByName(self.context,
                                    'portal_memberdata')
         default_editor = memberdata.get('wysiwyg_editor', None)
+
         if not default_editor:
-            default_editor = 'plone_wysiwyg'
+            # In Plone4, default editor is in
+            # portal_properties/site_properties/default_editor.
+            portal_props = getToolByName(self.context,
+                                         'portal_properties')
+            try:
+                default_editor = portal_props.site_properties.default_editor
+            except AttributeError:
+                default_editor = 'plone_wysiwyg'
 
         portal_membership = getToolByName(self.context,
                                           'portal_membership')
         member = portal_membership.getAuthenticatedMember()
         if member:
-            return  member.getProperty('wysiwyg_editor',
-                                       default_editor).lower()
-        return default_editor
+            member_editor = member.getProperty('wysiwyg_editor',
+                                       default_editor)
+        editor =  member_editor or default_editor
+        return editor.lower()
 
     def __call__(self):
         form = self.request.form
