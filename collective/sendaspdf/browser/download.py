@@ -1,7 +1,9 @@
 import os
-
 from AccessControl import Unauthorized
+from Products.CMFPlone.utils import normalizeString
+
 from collective.sendaspdf.browser.base import BaseView
+
 
 class PreDownloadPDF(BaseView):
     """ This page is the one called when clicking on the
@@ -21,6 +23,20 @@ class DownloadPDF(BaseView):
     """ View called when clicking the 'Click here to preview'
     link.
     """
+    def generate_pdf_name(self):
+        """ Generates the name for the PDF file.
+        If the context title does not contain non-ascii characters,
+        we'll use it.
+        Otherwise we'll rewrite it using normalize string.
+        """
+        try:
+            name = self.context.title.encode('ascii')
+        except UnicodeEncodeError:
+            name = normalizeString(self.context.title)
+
+        return '%s.pdf' % name
+
+    
     def __call__(self):
         form = self.request.form
         self.check_pdf_accessibility()
@@ -37,7 +53,7 @@ class DownloadPDF(BaseView):
                                         "noindex")
 
         if not self.pdf_tool.is_browser_excluded(self.request['HTTP_USER_AGENT']):
-            disposition = 'attachment; filename="%s.pdf"' % self.context.title
+            disposition = 'attachment; filename="%s"' % self.generate_pdf_name()
             self.request.response.setHeader('Content-Disposition', disposition)
 
         return self.pdf_file.read()

@@ -199,3 +199,20 @@ And the Japanese one:
 
     >>> self.browser.headers.get('content-disposition')
     'attachment; filename="Plone (jp).pdf"'
+
+Now the one with Cyrilic in the title:
+
+    >>> self.browser.open('http://nohost/plone/3tsdsa')
+    >>> self.browser.getLink('Download as PDF').click()
+    >>> display_pdf(self.browser.contents)
+    ------------------
+    ...
+    You are here: Home › 3цдса
+    ...
+
+
+There is a problem with setting headers containing non-ascii
+characters. So instead we use the normalized string::
+
+    >>> self.browser.headers.get('content-disposition')
+    'attachment; filename="3tsdsa.pdf"'
