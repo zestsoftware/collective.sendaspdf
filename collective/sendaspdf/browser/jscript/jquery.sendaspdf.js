@@ -163,8 +163,11 @@ jQuery(document).ready(function() {
 
 	function download_pdf(e) {
 	    e.preventDefault();
-	    $.pyproxy_call('jq_download_as_pdf',
-			   {page: get_page_source() })
+	    var base_href = $(this).attr('href').split('?')[0];
+
+	    $.pyproxy_call(
+		base_href.replace('download_as_pdf', 'jq_download_as_pdf'),
+		{page: get_page_source() });
 	};
 
 	
