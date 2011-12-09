@@ -9,7 +9,7 @@ setup(name='collective.sendaspdf',
       version=version,
       description="An open source product for Plone to download or email a " +
                   "page seen by the user as a PDF file.",
-      long_description=open("README.txt").read() + "\n" +
+      long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("collective",
                                          "sendaspdf",
                                          "HISTORY.txt")).read(),
