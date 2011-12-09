@@ -202,17 +202,22 @@ And the Japanese one:
 
 Now the one with Cyrilic in the title:
 
-    >>> self.browser.open('http://nohost/plone/3tsdsa')
+    >>> self.browser.open(self.cyrilic_title_page_url)
     >>> self.browser.getLink('Download as PDF').click()
+
+There is a problem with setting headers containing non-ascii
+characters. So instead we use the id of the page (note that the page
+id is quite different from the title, see
+collective.sendaspdf/tests/base.cfg, around line 172 for more explanations):
+
+    >>> self.cyrilic_title_page_url
+    'http://nohost/plone/cyrilic-title-page'
+
     >>> display_pdf(self.browser.contents)
     ------------------
     ...
-    You are here: Home › 3цдса
+    You are here: Home ... 3цдса
     ...
 
-
-There is a problem with setting headers containing non-ascii
-characters. So instead we use the normalized string::
-
     >>> self.browser.headers.get('content-disposition')
-    'attachment; filename="3tsdsa.pdf"'
+    'attachment; filename="cyrilic-title-page.pdf"'

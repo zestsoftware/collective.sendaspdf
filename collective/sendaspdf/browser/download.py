@@ -1,6 +1,5 @@
 import os
 from AccessControl import Unauthorized
-from Products.CMFPlone.utils import normalizeString
 
 from collective.sendaspdf.browser.base import BaseView
 
@@ -32,7 +31,7 @@ class DownloadPDF(BaseView):
         try:
             name = self.context.title.encode('ascii')
         except UnicodeEncodeError:
-            name = normalizeString(self.context.title)
+            name = self.context.id
 
         return '%s.pdf' % name
 
