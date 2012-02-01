@@ -18,7 +18,8 @@ else:
     wk_command = 'wkhtmltopdf'
     logger.warn("wkhtmltopdf path unknown, hope it's in the path")
 
-def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
+def html_to_pdf(source, export_dir, filename,
+                original_url, use_print_css, extra_options=[]):
     # First we need to store the source in a temporary
     # file.
     html_filename = find_filename(export_dir,
@@ -49,6 +50,9 @@ def html_to_pdf(source, export_dir, filename, original_url, use_print_css):
 
     if use_print_css:
         args.insert(2, '--print-media-type')
+
+    for opt in extra_options:
+        args.insert(2, opt)
 
     try:
         p = subprocess.Popen(args)

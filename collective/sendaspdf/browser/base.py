@@ -26,7 +26,7 @@ class BaseView(BrowserView):
         
         # We get the configuration from the portal_sendaspdf
         self.pdf_tool = getToolByName(self.context,
-                                    'portal_sendaspdf')
+                                      'portal_sendaspdf')
         self.tempdir = self.pdf_tool.tempdir
         self.salt = self.pdf_tool.salt
         self.pdf_generator = self.pdf_tool.pdf_generator
@@ -130,6 +130,14 @@ class BaseView(BrowserView):
         return find_filename(self.tempdir,
                              filename)
 
+    def get_extra_options(self):
+        options = []
+        for opt in ['toc', 'book']:
+            if self.request.get(opt, None) is not None:
+                options.append('--%s' % opt)
+
+        return options
+
     def generate_pdf_file(self, source):
         """ Generates a PDF file from the given source
         (string containing the HTML source of a page).
@@ -158,7 +166,8 @@ class BaseView(BrowserView):
                                                         self.tempdir,
                                                         filename,
                                                         url,
-                                                        print_css)
+                                                        print_css,
+                                                        self.get_extra_options())
         if err:
             self.errors.append('pdf_creation_failed')
             return
