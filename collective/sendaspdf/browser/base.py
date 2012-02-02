@@ -5,7 +5,7 @@ from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
 from collective.sendaspdf import transforms
-from collective.sendaspdf.utils import find_filename
+from collective.sendaspdf.utils import find_filename, update_relative_url
 
 from collective.sendaspdf.utils import md5_hash
 from collective.sendaspdf.utils import extract_from_url
@@ -87,6 +87,7 @@ class BaseView(BrowserView):
         that the URL of the page is contained in the form under
         the 'page_url' key.
         """
+
         if not 'page_url' in self.request.form:
             self.errors.append('no_source')
             return
@@ -112,7 +113,8 @@ class BaseView(BrowserView):
         except:
             return
 
-        return view()
+        return update_relative_url(view(), self.context)
+
 
     def generate_temp_filename(self):
         """ Generates the filename used to store the PDF file.

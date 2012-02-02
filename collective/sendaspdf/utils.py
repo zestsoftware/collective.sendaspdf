@@ -1,5 +1,9 @@
 import re
 import os
+import base64
+
+from Acquisition import aq_inner, aq_parent
+from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 
@@ -210,3 +214,55 @@ def find_filename(path, filename, extension='pdf'):
             return
 
     return filename + '.' + extension
+
+def update_relative_url(source, context):
+    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_\-\.\/]+)")', re.MULTILINE|re.I|re.U)
+    protocol_exp = re.compile('^(\w+:\/\/).*$')
+    image_exp = re.compile('^.*\.(jpgjpeg|gif|png)$')
+    
+    items = relative_exp.findall(source)
+    original_url = context.absolute_url()
+
+    mtool = getToolByName(context, 'portal_membership')
+    
+    for item in items:
+        attr = item[1]
+        value = item[2]
+                
+        if protocol_exp.match(value):
+            # That should not happen as ':' should not be recognized
+            # by relative_exp.
+            continue
+
+        replacment = ''
+        default_replacment = '%s="%s/%s"' % (attr, original_url, value)
+        
+        if image_exp.match(value) and attr == 'src':
+            image = context
+
+            for element in value.split('/'):
+                if element == '..':
+                    image = aq_parent(aq_inner(image))
+
+                elif element in image.contentIds():
+                    image = image[element]
+
+                else:
+                    replacment = default_replacment
+                    break
+
+            if replacment == '':
+                # We have found the image.
+                if mtool.checkPermission('View', image):              
+                    replacment = 'src="data:image/%s;base64,%s"' % (
+                        image.getImage().getFilename().split('.')[-1],
+                        base64.encodestring(image.getImageAsFile().read())
+                        )
+
+        if replacment == '':
+            replacment = default_replacment
+        
+        source = source.replace('%s="%s"' % (attr, value),
+                                replacment)
+
+    return source

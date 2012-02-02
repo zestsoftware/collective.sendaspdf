@@ -4,6 +4,9 @@ Changelog
 2.4.3 (unreleased)
 ------------------
 
+- Added utility to replace relative URL and include images as data in
+  the img tag. [vincent]
+
 - Enabled possibility to render table of contents and book style using
   GET arguments. [vincent]
 
