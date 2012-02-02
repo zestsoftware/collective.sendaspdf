@@ -30,7 +30,7 @@ class DownloadPDF(BaseView):
         """
         try:
             name = self.context.title.encode('ascii')
-        except UnicodeEncodeError:
+        except UnicodeDecodeError:
             name = self.context.id
 
         return '%s.pdf' % name
