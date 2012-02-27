@@ -134,8 +134,28 @@ class BaseView(BrowserView):
 
     def get_extra_options(self):
         options = []
+        tool_options = self.pdf_tool.make_options()
+
+        # Simple options without value.
         for opt in ['toc', 'book']:
-            if self.request.get(opt, None) is not None:
+            # Default option in the tool
+            t_val = tool_options.get(opt, False)
+            # User can specify in the download link '--no-book' for example.
+            r_noval = self.request.get('--no-%s' % opt, None)
+            # User can specify in the downloak link '--book'.
+            r_val = self.request.get(opt, None)
+            
+            if (t_val and r_noval is None) or (r_val is not None):
+                options.append('--%s' % opt)
+
+        # Options expecting a value.
+        for opt in ['margin-top','margin-bottom']:
+            # The value specified in the link will override the one specified in
+            # the tool.
+
+            value = self.request.get(opt, None) or tool_options.get(opt, None)
+            if value is not None:
+                options.append(value)
                 options.append('--%s' % opt)
 
         return options

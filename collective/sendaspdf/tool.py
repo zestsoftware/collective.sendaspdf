@@ -25,7 +25,7 @@ class ISendAsPDFTool(Interface):
 sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
     atapi.StringField(
         name = 'pdf_generator',
-        default='pisa',
+        default='wk',
         widget=atapi.SelectionWidget(
             format="select",
             label=_(u'label_pdf_generator',
@@ -125,6 +125,70 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
         ),
         schemata='wk',
     ),
+
+    atapi.BooleanField(
+        name='use_book_style',
+        widget=atapi.BooleanWidget(
+            label=_(u'label_use_book_style',
+                    default=u'Use book style'),
+            description=_(u'help_use_book_style',
+                          default=u'PDf generated will have a book ' + \
+                          'style (will override custom margins)')
+            ),
+        schemata='wk',
+        ),
+
+    atapi.BooleanField(
+        name='generate_toc',
+        widget=atapi.BooleanWidget(
+            label=_(u'label_add_toc',
+                    default=u'Add table of contents'),
+            description=_(u'help_add_toc',
+                          default=u'A table of contents will be ' + \
+                          'prepended to the generated files.')
+            ),
+        schemata='wk',
+        ),
+
+    atapi.IntegerField(
+        name='margin_top',
+        default = 10,
+        widget=atapi.IntegerWidget(
+            label=_(u'label_margin_top',
+                    default=u'Margin top'),
+            ),
+        schemata='wk',
+        ),
+
+    atapi.IntegerField(
+        name='margin_right',
+        default = 10,
+        widget=atapi.IntegerWidget(
+            label=_(u'label_margin_right',
+                    default=u'Margin right'),
+            ),
+        schemata='wk',
+        ),
+
+    atapi.IntegerField(
+        name='margin_bottom',
+        default = 10,
+        widget=atapi.IntegerWidget(
+            label=_(u'label_margin_bottom',
+                    default=u'Margin bottom'),
+            ),
+        schemata='wk',
+        ),
+
+    atapi.IntegerField(
+        name='margin_left',
+        default = 10,
+        widget=atapi.IntegerWidget(
+            label=_(u'label_margin_left',
+                    default=u'Margin left'),
+            ),
+        schemata='wk',
+        ),
 
 ))
 
@@ -268,5 +332,18 @@ class SendAsPDFTool(ImmutableId, ATDocument):
 
         return False
 
+    def make_options(self):
+        """ Returns a dictionnary of options that can be used in
+        the tool.
+        """
+        if self.pdf_generator == 'pisa':
+            return {}
+
+        return {'book': self.use_book_style,
+                'toc': self.generate_toc,
+                'margin-top': self.margin_top,
+                'margin-right': self.margin_right,
+                'margin-bottom': self.margin_bottom,
+                'margin-left': self.margin_left}
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

@@ -39,7 +39,6 @@ def html_to_pdf(source, export_dir, filename,
                      'wb')
 
     html_file.write(source)
-
     html_file.close()
 
     # Run the wkhtmltopdf command.
