@@ -254,9 +254,17 @@ def update_relative_url(source, context):
             if replacment == '':
                 # We have found the image.
                 if mtool.checkPermission('View', image):
+                    try:
+                        filetype = image.getImage().getFilename().split('.')[-1]
+                        content = image.getImageAsFile().read()
+                    except AttributeError:
+                        # that's an image in the skin folder.
+                        filetype = image.filename.split('.')[-1]
+                        content = image._readFile(False)
+                        
                     replacment = 'src="data:image/%s;base64,%s"' % (
-                        image.getImage().getFilename().split('.')[-1],
-                        base64.encodestring(image.getImageAsFile().read())
+                        filetype,
+                        base64.encodestring(content)
                         )
 
         if replacment == '':
