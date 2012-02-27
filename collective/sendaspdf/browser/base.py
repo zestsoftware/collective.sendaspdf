@@ -136,6 +136,7 @@ class BaseView(BrowserView):
     def get_extra_options(self):
         options = []
         tool_options = self.pdf_tool.make_options()
+
         try:
             adapter = ISendAsPDFOptionsMaker(self.pdf_tool)
         except TypeError:
@@ -144,7 +145,7 @@ class BaseView(BrowserView):
             adapter = None
 
         if adapter is not None:
-            adapter_options = getOptions(self.context)
+            adapter_options = adapter.getOptions(self.context)
         else:
             adapter_options = {}
 
@@ -174,6 +175,7 @@ class BaseView(BrowserView):
             value = self.request.get(opt, None) \
                     or tool_options.get(opt, None) \
                     or adapter_options.get(opt, None)
+
             if value is not None:
                 options.append(str(value))
                 options.append('--%s' % opt)
