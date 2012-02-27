@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from zope.i18n import translate
 from AccessControl import Unauthorized
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent
@@ -339,11 +340,16 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         if self.pdf_generator == 'pisa':
             return {}
 
+        toc_msg = _(u'label_toc',
+                    default = u'Table of content')
+
         return {'book': self.use_book_style,
                 'toc': self.generate_toc,
                 'margin-top': self.margin_top,
                 'margin-right': self.margin_right,
                 'margin-bottom': self.margin_bottom,
-                'margin-left': self.margin_left}
+                'margin-left': self.margin_left,
+                'toc-header-text': translate(toc_msg,
+                                             context = self.REQUEST)}
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

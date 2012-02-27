@@ -149,13 +149,13 @@ class BaseView(BrowserView):
                 options.append('--%s' % opt)
 
         # Options expecting a value.
-        for opt in ['margin-top','margin-bottom']:
+        for opt in ['margin-top','margin-bottom', 'margin-left', 'margin-right', 'toc-header-text']:
             # The value specified in the link will override the one specified in
             # the tool.
 
             value = self.request.get(opt, None) or tool_options.get(opt, None)
             if value is not None:
-                options.append(value)
+                options.append(str(value))
                 options.append('--%s' % opt)
 
         return options
