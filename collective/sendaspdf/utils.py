@@ -224,7 +224,7 @@ def update_relative_url(source, context):
     original_url = context.absolute_url()
 
     mtool = getToolByName(context, 'portal_membership')
-    
+
     for item in items:
         attr = item[1]
         value = item[2]
@@ -243,17 +243,17 @@ def update_relative_url(source, context):
             for element in value.split('/'):
                 if element == '..':
                     image = aq_parent(aq_inner(image))
+                    continue
 
-                elif element in image.contentIds():
-                    image = image[element]
-
-                else:
+                try:
+                    image = getattr(image, element)
+                except AttributeError:
                     replacment = default_replacment
-                    break
+                    break                   
 
             if replacment == '':
                 # We have found the image.
-                if mtool.checkPermission('View', image):              
+                if mtool.checkPermission('View', image):
                     replacment = 'src="data:image/%s;base64,%s"' % (
                         image.getImage().getFilename().split('.')[-1],
                         base64.encodestring(image.getImageAsFile().read())
@@ -261,7 +261,7 @@ def update_relative_url(source, context):
 
         if replacment == '':
             replacment = default_replacment
-        
+
         source = source.replace('%s="%s"' % (attr, value),
                                 replacment)
 
