@@ -16,17 +16,6 @@ class BaseView(BrowserView):
     """
     error_mapping = {}
 
-    # Boolean options, do not expect any value.
-    simple_options = ['toc', 'book']
-
-    # Options for which we have to specify a value.
-    valued_options = ['margin-top','margin-bottom', 'margin-left', 'margin-right',
-                      'header-font-name', 'header-html', 'header-font-size', 'header-spacing',
-                      'header-left', 'header-center','header-right', 
-                      'footer-font-name', 'footer-html', 'footer-font-size', 'footer-spacing',
-                      'footer-left', 'footer-center','footer-right', 
-                      'toc-header-text', 'cover']
-
     def __init__(self, *args, **kwargs):
         """ We just need to define some instance variables.
         """
@@ -147,7 +136,12 @@ class BaseView(BrowserView):
         options = []
         tool_options = self.pdf_tool.make_options()
 
-        for opt in self.simple_options:
+        try:
+            transform_module = getattr(transforms, self.pdf_generator)
+        except AttributeError:
+            return options
+
+        for opt in transform_module.simple_options:
             # Default option in the tool
             t_val = tool_options.get(opt, False)
             # User can specify in the download link '--no-book' for example.
@@ -158,7 +152,7 @@ class BaseView(BrowserView):
             if (t_val and r_noval is None) or (r_val is not None):
                 options.append('--%s' % opt)
 
-        for opt in self.valued_options:
+        for opt in transform_module.valued_options:
             # The value specified in the link will override the one specified in
             # the tool.
             value = self.request.get(opt, None) or tool_options.get(opt, None)
