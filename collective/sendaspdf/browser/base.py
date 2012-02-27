@@ -9,6 +9,7 @@ from collective.sendaspdf.utils import find_filename, update_relative_url
 
 from collective.sendaspdf.utils import md5_hash
 from collective.sendaspdf.utils import extract_from_url
+from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
 
 class BaseView(BrowserView):
     """ Class used to factorize some code for the different views
@@ -135,6 +136,17 @@ class BaseView(BrowserView):
     def get_extra_options(self):
         options = []
         tool_options = self.pdf_tool.make_options()
+        try:
+            adapter = ISendAsPDFOptionsMaker(self.pdf_tool)
+        except TypeError:
+            # There's no product implementing the adapter
+            # available.
+            adapter = None
+
+        if adapter is not None:
+            adapter_options = getOptions(self.context)
+        else:
+            adapter_options = {}
 
         try:
             transform_module = getattr(transforms, self.pdf_generator)
@@ -144,18 +156,24 @@ class BaseView(BrowserView):
         for opt in transform_module.simple_options:
             # Default option in the tool
             t_val = tool_options.get(opt, False)
+            # Option defined by the adapter.
+            a_val = adapter_options.get(opt, None)
             # User can specify in the download link '--no-book' for example.
             r_noval = self.request.get('--no-%s' % opt, None)
             # User can specify in the downloak link '--book'.
             r_val = self.request.get(opt, None)
             
-            if (t_val and r_noval is None) or (r_val is not None):
+            if ((t_val or a_val) and r_noval is None) or (r_val is not None):
                 options.append('--%s' % opt)
 
         for opt in transform_module.valued_options:
-            # The value specified in the link will override the one specified in
-            # the tool.
-            value = self.request.get(opt, None) or tool_options.get(opt, None)
+            # We chose with this order of importance:
+            # - request
+            # - tool
+            # - adapter
+            value = self.request.get(opt, None) \
+                    or tool_options.get(opt, None) \
+                    or adapter_options.get(opt, None)
             if value is not None:
                 options.append(str(value))
                 options.append('--%s' % opt)
