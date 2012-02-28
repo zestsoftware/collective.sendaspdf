@@ -5,8 +5,8 @@ Changelog
 ------------------
 
 - Added possibility to add an adapter that will generate default
-  options for PDF generation. Adapter should implement
-  ISendAsPDFOptionsMaker and adapter ISendAsPDFTool [vincent]
+  options for PDF generation.
+  Adapter must implement ISendAsPDFOptionsMaker. [vincent]
 
 - Added layout options when generating files with wkhtmlaspdf. Options
   available are: use book style, generate table of contents, margins.

@@ -349,7 +349,6 @@ class SendAsPDFTool(ImmutableId, ATDocument):
                 'margin-right': self.margin_right,
                 'margin-bottom': self.margin_bottom,
                 'margin-left': self.margin_left,
-                'toc-header-text': translate(toc_msg,
-                                             context = self.REQUEST)}
+                'toc-header-text': translate(toc_msg, context = self.REQUEST)}
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

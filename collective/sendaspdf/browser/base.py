@@ -133,52 +133,61 @@ class BaseView(BrowserView):
         return find_filename(self.tempdir,
                              filename)
 
-    def get_extra_options(self):
-        options = []
-        tool_options = self.pdf_tool.make_options()
-
+    def _get_adapter_options(self):
         try:
-            adapter = ISendAsPDFOptionsMaker(self.pdf_tool)
+            adapter = ISendAsPDFOptionsMaker(self.context)
         except TypeError:
             # There's no product implementing the adapter
             # available.
-            adapter = None
+            return {}, None
 
-        if adapter is not None:
-            adapter_options = adapter.getOptions(self.context)
-        else:
-            adapter_options = {}
+        return  adapter.getOptions(self.context), adapter.overrideAll()
 
+    def get_extra_options(self):
+        """ Fetches the options defined in the request, the tool
+        or an adapter.
+        """
+        # Options change depending on the pdf generator..
         try:
             transform_module = getattr(transforms, self.pdf_generator)
         except AttributeError:
-            return options
+            return []
 
-        for opt in transform_module.simple_options:
-            # Default option in the tool
-            t_val = tool_options.get(opt, False)
-            # Option defined by the adapter.
-            a_val = adapter_options.get(opt, None)
-            # User can specify in the download link '--no-book' for example.
-            r_noval = self.request.get('--no-%s' % opt, None)
-            # User can specify in the downloak link '--book'.
-            r_val = self.request.get(opt, None)
-            
-            if ((t_val or a_val) and r_noval is None) or (r_val is not None):
-                options.append('--%s' % opt)
+        options = []
+        tool_options = self.pdf_tool.make_options()
+        adapter_options, adapter_overrides = self._get_adapter_options()
 
-        for opt in transform_module.valued_options:
-            # We chose with this order of importance:
-            # - request
-            # - tool
-            # - adapter
-            value = self.request.get(opt, None) \
-                    or tool_options.get(opt, None) \
-                    or adapter_options.get(opt, None)
+        opts_order = [self.request, tool_options]
+        if adapter_overrides:
+            opts_order.insert(0, adapter_options)
+        else:
+            opts_order.append(adapter_options)
 
-            if value is not None:
-                options.append(str(value))
-                options.append('--%s' % opt)
+        # First we check the options for which no value is
+        # needed.
+        # For each one, it is possible to define a --no-xxx
+        # option.
+        for opt_name in transform_module.simple_options:
+            for opts in opts_order:
+                if opts.get('--no-%s' % opt_name):
+                    break
+
+                if opts.get(opt_name, None is not None):
+                    options.append('--%s' % opt_name)
+                    break
+        # Then we check values that expect a value.
+        for opt_name in transform_module.valued_options:
+            for opts in opts_order:
+                opt_val = opts.get(opt_name, None)
+
+                if opt_val is None:
+                    continue
+
+                # Value is put before the option name as we
+                # insert them after in another list using l.insert(2, opt)
+                options.append(str(opt_val))
+                options.append('--%s' % opt_name)  
+                break
 
         return options
 
