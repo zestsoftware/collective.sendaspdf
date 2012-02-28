@@ -221,3 +221,18 @@ collective.sendaspdf/tests/base.cfg, around line 172 for more explanations):
 
     >>> self.browser.headers.get('content-disposition')
     'attachment; filename="cyrilic-title-page.pdf"'
+
+
+4 - Relative path replacments
+-----------------------------
+
+The tool is updating the relative paths in the document's content to
+avoid dead links.
+For that, we need a bit of context.
+
+    >>> _ = self.create_folder(self.portal, 'root')
+    >>> _ = self.create_folder(self.portal['root'], 'sub_folder1')
+    >>> _ = self.create_folder(self.portal['root'], 'sub_folder2')
+    >>> _ = self.create_page('nl', title = 'Page in root', parent = self.portal['root'])
+    >>> _ = self.create_page('fr', title = 'Page in sub folder 1', parent = self.portal['root']['sub_folder1'])
+    >>> _ = self.create_page('en', title = 'Page in sub folder 2', parent = self.portal['root']['sub_folder2'])

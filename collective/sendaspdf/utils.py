@@ -4,6 +4,8 @@ import base64
 
 from Acquisition import aq_inner, aq_parent
 from Products.CMFCore.utils import getToolByName
+from Products.Archetypes.interfaces import IBaseFolder
+
 
 from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 
@@ -215,10 +217,28 @@ def find_filename(path, filename, extension='pdf'):
 
     return filename + '.' + extension
 
-def update_relative_url(source, context):
-    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_\-\.\/]+)")', re.MULTILINE|re.I|re.U)
+img_sizes = ['image', 'image_listing', 'image_icon', 'image_tile', 'image_thumb',
+             'image_mini', 'image_preview', 'image_large']
+
+def get_object_from_url(context, path):
+    obj = context
+
+    for position, element in enumerate(path):
+        if element == '..':
+            obj = aq_parent(aq_inner(obj))
+            continue
+
+        try:
+            obj = getattr(obj, element)
+        except AttributeError:
+            # The path might not be correct.
+            return obj
+    return obj   
+
+def update_relative_url(source, context):   
+    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_\-\.\/@]+)")', re.MULTILINE|re.I|re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
-    image_exp = re.compile('^.*\.(jpgjpeg|gif|png)$')
+    image_exp = re.compile('^.*\.(jpg|jpeg|gif|png)(\/(%s)\/?)?$' % '|'.join(img_sizes))
     
     items = relative_exp.findall(source)
     original_url = context.absolute_url()
@@ -234,35 +254,18 @@ def update_relative_url(source, context):
             # by relative_exp.
             continue
 
-        replacment = ''
-        default_replacment = '%s="%s/%s"' % (attr, original_url, value)
+        path = value.split('/')
+        linked_obj = get_object_from_url(context, path)
         
-        if image_exp.match(value) and attr == 'src':
-            image = context
-
-            for element in value.split('/'):
-                if element == '..':
-                    image = aq_parent(aq_inner(image))
-
-                elif element in image.contentIds():
-                    image = image[element]
-
-                else:
-                    replacment = default_replacment
-                    break
-
-            if replacment == '':
-                # We have found the image.
-                if mtool.checkPermission('View', image):              
-                    replacment = 'src="data:image/%s;base64,%s"' % (
-                        image.getImage().getFilename().split('.')[-1],
-                        base64.encodestring(image.getImageAsFile().read())
-                        )
-
-        if replacment == '':
-            replacment = default_replacment
-        
+        # if image_exp.match(value) and attr == 'src':
+        #     if  is not None:
+        #         # We have found the image.
+        #         if mtool.checkPermission('View', image):              
+        #             replacment = 'src="data:image/%s;base64,%s"' % (
+        #                 image.getImage().getFilename().split('.')[-1],
+        #                 base64.encodestring(image.getImageAsFile().read())
+        #                 )
         source = source.replace('%s="%s"' % (attr, value),
-                                replacment)
+                                '%s=%s' % (attr, linked_obj.absolute_url()))
 
     return source

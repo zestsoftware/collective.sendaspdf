@@ -7,6 +7,7 @@ from jquery.pyproxy.base import clean_string
 
 from collective.sendaspdf import SendAsPDFMessageFactory as _
 from collective.sendaspdf.browser.send import SendForm
+from collective.sendaspdf.utils import update_relative_url
 
 class SendAsPDFAjax(SendForm):
     """ This class contains a set of methods that are called
@@ -17,7 +18,8 @@ class SendAsPDFAjax(SendForm):
         """ We override the get_page_source has this is
         sent by the ajax request.
         """
-        return self.request.form.get('page', '')
+        return update_relative_url(self.request.form.get('page', ''),
+                                   self.context)
 
     def add_popup(self, jq):
         jq.extend_grammar({'send_as_pdf_lightbox': []});

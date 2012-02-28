@@ -153,9 +153,19 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         self.addProfile('collective.sendaspdf:tests')
         self.addProduct('collective.sendaspdf')
 
-    def create_page(self, language, title = None):
+    def create_folder(self, parent, title):
         self.login_as_manager()
-        self.browser.open('http://nohost/plone/createObject?type_name=Document')
+        self.browser.open('%s/createObject?type_name=Folder' % parent.absolute_url())
+        self.browser.getControl(name='title').value = title
+        self.browser.getControl(name='form.button.save').click()
+        return self.browser.url
+
+    def create_page(self, language, title = None, parent = None):
+        self.login_as_manager()
+        if parent is None:
+            parent = self.portal
+
+        self.browser.open('%s/createObject?type_name=Document' % parent.absolute_url())
         if title is None:
             title = 'Plone (%s)' % language
 
