@@ -2,7 +2,7 @@ import re
 import os
 import base64
 
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_inner, aq_parent, aq_chain
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.interfaces import IBaseFolder
 
@@ -221,30 +221,50 @@ img_sizes = ['image', 'image_listing', 'image_icon', 'image_tile', 'image_thumb'
              'image_mini', 'image_preview', 'image_large']
 
 def get_object_from_url(context, path):
+    """ Returns a tuple object, view name, image size
+    """
     obj = context
 
     for position, element in enumerate(path):
         if element == '..':
-            obj = aq_parent(aq_inner(obj))
+            parent = aq_parent(aq_inner(obj))
+            if parent is not None:
+                obj = parent
             continue
 
         try:
             obj = getattr(obj, element)
         except AttributeError:
-            # The path might not be correct.
-            return obj
-    return obj   
+            # Three possibilities here:
+            # - the path is broken
+            # - the element is a view name
+            # the element defines the image size (in case of images)
+            if element in img_sizes:
+                return obj, None, element
+
+            # To test the views, we'll use the full aq_chain.
+            for ancestor in aq_chain(aq_inner(obj)):
+                try:
+                    view = ancestor.restrictedTraverse(str(element))
+                    return ancestor, element, None
+                except (AttributeError, KeyError, ):
+                    pass
+
+            # Ok, we really can't find it now.
+            return None, None, None
+
+    return obj, None, None
 
 def update_relative_url(source, context):   
-    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_\-\.\/@]+)")', re.MULTILINE|re.I|re.U)
+    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")', re.MULTILINE|re.I|re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
-    image_exp = re.compile('^.*\.(jpg|jpeg|gif|png)(\/(%s)\/?)?$' % '|'.join(img_sizes))
+    image_exp = re.compile('^.*\.(jpg|jpeg|gif|png).*$')
     
     items = relative_exp.findall(source)
     original_url = context.absolute_url()
 
     mtool = getToolByName(context, 'portal_membership')
-    
+
     for item in items:
         attr = item[1]
         value = item[2]
@@ -254,18 +274,55 @@ def update_relative_url(source, context):
             # by relative_exp.
             continue
 
+        if '?' in value:
+            # Just to make things funnier, we have get parameters...
+            split = value.split('?')
+            value = split[0]
+            get_params = '?'.join(split[1:])
+        else:
+            get_params = None
+
         path = value.split('/')
-        linked_obj = get_object_from_url(context, path)
-        
-        # if image_exp.match(value) and attr == 'src':
-        #     if  is not None:
-        #         # We have found the image.
-        #         if mtool.checkPermission('View', image):              
-        #             replacment = 'src="data:image/%s;base64,%s"' % (
-        #                 image.getImage().getFilename().split('.')[-1],
-        #                 base64.encodestring(image.getImageAsFile().read())
-        #                 )
-        source = source.replace('%s="%s"' % (attr, value),
-                                '%s=%s' % (attr, linked_obj.absolute_url()))
+
+        print 'Value: %s' % value
+        print 'Path: %s' % path
+        print 'get_params: %s' % get_params
+
+        default_replacement = '%s=%s/%s' % (attr, context.absolute_url, value)
+        if get_params:
+            default_replacement = '%s?%s' % (default_replacement, get_params)
+
+        linked_obj, view, img_size = get_object_from_url(context, path)
+        print 'Obj, view, size: %s %s %s ' % (linked_obj, view, img_size)
+
+        if linked_obj is None:
+            source = source.replace('%s="%s"' % (attr, value), default_replacement)
+            continue
+
+        replacement = '%s=%s' % (attr, linked_obj.absolute_url())
+        if view:
+            replacement += '/%s' % view
+        if get_params:
+            replacement += '?%s' % (get_params)
+
+        if image_exp.match(value) and attr == 'src':
+            if linked_obj != context and mtool.checkPermission('View', linked_obj):
+                try:
+                    filetype = linked_obj.getImage().getFilename().split('.')[-1]
+                    content = linked_obj.getImageAsFile().read()
+                except AttributeError:
+                    # that's an image in the skin folder.
+                    try:
+                        filetype = linked_obj.filename.split('.')[-1]
+                    except AttributeError:
+                        filetype = linked_obj._filepath.split('.')[-1]
+                    content = linked_obj._readFile(False)
+                        
+                replacement = 'src="data:image/%s;base64,%s"' % (
+                    filetype,
+                    base64.encodestring(content)
+                    )
+
+        source = source.replace('%s="%s"' % (attr, item[2]), replacement)
 
     return source

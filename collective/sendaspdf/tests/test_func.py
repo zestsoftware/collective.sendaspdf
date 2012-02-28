@@ -14,4 +14,9 @@ def test_suite():
                          package='collective.sendaspdf.tests',
                          optionflags=OPTIONFLAGS,
                          test_class=SendAsPDFTestCase)
-    return TestSuite((func, ))
+    adapter = ZopeDocFileSuite('adapter.txt',
+                         package='collective.sendaspdf.tests',
+                         optionflags=OPTIONFLAGS,
+                         test_class=SendAsPDFTestCase)
+
+    return TestSuite((func, adapter, ))

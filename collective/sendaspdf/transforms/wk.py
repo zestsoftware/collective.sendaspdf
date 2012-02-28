@@ -18,6 +18,24 @@ else:
     wk_command = 'wkhtmltopdf'
     logger.warn("wkhtmltopdf path unknown, hope it's in the path")
 
+simple_options = ['book', 'collate',
+                  'disable-external-links', 'disable-internal-links',
+                  'disable-pdf-compression', 'disable-smart-shrinking',
+                  'forms', 'grayscale', 'lowquality', 'no-background',
+                  'header-line', 'footer-line',
+                  'toc', 'toc-disable-back-links', 'toc-disable-links']
+                  
+valued_options = ['copies', 'cover', 'dpi',  
+                  'margin-top','margin-bottom', 'margin-left', 'margin-right',
+                  'minimum-font-size', 'orientation',
+                  'page-height', 'page-offset', 'page-size', 'page-width',
+                  'header-font-name', 'header-html', 'header-font-size', 'header-spacing',
+                  'header-left', 'header-center','header-right', 
+                  'footer-font-name', 'footer-html', 'footer-font-size', 'footer-spacing',
+                  'footer-left', 'footer-center','footer-right', 
+                  'toc-depth', 'toc-header-text']
+                  
+
 def html_to_pdf(source, export_dir, filename,
                 original_url, use_print_css, extra_options=[]):
     # First we need to store the source in a temporary
@@ -39,7 +57,6 @@ def html_to_pdf(source, export_dir, filename,
                      'wb')
 
     html_file.write(source)
-
     html_file.close()
 
     # Run the wkhtmltopdf command.

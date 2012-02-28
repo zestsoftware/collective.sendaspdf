@@ -1,6 +1,9 @@
 # Defines the html_to_pdf method using PISA:
 # http://github.com/holtwick/xhtml2pdf
 
+simple_options = []
+valued_options = []
+
 def html_to_pdf(source, export_dir, filename, original_url, use_print_css, extra_options=[]):
     # We import pisa inside the function so it does not raise
     # import exception if pisa is not installed.

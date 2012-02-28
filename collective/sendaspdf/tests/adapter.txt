@@ -1,0 +1,303 @@
+Extra configuration for sendaspdf
+=================================
+
+The most common options for PDF generation can be done by the user
+from the control panel.
+
+There is two ways to override those settings: in the request or by
+using an adapter.
+
+To test those solutions, we'll patch the base view so it prints out
+the generated options::
+
+    >>> from collective.sendaspdf.browser.base import BaseView
+    >>> def get_extra_options(self):
+    ...     opts = self._get_extra_options()
+    ...     print [x for x in reversed(opts)]
+    ...     return opts
+    >>> BaseView._get_extra_options = BaseView.get_extra_options
+    >>> BaseView.get_extra_options = get_extra_options
+
+And we set up the site's data::
+
+    >>> self.setup_data()
+
+
+Default options
+---------------
+
+If we click on a document to generate a PDF, we'll see options that
+will be sent to the transformer::
+
+    >>> self.browser.open('http://nohost/plone/plone-fr')
+    >>> self.browser.getLink('Download as PDF').click()
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10',
+     '--margin-left', '10',
+     '--margin-bottom', '10',
+     '--margin-top', '10']
+
+Those are the options defined by the user in the control panel. We can
+check that quickly::
+
+    >>> self.login_as_manager()
+    >>> self.browser.open('http://nohost/plone/portal_sendaspdf')
+    >>> self.browser.getControl(name="margin_top").value = "30"
+    >>> self.browser.getControl(name="generate_toc:boolean").value = [True]
+    >>> self.browser.getControl(name='form.button.save').click()
+
+
+And now if we click again on the download link for a page, the top
+margin will change and the option to generate a toc will be set::
+
+    >>> self.browser.open('http://nohost/plone/plone-fr')
+    >>> self.browser.getLink('Download as PDF').click()
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10',
+     '--margin-left', '10',
+     '--margin-bottom', '10',
+     '--margin-top', '30',
+     '--toc']
+
+Overriding options in the request
+---------------------------------
+
+The quickest (but not cleanest) way to override/define options is to
+set them in the link to download the PDF.
+
+There's two types of options: valued or not valued. The valued ones
+are defined in ``collective/sendaspdf/transforms/<transformer
+name>.py/valued_options::
+
+    >>> from collective.sendaspdf.transforms import wk
+    >>> wk.valued_options
+    ['copies', 'cover', 'dpi', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right',
+     'minimum-font-size', 'orientation', 'page-height', 'page-offset', 'page-size', 'page-width',
+     'header-font-name', 'header-html', 'header-font-size', 'header-spacing', 'header-left',
+     'header-center', 'header-right', 'footer-font-name', 'footer-html', 'footer-font-size',
+     'footer-spacing', 'footer-left', 'footer-center', 'footer-right', 'toc-depth', 'toc-header-text']
+
+The non-valued ones are defined in the ``simple_options`` attribute:
+
+    >>> wk.simple_options
+    ['book', 'collate', 'disable-external-links', 'disable-internal-links', 'disable-pdf-compression',
+     'disable-smart-shrinking', 'forms', 'grayscale', 'lowquality', 'no-background', 'header-line',
+     'footer-line', 'toc', 'toc-disable-back-links', 'toc-disable-links']
+
+
+First, we create a simple function to generate a link to download a
+PDF with options. Those parameters are simple GET parameters::
+
+    >>> def make_download_link(context_url, options):
+    ...     options['page_url'] = context_url
+    ...     context_url += 'download_as_pdf?'
+    ...     return context_url + '&'.join(['%s=%s' % (k, v) for k, v in options.items()])
+    >>> make_download_link('http://nohost/plone/', {'book': 1})
+    'http://nohost/plone/download_as_pdf?book=1&page_url=http://nohost/plone/'
+
+
+First we'll play with the non-valued options. If they are present in
+the request (whatever the value), they will be passed to the
+transformer::
+
+    >>> context_url = 'http://nohost/plone/front-page/'
+    >>> self.browser.open(make_download_link(context_url, {'book': 1}))
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30',
+     '--toc', '--book']
+
+
+The book option is now available. It is possible to specify an option
+named ``--no-opt`` that will delete the option if specified in the tool.
+For example if we do not want to generate a table of contents::
+
+    >>> self.browser.open(make_download_link(context_url, {'book': 1, '--no-toc': 1}))
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30',
+     '--book']
+
+
+The valued options work the same way except that the value passed in
+the request is taken into account. Here we'll override the margin-top
+specified in the tool and add a text in the footer::
+
+    >>> self.browser.open(make_download_link(context_url,
+    ...                                      {'book': 1,
+    ...                                       '--no-toc': 1,
+    ...                                       'margin-top': 12,
+    ...                                       'footer-left': 'My document footer'}))
+    ['--toc-header-text', 'Table of content',
+     '--footer-left', 'My document footer',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '12',
+     '--book']
+
+
+Adapter solution
+----------------
+
+The second solution to customize the PDF generation is to create an
+adapter implementing ISendAsPDFOptionsMaker::
+
+    >>> from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
+
+This solution generates default options depending on the context. This
+way, you can define options that will only apply to one type of
+objects in the site.
+
+For example, we want the PDF generated on the folder to have some
+custom header and footers, so we declared an adapter in
+``collective/sendaspdf/tests/folder_adapter.py``, which is registered
+in ``tests.zcml`` by adding::
+
+      <adapter factory=".tests.folder_adapter.FolderOptionsMaker" />
+
+
+Let's first check that our adapter can be called::
+
+    >>> adapter = ISendAsPDFOptionsMaker(self.portal)
+    >>> adapter
+    <collective.sendaspdf.tests.folder_adapter.FolderOptionsMaker object at ...>
+
+Adapters must define two methods:
+ - ``overrideAll`` returns a boolean telling if the settings
+   given by the adapter have to override the ones specified in the tool
+   or in the request::
+
+    >>> adapter.overrideAll()
+    False
+
+ - ``getOptions`` returns a dictionary of options that must be passed
+   to the pdf maker. 
+
+    >>> adapter.getOptions()
+    {'footer-center': 'Plone site',
+     'margin-top': 42,
+     'book': 1, '--no-toc': 1,
+     'header-center': 'This was added by a custom adapter'}
+
+
+Options given by the adapter will automatically apply when downloading
+a PDF::
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/', {}))
+    ['--toc-header-text', 'Table of content',
+     '--footer-center', 'Plone site',
+     '--header-center', 'This was added by a custom adapter',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30',
+     '--toc', '--book']
+
+As we can see, the ``margin-top`` defined in the tool was not
+overriden by the setting in our adapter. This is due to the fact the
+``overrideAll`` returns False.
+The ``--toc`` option is still present (it is defined in the tool) even
+if our adapter specifies a ``--no-toc`` option.
+
+In the same idea, it will not override an option specified in the request::
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/',
+    ...                                      {'margin-top': 12}))
+    ['--toc-header-text', 'Table of content',
+     '--footer-center', 'Plone site',
+     '--header-center', 'This was added by a custom adapter',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '12',
+     '--toc', '--book']
+
+
+If the request specifies not to use the book style, the adapter option
+will not be taken into account::
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/',
+    ...                                      {'margin-top': 12,
+    ...                                       '--no-book': 1}))
+    ['--toc-header-text', 'Table of content',
+     '--footer-center', 'Plone site',
+     '--header-center', 'This was added by a custom adapter',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '12',
+     '--toc']
+
+We'll now patch our adapter so the options it specifies will override
+the ones defined in the request or the tool::
+
+    >>> def overrideAll(self):
+    ...     return True
+    >>> from collective.sendaspdf.tests.folder_adapter import FolderOptionsMaker
+    >>> FolderOptionsMaker.overrideAll = overrideAll
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/',
+    ...                                      {'margin-top': 12,
+    ...                                       '--no-book': 1}))
+    ['--toc-header-text', 'Table of content',
+     '--footer-center', 'Plone site',
+     '--header-center', 'This was added by a custom adapter',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '42',
+     '--book']
+
+
+The ``--no-book`` option from the request was not taken into
+account as our adapter specifies that the ``book`` option must be set.
+
+The ``toc`` option from the tool was not used, as our tool specifies
+that no table of contents should be generated for folders.
+
+The ``margin-top`` option is also taken from the adapter and overrides
+the ones specified in the request and the tool.
+
+Caveats / things to remember
+----------------------------
+
+The adapter is called based on the page context, not the page source url.
+For example, if I call the page download a pdf with the portal as
+context, then the previously created adapter will be used, whatever
+the downloaded page is::
+
+    >>> self.browser.open('http://nohost/plone/download_as_pdf?page_url=http://nohost/plone/plone-fr')
+    ['--toc-header-text', 'Table of content',
+     '--footer-center', 'Plone site',
+     '--header-center', 'This was added by a custom adapter',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '42', '--book']
+
+The element downloaded as a PDF is a Document object, but the page was
+called in the portal site.
+If we do it the other way around, then the adapter will not be called::
+
+    >>> self.browser.open('http://nohost/plone/plone-fr/download_as_pdf?page_url=http://nohost/plone/')
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30',
+     '--toc']
+
+
+The order of importance for the options is:
+ - request > tool > adapter (if the adapter does not override)
+ - adapter > request > tool (if the adapter does override)
+
+
+For non-valued options, giving a value that would be evaluated as
+False will not remove it, you have to specify the ``--no-xxx`` option::
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/plone-fr/', {'toc': 0}))
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30',
+     '--toc']
+
+    >>> self.browser.open(make_download_link('http://nohost/plone/plone-fr/', {'--no-toc': 0}))
+    ['--toc-header-text', 'Table of content',
+     '--margin-right', '10', '--margin-left', '10',
+     '--margin-bottom', '10', '--margin-top', '30']
+
+
+To finish, we unpatch what we did at the beginning::
+
+    >>> BaseView.get_extra_options = BaseView._get_extra_options
+    >>> def getOptions(self):
+    ...     return {}
+    >>> FolderOptionsMaker.getOptions = getOptions

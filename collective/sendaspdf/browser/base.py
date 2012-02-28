@@ -9,6 +9,7 @@ from collective.sendaspdf.utils import find_filename, update_relative_url
 
 from collective.sendaspdf.utils import md5_hash
 from collective.sendaspdf.utils import extract_from_url
+from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
 
 class BaseView(BrowserView):
     """ Class used to factorize some code for the different views
@@ -132,11 +133,61 @@ class BaseView(BrowserView):
         return find_filename(self.tempdir,
                              filename)
 
+    def _get_adapter_options(self):
+        try:
+            adapter = ISendAsPDFOptionsMaker(self.context)
+        except TypeError:
+            # There's no product implementing the adapter
+            # available.
+            return {}, None
+
+        return  adapter.getOptions(), adapter.overrideAll()
+
     def get_extra_options(self):
+        """ Fetches the options defined in the request, the tool
+        or an adapter.
+        """
+        # Options change depending on the pdf generator..
+        try:
+            transform_module = getattr(transforms, self.pdf_generator)
+        except AttributeError:
+            return []
+
         options = []
-        for opt in ['toc', 'book']:
-            if self.request.get(opt, None) is not None:
-                options.append('--%s' % opt)
+        tool_options = self.pdf_tool.make_options()
+        adapter_options, adapter_overrides = self._get_adapter_options()
+
+        opts_order = [self.request, tool_options]
+        if adapter_overrides:
+            opts_order.insert(0, adapter_options)
+        else:
+            opts_order.append(adapter_options)
+
+        # First we check the options for which no value is
+        # needed.
+        # For each one, it is possible to define a --no-xxx
+        # option.
+        for opt_name in transform_module.simple_options:
+            for opts in opts_order:
+                if opts.get('--no-%s' % opt_name):
+                    break
+
+                if opts.get(opt_name, None is not None):
+                    options.append('--%s' % opt_name)
+                    break
+        # Then we check values that expect a value.
+        for opt_name in transform_module.valued_options:
+            for opts in opts_order:
+                opt_val = opts.get(opt_name, None)
+
+                if opt_val is None:
+                    continue
+
+                # Value is put before the option name as we
+                # insert them after in another list using l.insert(2, opt)
+                options.append(str(opt_val))
+                options.append('--%s' % opt_name)  
+                break
 
         return options
 
