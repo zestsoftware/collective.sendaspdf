@@ -284,16 +284,11 @@ def update_relative_url(source, context):
 
         path = value.split('/')
 
-        print 'Value: %s' % value
-        print 'Path: %s' % path
-        print 'get_params: %s' % get_params
-
         default_replacement = '%s=%s/%s' % (attr, context.absolute_url, value)
         if get_params:
             default_replacement = '%s?%s' % (default_replacement, get_params)
 
         linked_obj, view, img_size = get_object_from_url(context, path)
-        print 'Obj, view, size: %s %s %s ' % (linked_obj, view, img_size)
 
         if linked_obj is None:
             source = source.replace('%s="%s"' % (attr, value), default_replacement)
