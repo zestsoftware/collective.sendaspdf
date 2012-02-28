@@ -141,7 +141,7 @@ class BaseView(BrowserView):
             # available.
             return {}, None
 
-        return  adapter.getOptions(self.context), adapter.overrideAll()
+        return  adapter.getOptions(), adapter.overrideAll()
 
     def get_extra_options(self):
         """ Fetches the options defined in the request, the tool

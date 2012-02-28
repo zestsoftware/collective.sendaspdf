@@ -343,12 +343,12 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         toc_msg = _(u'label_toc',
                     default = u'Table of content')
 
-        return {'book': self.use_book_style,
-                'toc': self.generate_toc,
-                'margin-top': self.margin_top,
-                'margin-right': self.margin_right,
-                'margin-bottom': self.margin_bottom,
-                'margin-left': self.margin_left,
+        return {'book': self.getUse_book_style(),
+                'toc': self.getGenerate_toc(),
+                'margin-top': self.getMargin_top(),
+                'margin-right': self.getMargin_right(),
+                'margin-bottom': self.getMargin_bottom(),
+                'margin-left': self.getMargin_left(),
                 'toc-header-text': translate(toc_msg, context = self.REQUEST)}
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

@@ -103,6 +103,20 @@ For wkhtmltopdf user, two extra options are available:
 
 xhtml2pdf always use the print CSS.
 
+Compatibility
+=============
+
+This product has been tested with Plone 3 and Plone 4.
+
+
+For developpers
+===============
+
+You can find some extra doc in
+``collective/sendaspdf/tests.adapter.txt``. It explains how to define
+custom options in the request or with an adapter.
+
+
 Testing
 =======
 
