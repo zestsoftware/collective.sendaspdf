@@ -217,11 +217,17 @@ def find_filename(path, filename, extension='pdf'):
 
     return filename + '.' + extension
 
-img_sizes = ['image', 'image_listing', 'image_icon', 'image_tile', 'image_thumb',
-             'image_mini', 'image_preview', 'image_large']
+img_sizes = {'image': [],
+             'image_listing': [16, 16],
+             'image_icon': [32, 32],
+             'image_tile': [64, 64],
+             'image_thumb': [128, 128],
+             'image_mini': [200, 200],
+             'image_preview': [400, 400],
+             'image_large': [768, 768]}
 
 def get_object_from_url(context, path):
-    """ Returns a tuple object, view name, image size
+    """ Returns a tuple object, view name, image size, unparsed items.
     """
     obj = context
 
@@ -240,22 +246,22 @@ def get_object_from_url(context, path):
             # - the element is a view name
             # the element defines the image size (in case of images)
             if element in img_sizes:
-                return obj, None, element
+                return obj, None, element, path[position + 1:]
 
             # To test the views, we'll use the full aq_chain.
             for ancestor in aq_chain(aq_inner(obj)):
                 try:
                     view = ancestor.restrictedTraverse(str(element))
-                    return ancestor, element, None
+                    return ancestor, element, None, path[position + 1:]
                 except (AttributeError, KeyError, ):
                     pass
 
             # Ok, we really can't find it now.
-            return None, None, None
+            return None, None, None, None
 
-    return obj, None, None
+    return obj, None, None, None
 
-def update_relative_url(source, context):   
+def update_relative_url(source, context, embedded_images = True):
     relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")', re.MULTILINE|re.I|re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
     image_exp = re.compile('^.*\.(jpg|jpeg|gif|png).*$')
@@ -288,23 +294,42 @@ def update_relative_url(source, context):
         if get_params:
             default_replacement = '%s?%s' % (default_replacement, get_params)
 
-        linked_obj, view, img_size = get_object_from_url(context, path)
+        linked_obj, view, img_size, left_path = get_object_from_url(context, path)
 
         if linked_obj is None:
             source = source.replace('%s="%s"' % (attr, value), default_replacement)
             continue
 
-        replacement = '%s=%s' % (attr, linked_obj.absolute_url())
+        replacement = linked_obj.absolute_url()
         if view:
             replacement += '/%s' % view
-        if get_params:
-            replacement += '?%s' % (get_params)
 
-        if image_exp.match(value) and attr == 'src':
-            if linked_obj != context and mtool.checkPermission('View', linked_obj):
+        if image_exp.match(value) and attr == 'src' and \
+               linked_obj != context and mtool.checkPermission('View', linked_obj):
+
+            if not embedded_images:
+                replacement = '%s' % linked_obj.absolute_url()
+                if view in ['images', '@@images']:
+                    # Image integrated with Plone 4/TinyMCE.
+                    replacement += '/@@images/' + '/'.join(left_path)
+                elif img_size:
+                    replacement += '/' + image_size
+            else:
                 try:
                     filetype = linked_obj.getImage().getFilename().split('.')[-1]
                     content = linked_obj.getImageAsFile().read()
+
+                    # That's the default image (in it's full size). We'll now try to
+                    # resize it.
+                    if view in ['images', '@@images'] and left_path and 'image_%s' % left_path[-1] in img_sizes:
+                        # Plone 4
+                        img_view = linked_obj.restrictedTraverse('@@images')
+                        img_w, img_h = img_sizes['image_%s' % left_path[-1]]
+                        content = img_view.scale(height = img_h, width = img_w).data
+
+                    elif img_size:
+                        content = linked_obj.restrictedTraverse(str(img_size)).data
+
                 except AttributeError:
                     # that's an image in the skin folder.
                     try:
@@ -312,12 +337,18 @@ def update_relative_url(source, context):
                     except AttributeError:
                         filetype = linked_obj._filepath.split('.')[-1]
                     content = linked_obj._readFile(False)
-                        
-                replacement = 'src="data:image/%s;base64,%s"' % (
+
+                replacement = 'data:image/%s;base64,%s' % (
                     filetype,
                     base64.encodestring(content)
                     )
 
-        source = source.replace('%s="%s"' % (attr, item[2]), replacement)
+        if get_params:
+            replacement += '?%s' % (get_params)
+
+        replacement = '%s="%s"' % (attr, replacement)
+
+        source = source.replace('%s="%s"' % (attr, item[2]),
+                                replacement)
 
     return source
