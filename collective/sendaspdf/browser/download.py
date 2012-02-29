@@ -50,6 +50,8 @@ class DownloadPDF(BaseView):
                                         "application/pdf")
         self.request.response.setHeader("X-Robots-Tag",
                                         "noindex")
+        self.request.response.setHeader("Cache-Control",
+                                        "no-cache, must-revalidate")
 
         if not self.pdf_tool.is_browser_excluded(self.request['HTTP_USER_AGENT']):
             disposition = 'attachment; filename="%s"' % self.generate_pdf_name()
