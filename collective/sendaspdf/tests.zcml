@@ -7,8 +7,6 @@
     i18n_domain="collective.sendaspdf">
 
   <cmf:registerDirectory name="sendaspdf_tests"/>
-
-  <adapter factory=".tests.folder_adapter.FolderOptionsMaker" />
   <genericsetup:registerProfile
       name="tests"
       title="collective.sendaspdf"
