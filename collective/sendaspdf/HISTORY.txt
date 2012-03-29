@@ -20,6 +20,8 @@ Changelog
 - Enabled possibility to render table of contents and book style using
   GET arguments. [vincent]
 
+- Added Italian translation [giacomos]
+
 
 2.4.2 (2011-12-09)
 ------------------
