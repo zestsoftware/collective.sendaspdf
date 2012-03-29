@@ -174,6 +174,29 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         self.browser.getControl(name='form.button.save').click()
         return self.browser.url
 
+    def create_image(self, img_file, img_file_type, parent = None):
+        self.login_as_manager()
+        if parent is None:
+            parent = self.portal
+
+        def mydir():
+            import os.path, sys
+            if __name__ == '__main__':
+                filename = sys.argv[0]
+            else:
+                filename = __file__
+            return os.path.abspath(os.path.dirname(filename))
+
+
+        self.browser.open('%s/createObject?type_name=Image' % parent.absolute_url())
+        file_control = self.browser.getControl(name='image_file')
+        file_control.mech_control.add_file(file(mydir() +  '/' + img_file),
+                                           img_file_type,
+                                           img_file)
+        self.browser.getControl(name='form.button.save').click()
+        return self.browser.url
+
+
     def setup_data(self):
         self.install_products()
         for lang in self.data.keys():

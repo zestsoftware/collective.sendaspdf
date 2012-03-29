@@ -71,10 +71,9 @@ def decode_parameter(p):
              '60': '`'}
 
     for k in table:
-        if k == '25':
-            continue
         p = p.replace('%' + k, table[k])
     return p.replace('%25', '%')
+
 
 def extract_from_url(url, context_url):
     """ Extracts the view name and the list of get
@@ -228,6 +227,8 @@ img_sizes = {'image': [],
 
 def get_object_from_url(context, path):
     """ Returns a tuple object, view name, image size, unparsed items.
+
+    View tests/utils.txt for samples.
     """
     obj = context
 
@@ -244,7 +245,7 @@ def get_object_from_url(context, path):
             # Three possibilities here:
             # - the path is broken
             # - the element is a view name
-            # the element defines the image size (in case of images)
+            # - the element defines the image size (in case of images)
             if element in img_sizes:
                 return obj, None, element, path[position + 1:]
 
