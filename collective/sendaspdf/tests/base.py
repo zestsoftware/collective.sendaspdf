@@ -7,8 +7,10 @@ from Testing import ZopeTestCase as ztc
 
 try:
     from Zope2.App import zcml
+    is_plone_3 = False
 except ImportError:
     # Plone 3
+    is_plone_3 = True
     from Products.Five import  zcml
 
 try:
@@ -36,6 +38,8 @@ from collective.sendaspdf.emailer import su
 OPTIONFLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
 
 class SendAsPDFTestCase(ptc.FunctionalTestCase):
+    is_plone_3 = is_plone_3
+
     # We'll use those pages taken from Wikipedia pages about Plone
     # to create some pages in the system.
     # We chose english for its lack of accentued characters, french

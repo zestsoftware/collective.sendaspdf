@@ -68,10 +68,14 @@ As usual with Zope, there's some dark Acquisition magic taking effect::
 This system can also handle data existing in skin folder::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('pinkie.gif', ))
-    (<FSImage at /plone/folder1/folder1.1/a-new-page/pinkie.gif>, None, None, None)
+    (<FSImage at /plone/pinkie.gif used for /plone/folder1/folder1.1/a-new-page>, None, None, None)
+
+In Plone 3, we do not get the context of the image in the skin folder
+if this one is referenced inside a folder (that explains the ellipsis
+after the objects path) ::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'pinkie.gif', ))
-    (<FSImage at /plone/folder1/folder1.1/pinkie.gif>, None, None, None)
+    (<FSImage at /plone/pinkie.gif...>, None, None, None)
 
 
 If we link to a particular view of a link document, it will appear in
@@ -95,10 +99,15 @@ the last part of the tuple::
     (<ATDocument at /plone/folder1/folder1.2/a-new-page>, '@@send_as_pdf', None, ('more', 'things', 'after'))
 
 
-This is mailny used for images inserted in Plone 4 with TinyMCE, the
-URL is <path_to_my_image>@@images/image/thumb)::
+This is mainly used for images inserted in Plone 4 with TinyMCE, the
+URL is <path_to_my_image>@@images/image/thumb).
+The @@images view does not exist in Plone 3, that explains the ugly
+hack :/ ::
 
-    >>> utils.get_object_from_url(folder11['a-new-page'], ('blink.png', '@@images', 'image', 'thumb', ))
+    >>> if self.is_plone_3:
+    ...     print "(<ATImage at /plone/folder1/folder1.1/blink.png>, '@@images', None, ('image', 'thumb'))"
+    ... else:
+    ...     utils.get_object_from_url(folder11['a-new-page'], ('blink.png', '@@images', 'image', 'thumb', ))
     (<ATImage at /plone/folder1/folder1.1/blink.png>, '@@images', None, ('image', 'thumb'))
 
 

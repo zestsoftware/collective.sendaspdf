@@ -2,10 +2,11 @@ import re
 import os
 import base64
 
+from zExceptions import Unauthorized
 from Acquisition import aq_inner, aq_parent, aq_chain
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.interfaces import IBaseFolder
-
+from Products.Five import BrowserView
 
 from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 
@@ -246,15 +247,34 @@ def get_object_from_url(context, path):
             # - the path is broken
             # - the element is a view name
             # - the element defines the image size (in case of images)
+
             if element in img_sizes:
                 return obj, None, element, path[position + 1:]
+
+            try:
+                # We sometimes have the problem with Plone 3 where
+                # Acquisition seems to not have an effect on getattr
+                # or something like that ...
+                obj = getattr(aq_parent(obj), element)
+                continue
+            except AttributeError:
+                pass
 
             # To test the views, we'll use the full aq_chain.
             for ancestor in aq_chain(aq_inner(obj)):
                 try:
                     view = ancestor.restrictedTraverse(str(element))
-                    return ancestor, element, None, path[position + 1:]
-                except (AttributeError, KeyError, ):
+                    if isinstance(view, BrowserView):
+                        return ancestor, element, None, path[position + 1:]
+
+                    # Ho, Plone 3 again. An object in the skin folder can not be
+                    # accessed via getattr (when in a folder, works when in a document ...).
+                    obj = view
+                    if position == len(path) - 1:
+                        return obj, None, None, None
+                    continue
+
+                except (Unauthorized, AttributeError, KeyError, ):
                     pass
 
             # Ok, we really can't find it now.
