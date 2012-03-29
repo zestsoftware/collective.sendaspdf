@@ -15,12 +15,25 @@ the generated options::
     ...     opts = self._get_extra_options()
     ...     print [x for x in reversed(opts)]
     ...     return opts
+
     >>> BaseView._get_extra_options = BaseView.get_extra_options
     >>> BaseView.get_extra_options = get_extra_options
 
 And we set up the site's data::
 
     >>> self.setup_data()
+
+
+We can not declare our adapter in 'tests.zcml' as it's not recognized
+when running the full test suite::
+
+    >>> try:
+    ...     from Zope2.App import zcml
+    ... except ImportError:
+    ...     from Products.Five import  zcml
+
+    >>> import collective.sendaspdf
+    >>> zcml.load_config('tests_adapter.zcml', collective.sendaspdf)
 
 
 Default options

@@ -8,10 +8,13 @@ First step, we have to set up the system:
 
     >>> self.setup_data()
 
-Let's first test if our pages are there:
+Let's first test if our pages are there (there is some problems with
+Plone 3 when displaying the 'folder_contents' view due to the page
+containing non-ascii characters in the title, so we use the
+folder_listing view)::
 
     >>> self.login_as_manager()
-    >>> self.browser.open('http://nohost/plone/folder_contents')
+    >>> self.browser.open('http://nohost/plone/selectViewTemplate?templateId=folder_listing')
     >>> ['Plone (%s)' % lang in self.browser.contents for lang in self.data.keys()]
     [True, True, True]
 
@@ -23,6 +26,13 @@ And if they contain what they are supposed to contain:
     True
     True
     True
+
+We switch back to the default view for the home page::
+
+    >>> self.browser.open('http://nohost/plone/select_default_page')
+    >>> self.browser.getControl(name='objectId').value = ['front-page']
+    >>> self.browser.getControl(name='form.button.Save').click()
+
 
 Ok, now we can test that we can send those pages as PDF.
 
