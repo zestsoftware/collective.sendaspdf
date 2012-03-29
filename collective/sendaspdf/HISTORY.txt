@@ -4,6 +4,8 @@ Changelog
 2.4.3 (unreleased)
 ------------------
 
+- Fixed generating pdf name [kroman0]
+
 - Added possibility to add an adapter that will generate default
   options for PDF generation.
   Adapter must implement ISendAsPDFOptionsMaker. [vincent]
