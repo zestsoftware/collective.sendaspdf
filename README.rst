@@ -107,7 +107,7 @@ Compatibility
 =============
 
 This product has been tested with Plone 3 and Plone 4.
-After vesion 2.5 (*well, starting at 2.6), we'll only ensure
+After version 2.5 (*well, starting at 2.6*), we'll only ensure
 compatibility with Plone 4 (at least in the tests).
 
 
