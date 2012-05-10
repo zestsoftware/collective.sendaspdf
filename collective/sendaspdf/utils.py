@@ -315,7 +315,8 @@ def update_relative_url(source, context, embedded_images = True):
 
         path = value.split('/')
 
-        default_replacement = '%s=%s/%s' % (attr, context.absolute_url(), value)
+        portal_path = getMultiAdapter((context, context.REQUEST), name="plone_portal_state").portal().absolute_url()
+        default_replacement = '%s=%s/%s' % (attr, portal_path, value)
         if get_params:
             default_replacement = '%s?%s' % (default_replacement, get_params)
 
