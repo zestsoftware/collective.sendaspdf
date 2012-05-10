@@ -4,6 +4,9 @@ import base64
 
 from zExceptions import Unauthorized
 from Acquisition import aq_inner, aq_parent, aq_chain
+
+from zope.component import getMultiAdapter
+
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.interfaces import IBaseFolder
 from Products.Five import BrowserView
@@ -282,6 +285,7 @@ def get_object_from_url(context, path):
 
     return obj, None, None, None
 
+
 def update_relative_url(source, context, embedded_images = True):
     relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")', re.MULTILINE|re.I|re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
@@ -311,7 +315,7 @@ def update_relative_url(source, context, embedded_images = True):
 
         path = value.split('/')
 
-        default_replacement = '%s=%s/%s' % (attr, context.absolute_url, value)
+        default_replacement = '%s=%s/%s' % (attr, context.absolute_url(), value)
         if get_params:
             default_replacement = '%s?%s' % (default_replacement, get_params)
 
