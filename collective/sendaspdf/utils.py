@@ -290,11 +290,18 @@ def update_relative_url(source, context, embedded_images = True):
     relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")', re.MULTILINE|re.I|re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
     image_exp = re.compile('^.*\.(jpg|jpeg|gif|png).*$')
+    anchor_exp = re.compile('((href)="(#[^"]+)")', re.MULTILINE|re.I|re.U)
     
     items = relative_exp.findall(source)
     original_url = context.absolute_url()
 
     mtool = getToolByName(context, 'portal_membership')
+
+    anchor_items = anchor_exp.findall(source)
+    for anchor_item in anchor_items:
+        attr = anchor_item[1]
+        value = anchor_item[2]
+        source = source.replace('href="%s"' % value, 'href="%s%s"' % (original_url, value))
 
     for item in items:
         attr = item[1]
