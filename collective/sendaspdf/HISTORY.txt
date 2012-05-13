@@ -4,8 +4,9 @@ Changelog
 2.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- fix generating local urls with anchors [Davide Moro]
 
+- Bugfix in update_relative_urls [Davide Moro]
 
 2.5 (2012-03-29)
 ----------------
