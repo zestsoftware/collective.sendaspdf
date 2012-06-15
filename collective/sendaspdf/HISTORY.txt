@@ -4,6 +4,8 @@ Changelog
 2.6 (unreleased)
 ----------------
 
+- Updated Dutch translations. [Thom van Ledden]
+
 - fix generating local urls with anchors [Davide Moro]
 
 - Bugfix in update_relative_urls [Davide Moro]

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-06-15 08:12+0000\n"
+"POT-Creation-Date: 2012-06-15 11:16+0000\n"
 "PO-Revision-Date: 2012-02-27 13:29+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,7 +83,7 @@ msgstr "Er is een fout opgetreden tijdens het maken van de PDF, neem contact op 
 #. Default: "A table of contents will be prepended to the generated files."
 #: ./tool.py:147
 msgid "help_add_toc"
-msgstr ""
+msgstr "Een inhoudsopgave zal aan de gegenereerde bestanden worden toegevoegd"
 
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
 #: ./tool.py:120
@@ -97,13 +97,14 @@ msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebr
 
 #. Default: "PDf generated will have a book style (will override custom margins)"
 #: ./tool.py:135
+#, fuzzy
 msgid "help_use_book_style"
-msgstr ""
+msgstr "PDF zal een boek stijl hebben (overschrijft alle handmatige marges)"
 
 #. Default: "Add table of contents"
 #: ./tool.py:145
 msgid "label_add_toc"
-msgstr ""
+msgstr "Voeg inhoudsopgave toe"
 
 #. Default: "Attachments"
 #: ./browser/templates/send_form.pt:126
@@ -138,7 +139,7 @@ msgstr "E-mailadres van de ontvanger"
 #. Default: "List of browsers for which PDF filename will not be forced"
 #: ./tool.py:51
 msgid "label_excluded_browsersattachments"
-msgstr ""
+msgstr "Lijst van browsers waar PDF bestandsnaam niet zal worden geforceerd"
 
 #. Default: "Directory where PDF files will be stored"
 #: ./tool.py:42
@@ -152,8 +153,9 @@ msgstr "De naam van het PDF-bestand in de e-mail."
 
 #. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browser for which the system will not force the download. We recommend to have Chrome in the list"
 #: ./tool.py:54
+#, fuzzy
 msgid "label_help_excluded_attachments"
-msgstr ""
+msgstr "Browsers kunnen de gebruiker waarschuwen dat het downloaden van het PDF-bestand schadelijk is voor de computer. U kunt hier browsers toevoegen die de download niet zullen forceren. We adviseren Chrome toe te voegen aan deze lijst."
 
 #. Default: "Default body of e-mails"
 #: ./tool.py:86
@@ -168,22 +170,22 @@ msgstr "Standaard titel"
 #. Default: "Margin bottom"
 #: ./tool.py:178
 msgid "label_margin_bottom"
-msgstr ""
+msgstr "Marge onderkant"
 
 #. Default: "Margin left"
 #: ./tool.py:188
 msgid "label_margin_left"
-msgstr ""
+msgstr "Linker marge"
 
 #. Default: "Margin right"
 #: ./tool.py:168
 msgid "label_margin_right"
-msgstr ""
+msgstr "Rechter marge"
 
 #. Default: "Margin top"
 #: ./tool.py:158
 msgid "label_margin_top"
-msgstr ""
+msgstr "Marge bovenkant"
 
 #. Default: "Your name"
 #: ./browser/templates/send_form.pt:8
