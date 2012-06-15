@@ -9,7 +9,7 @@
   </div>
 
   <div tal:condition="not: view/errors">
-    <p i18n:translate="msg_success"></p>
+    <p i18n:translate="msg_success">The e-mail has been sent</p>
     <a href="#"
        class="send_as_pdf_close"
        i18n:translate="msg_close">Click here to close</a>
