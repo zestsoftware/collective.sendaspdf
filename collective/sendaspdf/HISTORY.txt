@@ -4,7 +4,8 @@ Changelog
 2.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added bootstrap/buildout based on collective/tutorial.todoapp
+  (https://github.com/collective/tutorial.todoapp). [vincent]
 
 
 2.6 (2012-06-15)

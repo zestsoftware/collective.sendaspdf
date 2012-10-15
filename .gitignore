@@ -5,3 +5,10 @@ Paste*
 PasteDeploy*
 PasteScript*
 dist*
+.installed.cfg
+.mr.developer.cfg
+bin/
+develop-eggs/
+eggs/
+parts/
+var/
