@@ -1,0 +1,16 @@
+language: python
+python:
+  - 2.7
+
+install:
+  - $(which echo) -e "[buildout]\nextends = buildout.d/travis.cfg" > buildout.cfg
+  - python bootstrap.py
+  - bin/buildout
+
+script:
+  - bin/test -m collective.sendaspdf
+ 
+notifications:
+  irc:
+  email:
+    - v.pretre@zestsoftware.nl
