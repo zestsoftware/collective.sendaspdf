@@ -6,6 +6,7 @@ from zExceptions import Unauthorized
 from Acquisition import aq_inner, aq_parent, aq_chain
 
 from zope.component import getMultiAdapter
+from zope.app.component.hooks import getSite
 
 from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.interfaces import IBaseFolder
@@ -25,6 +26,10 @@ except:
 
     def md5_hash(string, salt = ''):
         return md5.md5(salt + string).hexdigest()
+
+def get_pdf_tool():
+    portal = getSite()
+    return getToolByName(portal, 'portal_sendaspdf')
 
 def decode_parameter(p):
     """ Decode a parameter/value from a URL format to
