@@ -30,15 +30,15 @@ setup(name='collective.sendaspdf',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'simplejson',
           'jquery.pyproxy',
           # -*- Extra requirements: -*-
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-
-      [z3c.autoinclude.plugin]
-      target = plone
-      """,
+      entry_points={
+          'z3c.autoinclude.plugin': 'target = plone',
+          'console_scripts': [
+              'wk_worker = collective.sendaspdf.wk_worker:start_worker'
+              ]},
       setup_requires=["PasteScript"],
       paster_plugins=["ZopeSkel"],
       )

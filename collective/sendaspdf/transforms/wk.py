@@ -2,8 +2,10 @@
 # http://code.google.com/p/wkhtmltopdf/
 import os
 import subprocess
+import socket
 import logging
 
+import simplejson as json
 from Products.CMFPlone.utils import safe_unicode
 
 from collective.sendaspdf.utils import find_filename
@@ -34,7 +36,9 @@ valued_options = ['copies', 'cover', 'dpi',
                   'footer-font-name', 'footer-html', 'footer-font-size', 'footer-spacing',
                   'footer-left', 'footer-center','footer-right', 
                   'toc-depth', 'toc-header-text']
-                  
+
+
+
 
 def html_to_pdf(source, export_dir, filename,
                 original_url, use_print_css, extra_options=[]):
@@ -71,10 +75,14 @@ def html_to_pdf(source, export_dir, filename,
     for opt in extra_options:
         args.insert(2, opt)
 
-    try:
-        p = subprocess.Popen(args)
-        p.wait()
-    except:
+    sock = socket.socket(socket.AF_INET,
+                         socket.SOCK_STREAM)
+    sock.connect(('localhost', 8081))
+    sock.send(json.dumps(args))
+    data = sock.recv(1024)
+    sock.close()
+
+    if data != 'ok':
         logger.error('Running wkhtmltopdf failed. Please check that ' + \
                      'you use a version compatible with your OS and ' + \
                      'the version is 0.9.')
