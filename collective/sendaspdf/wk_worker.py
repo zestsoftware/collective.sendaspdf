@@ -5,6 +5,37 @@ import subprocess
 
 import simplejson as json
 
+class WkWorkerThread(threading.Thread):
+    def __init__(self, lock, clientsock):
+        threading.Thread.__init__(self)
+        self.lock = lock
+        self.clientsock = clientsock
+    
+    def run(self):
+        while 1:
+            data = self.clientsock.recv(1024)
+            if not data:
+                break
+
+            msg = 'ok'
+            args = json.loads(data)
+
+            print 'Waiting for the lock'
+            self.lock.acquire()
+            try:
+                p = subprocess.Popen(args)
+                p.wait()
+            except:
+                msg = 'ko'
+                
+            print 'Releasing the lock'
+            self.lock.release()
+
+            self.clientsock.send(msg)
+
+        print 'Connection over'
+
+
 class WkWorker:
     host = 'localhost'
     port = 8081
@@ -16,24 +47,6 @@ class WkWorker:
 
         self.lock = threading.Lock()
 
-    def handler(self, clientsock, addr):
-        while 1:
-            data = clientsock.recv(1024)
-            if not data:
-                break
-
-            msg = 'ok'
-            args = json.loads(data)
-            try:
-                p = subprocess.Popen(args)
-                p.wait()
-            except:
-                msg = 'ko'
-
-            clientsock.send(msg)
-
-        print 'Connection over'
-
     def start_server(self):
         serversock = socket.socket(socket.AF_INET,
                                    socket.SOCK_STREAM)
@@ -44,9 +57,9 @@ class WkWorker:
             print 'waiting for connection...'
             clientsock, addr = serversock.accept()
             print 'connected from:', addr
-            th = threading.Thread(
-                target = self.handler,
-                args = (clientsock, addr))
+            th = WkWorkerThread(
+                self.lock,
+                clientsock)
             th.start()
 
         serversock.close()
