@@ -4,6 +4,15 @@ Changelog
 2.7 (unreleased)
 ----------------
 
+- added some more random in the temporary file generation to avoid
+  issue with multiple concurrent runs. [vincent]
+
+- added a timeout on the subprocess + put stdout/err in TemporaryFile
+  to avoid potential issues. [vincent]
+
+- raised number of zserver-threads in default buildout, that prevents
+  the server locking. [vincent]
+
 - Added bootstrap/buildout based on collective/tutorial.todoapp
   (https://github.com/collective/tutorial.todoapp). [vincent]
 

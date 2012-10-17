@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from random import randint
 
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
@@ -128,7 +129,11 @@ class BaseView(BrowserView):
         now = datetime.now()
         # Ok that might not be the best timestamp system, but it's
         # enough for our needs.
-        timestamp = ''.join([str(x) for x in now.timetuple()])
+        timestamp = '-'.join([
+            ''.join([str(x) for x in now.timetuple()]),
+            str(now.microsecond),
+            str(randint(10000, 99999))])
+
         filename = prefix + timestamp
         return find_filename(self.tempdir,
                              filename)

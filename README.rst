@@ -51,6 +51,7 @@ recipes::
 
   [instance]
   ...
+  zserver-threads = 7
   environment-vars =
       ...
       WKHTMLTOPDF_PATH ${wkhtmltopdf:location}/wkhtmltopdf
@@ -67,6 +68,12 @@ recipes::
        cd ${buildout:directory}/parts/wkhtmltopdf
        mv wkhtmltopdf-amd64 wkhtmltopdf
        chmod +x wkhtmltopdf
+
+As you can see in this configuration, the zserver-threads number has
+been pushed to 7. This avoids troubles with threads locks when
+multiple PDFs are rendered at the same time.
+7 threads work fine when rendering 5 PDFs of the same page at the same
+time.
 
 You might have some changes to do depending on the architecture you
 are using (this example is for the amd64 architecture)

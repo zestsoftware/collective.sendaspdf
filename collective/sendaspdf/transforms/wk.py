@@ -4,6 +4,9 @@ import os
 import subprocess
 import logging
 
+from tempfile import TemporaryFile
+from threading import Timer
+
 from Products.CMFPlone.utils import safe_unicode
 
 from collective.sendaspdf.utils import find_filename
@@ -72,15 +75,32 @@ def html_to_pdf(source, export_dir, filename,
         args.insert(2, opt)
 
     try:
-        p = subprocess.Popen(args)
-        p.wait()
+        proc = subprocess.Popen(args,
+                                stdin=TemporaryFile(),
+                                stdout=TemporaryFile(),
+                                stderr=TemporaryFile())
+        timer = Timer(10,
+                      lambda p: p.kill,
+                      [proc])
+        proc.communicate()
+        timer.cancel()
     except:
         logger.error('Running wkhtmltopdf failed. Please check that ' + \
                      'you use a version compatible with your OS and ' + \
                      'the version is 0.9.')
         return None, ['pdf_generation_failed']
 
-    os.remove('%s/%s' % (export_dir, html_filename))
-    pdf_file = file('%s/%s' % (export_dir, filename),
-                    'r')
+    try:
+        os.remove('%s/%s' % (export_dir, html_filename))
+    except IOError:
+        logger.error('Temp file does not exist: %s/%s' % (
+            export_dir,
+            html_filename))
+
+    try:
+        pdf_file = file('%s/%s' % (export_dir, filename), 'r')
+    except IOError:
+        logger.error('No PDF output file')
+        return None, ['pdf_generation_failed']
+        
     return pdf_file, None
