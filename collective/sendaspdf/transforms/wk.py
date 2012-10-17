@@ -65,7 +65,6 @@ def html_to_pdf(source, export_dir, filename,
 
     # Run the wkhtmltopdf command.
     args = [wk_command,
-            '-q',
             '--disable-javascript',
             'file://%s/%s' % (export_dir, html_filename),
             '%s/%s' % (export_dir, filename)]
@@ -76,8 +75,7 @@ def html_to_pdf(source, export_dir, filename,
     for opt in extra_options:
         args.insert(2, opt)
 
-    sock = socket.socket(socket.AF_INET,
-                         socket.SOCK_STREAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(('localhost', 8081))
     sock.send(json.dumps(args))
     # We wait for the reply to be sure the PDF has been generated.

@@ -3,7 +3,7 @@ from  threading import Thread, Timer
 from Queue import Queue
 import socket
 import subprocess
-import daemon
+from tempfile import TemporaryFile
     
 import logging
 logger = logging.getLogger('collective.sendaspdf.wk_worker')
@@ -15,16 +15,23 @@ class WkWorkerThread(Thread):
         Thread.__init__(self)
         self.queue = queue
 
-    def run_command(self, args, timeout = 30):
+    def run_command(self, args, timeout = 10):
         """ Based on 
         http://stackoverflow.com/questions/1191374/subprocess-with-timeout
         """
-        proc = subprocess.Popen(args)
+
+        print '---------------------'
+        print 'Starting process'
+        print args
+        proc = subprocess.Popen(args,
+                                stdin=TemporaryFile(),
+                                stdout=TemporaryFile(),
+                                stderr=TemporaryFile())
         timer = Timer(timeout,
                       lambda p: p.kill(),
                       [proc])
         timer.start()
-        stdo, stderr = proc.communicate()
+        proc.communicate()
         timer.cancel()
     
     def run(self):
@@ -35,11 +42,12 @@ class WkWorkerThread(Thread):
             if not data:
                 break
 
-            args = json.loads(data)
-            print '----------------------------'
-            print ' -> '.join([x for x in args if 'tmp' in x])
-            self.run_command(args)
-            clientsock.send('ok')
+            try:
+                self.run_command(json.loads(data))
+            finally:
+                # Sending the message makes the client close the
+                # socket.
+                clientsock.send('ok')
 
 class WkWorker:
     host = 'localhost'
@@ -62,7 +70,7 @@ class WkWorker:
         # We only use one thread to read the queue, this way
         # we ensure that only one process of wkhtmltopdf is ran.
         th = WkWorkerThread(
-            self.queue,
+            self.queue)
         th.setDaemon(True)
         th.start()
 
