@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.7 (unreleased)
+2.7 (2012-10-17)
 ----------------
 
 - added some more random in the temporary file generation to avoid
