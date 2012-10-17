@@ -129,6 +129,7 @@ class BaseView(BrowserView):
         # Ok that might not be the best timestamp system, but it's
         # enough for our needs.
         timestamp = ''.join([str(x) for x in now.timetuple()])
+        timestamp += str(now.microsecond)
         filename = prefix + timestamp
         return find_filename(self.tempdir,
                              filename)

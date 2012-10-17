@@ -65,6 +65,7 @@ def html_to_pdf(source, export_dir, filename,
 
     # Run the wkhtmltopdf command.
     args = [wk_command,
+            '-q',
             '--disable-javascript',
             'file://%s/%s' % (export_dir, html_filename),
             '%s/%s' % (export_dir, filename)]
@@ -79,16 +80,21 @@ def html_to_pdf(source, export_dir, filename,
                          socket.SOCK_STREAM)
     sock.connect(('localhost', 8081))
     sock.send(json.dumps(args))
-    data = sock.recv(1024)
+    # We wait for the reply to be sure the PDF has been generated.
+    sock.recv(1024)
     sock.close()
 
-    if data != 'ok':
+    try:
+        os.remove('%s/%s' % (export_dir, html_filename))
+    except IOError:
+        logger.error('File %s/%s does not exist' % (export_dir, html_filename))
+
+    try:
+        pdf_file = file('%s/%s' % (export_dir, filename), 'r')
+    except IOError:
         logger.error('Running wkhtmltopdf failed. Please check that ' + \
                      'you use a version compatible with your OS and ' + \
                      'the version is 0.9.')
         return None, ['pdf_generation_failed']
 
-    os.remove('%s/%s' % (export_dir, html_filename))
-    pdf_file = file('%s/%s' % (export_dir, filename),
-                    'r')
     return pdf_file, None
