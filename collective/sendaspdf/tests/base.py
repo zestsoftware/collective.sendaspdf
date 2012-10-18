@@ -101,7 +101,7 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
             ロダクトで追加する。それはPloneのウェブサイトかその他のサイトで配布されている。
             Plone財団は全ての著作権と商標を保持している。さらにPloneはSoftware Freedom
             Law Centerの評議会からの法的な後ろ盾も持っている。</p>
-            <p>MediaWikiの"Monobook"レイアウトは部分的にPloneのスタイルシートをベー
+            <p>MediaWikiの"Monobook [JP]"レイアウトは部分的にPloneのスタイルシートをベー
             スにしている。</p>
             """}
 

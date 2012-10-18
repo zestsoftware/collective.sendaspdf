@@ -3,8 +3,26 @@
 # is not installed in the buildout.
 # The product can be found here: http://plone.org/products/passwordresettool
 
+from datetime import datetime, timedelta
+
+from Products.Five.browser import BrowserView
 from Products.SecureMailHost.SecureMailHost import SecureMailHost as MailBase
 
+class LongView(BrowserView):
+    """ A view that takes a loooooong time
+    to answer (well, about 20 seconds).
+    Used to ensure we correctly kill wkhtmltopdf
+    when it takes too long to finish its job (that may lead
+    to lock the Zope thread and getting wkhtmltopdf
+    unusable until the next restart of the instance).
+    """
+
+    def wait(self):
+        end_time = datetime.now() + timedelta(0.0002)
+        while datetime.now() < end_time:
+            pass
+
+        return 'Ho, finished :)'
 
 class MockMailHost(MailBase):
     """A MailHost that collects messages instead of sending them.
