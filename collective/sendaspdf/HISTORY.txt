@@ -4,7 +4,7 @@ Changelog
 2.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix exception syntax for Python 2.4 (Plone 3). [vincent]
 
 
 2.7.1 (2012-10-18)
