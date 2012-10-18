@@ -82,9 +82,10 @@ def html_to_pdf(source, export_dir, filename,
         timer = Timer(10,
                       lambda p: p.kill,
                       [proc])
+        timer.start()
         proc.communicate()
         timer.cancel()
-    except:
+    except Exception as e:
         logger.error('Running wkhtmltopdf failed. Please check that ' + \
                      'you use a version compatible with your OS and ' + \
                      'the version is 0.9.')
