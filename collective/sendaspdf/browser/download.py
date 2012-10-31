@@ -1,8 +1,4 @@
-import os
-from AccessControl import Unauthorized
-
 from collective.sendaspdf.browser.base import BaseView
-
 
 class PreDownloadPDF(BaseView):
     """ This page is the one called when clicking on the

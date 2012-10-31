@@ -7,10 +7,7 @@ import logging
 from tempfile import TemporaryFile
 from threading import Timer
 
-from Products.CMFPlone.utils import safe_unicode
-
 from collective.sendaspdf.utils import find_filename
-from collective.sendaspdf.emailer import su, get_charset
 
 logger = logging.getLogger('collective.sendaspdf')
 
@@ -36,7 +33,7 @@ valued_options = ['copies', 'cover', 'dpi',
                   'header-left', 'header-center','header-right', 
                   'footer-font-name', 'footer-html', 'footer-font-size', 'footer-spacing',
                   'footer-left', 'footer-center','footer-right', 
-                  'toc-depth', 'toc-header-text']
+                  'toc-depth', 'toc-header-text', 'cookie']
                   
 
 def html_to_pdf(source, export_dir, filename,

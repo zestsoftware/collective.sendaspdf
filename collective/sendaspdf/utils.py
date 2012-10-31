@@ -8,7 +8,6 @@ from Acquisition import aq_inner, aq_parent, aq_chain
 from zope.component import getMultiAdapter
 
 from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.interfaces import IBaseFolder
 from Products.Five import BrowserView
 
 from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
@@ -346,7 +345,7 @@ def update_relative_url(source, context, embedded_images = True):
                     # Image integrated with Plone 4/TinyMCE.
                     replacement += '/@@images/' + '/'.join(left_path)
                 elif img_size:
-                    replacement += '/' + image_size
+                    replacement += '/' + img_size
             else:
                 try:
                     filetype = linked_obj.getImage().getFilename().split('.')[-1]

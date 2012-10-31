@@ -1,5 +1,4 @@
 from zope.i18n import translate
-from AccessControl import Unauthorized
 from Products.validation import validation
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile

@@ -2,19 +2,17 @@ import os
 from datetime import datetime
 
 from zope.i18n import translate
-from AccessControl import Unauthorized
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_inner, aq_parent
 from persistent.dict import PersistentDict
 from zope.annotation.interfaces import IAnnotations
+from zope.interface import Interface
 from zope.interface import implements
 from Products.Archetypes import atapi
 from Products.CMFCore.utils import ImmutableId
-from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
 from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.document import ATDocumentSchema
-from zope.interface import Interface, implements
+
 import config
 
 from collective.sendaspdf import SendAsPDFMessageFactory as _
@@ -111,6 +109,18 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             ),
         schemata='wk',
         ),
+
+    atapi.BooleanField(
+        name='allow_cookie',
+        widget=atapi.BooleanWidget(
+            label=_(u'label_allow_cookie',
+                    default=u'Allow passing cookies to sendaspdf'),
+            description=_(u'help_allow cookie',
+                          default=u'Allow passing the user\'s cookie to wkhtmltopdf')
+            ),
+        schemata='wk',
+        ),
+
 
     atapi.LinesField(
         name='print_css_types',
@@ -343,12 +353,18 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         toc_msg = _(u'label_toc',
                     default = u'Table of content')
 
-        return {'book': self.getUse_book_style(),
-                'toc': self.getGenerate_toc(),
-                'margin-top': self.getMargin_top(),
-                'margin-right': self.getMargin_right(),
-                'margin-bottom': self.getMargin_bottom(),
-                'margin-left': self.getMargin_left(),
-                'toc-header-text': translate(toc_msg, context = self.REQUEST)}
+        options = {'book': self.getUse_book_style(),
+                   'toc': self.getGenerate_toc(),
+                   'margin-top': self.getMargin_top(),
+                   'margin-right': self.getMargin_right(),
+                   'margin-bottom': self.getMargin_bottom(),
+                   'margin-left': self.getMargin_left(),
+                   'toc-header-text': translate(toc_msg, context = self.REQUEST)}
+
+        ac_cookie = self.REQUEST.cookies.get('__ac', None)
+        if self.getAllow_cookie() and ac_cookie is not None:
+            options['cookie'] = ['__ac', ac_cookie]
+
+        return options
 
 atapi.registerType(SendAsPDFTool, config.PROJECTNAME)

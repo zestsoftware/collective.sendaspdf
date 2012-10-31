@@ -144,6 +144,9 @@ Now we'll check the default settings are there and correct:
     always_print_css:boolean: True (checkbox)
     [<ItemControl name='always_print_css:boolean' type='checkbox' optionValue='on' selected=True>]
     always_print_css:boolean:default:  (hidden)
+    allow_cookie:boolean: False (checkbox)
+    [<ItemControl name='allow_cookie:boolean' type='checkbox' optionValue='on' selected=False>]
+    allow_cookie:boolean:default:  (hidden)
     print_css_types:lines:  (textarea)
     ...
 

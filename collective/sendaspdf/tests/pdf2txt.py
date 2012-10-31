@@ -1,11 +1,8 @@
 # Code taken from PDFMiner tool pdf2txt: https://github.com/euske/pdfminer/blob/master/tools/pdf2txt.py
 
-import sys
-from pdfminer.pdfparser import PDFDocument, PDFParser
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter, process_pdf
-from pdfminer.pdfdevice import PDFDevice, TagExtractor
-from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
-from pdfminer.cmapdb import CMapDB
+from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfinterp import process_pdf
+from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 
 from StringIO import StringIO

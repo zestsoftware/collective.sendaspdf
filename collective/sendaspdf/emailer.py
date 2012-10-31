@@ -156,6 +156,6 @@ def send_message(mfrom, mto, subject, message, attachment, filename):
 
     except (socket.error, SMTPException):
         logger.warn('Could not send email to %s with subject %s',
-                    address, subject)
+                    mto, subject)
     except:
         raise

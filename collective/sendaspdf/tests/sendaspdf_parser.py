@@ -54,7 +54,6 @@ class SendAsPDFHtmlParser(HTMLParser):
 
         t = self.path.pop()
         tag_id = t.get('id', '')
-        tag_classes = t.get('class', '')
 
         if t['tag'] == 'li':
             if tag_id == 'document-action-download_as_pdf':

@@ -4,7 +4,10 @@ Changelog
 2.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added option to allow passing the authentication cookie to
+  wkhtmltopdf. This fixes some issues with images hidden inside
+  non-public folder (but that the user can see in the normal
+  page). [vincent]
 
 
 2.7.2 (2012-10-18)

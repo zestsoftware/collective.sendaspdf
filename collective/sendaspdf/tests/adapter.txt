@@ -88,7 +88,8 @@ name>.py/valued_options::
      'minimum-font-size', 'orientation', 'page-height', 'page-offset', 'page-size', 'page-width',
      'header-font-name', 'header-html', 'header-font-size', 'header-spacing', 'header-left',
      'header-center', 'header-right', 'footer-font-name', 'footer-html', 'footer-font-size',
-     'footer-spacing', 'footer-left', 'footer-center', 'footer-right', 'toc-depth', 'toc-header-text']
+     'footer-spacing', 'footer-left', 'footer-center', 'footer-right', 'toc-depth', 'toc-header-text',
+     'cookie']
 
 The non-valued ones are defined in the ``simple_options`` attribute:
 

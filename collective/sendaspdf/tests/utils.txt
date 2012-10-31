@@ -65,17 +65,16 @@ As usual with Zope, there's some dark Acquisition magic taking effect::
     (<ATDocument at /plone/folder1/my-page used for /plone/folder1/folder1.1/a-new-page>, None, None, None)
 
 
-This system can also handle data existing in skin folder::
+This system can also handle data existing in skin folder (depending in
+Plone version, the name displayed may change so we use ellipsis to
+keep the tests running, the important thing is that it's getting the
+FS image object) ::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('pinkie.gif', ))
-    (<FSImage at /plone/pinkie.gif used for /plone/folder1/folder1.1/a-new-page>, None, None, None)
-
-In Plone 3, we do not get the context of the image in the skin folder
-if this one is referenced inside a folder (that explains the ellipsis
-after the objects path) ::
+    (<FSImage at /plone/...pinkie.gif...>, None, None, None)
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'pinkie.gif', ))
-    (<FSImage at /plone/pinkie.gif...>, None, None, None)
+    (<FSImage at /plone/...pinkie.gif...>, None, None, None)
 
 
 If we link to a particular view of a link document, it will appear in

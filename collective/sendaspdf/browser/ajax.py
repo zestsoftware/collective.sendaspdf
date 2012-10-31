@@ -1,11 +1,8 @@
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.CMFCore.utils import getToolByName
-from zope.i18n import translate
 
 from jquery.pyproxy.plone import jquery, JQueryProxy
 from jquery.pyproxy.base import clean_string
 
-from collective.sendaspdf import SendAsPDFMessageFactory as _
 from collective.sendaspdf.browser.send import SendForm
 from collective.sendaspdf.utils import update_relative_url
 
@@ -92,10 +89,11 @@ class SendAsPDFAjax(SendForm):
         return self._send_mail()
 
     def _download(self):
+        jq = JQueryProxy()
         if not 'page' in self.request.form:
             # This should not happen.
             return jq
-        jq = JQueryProxy()
+
         jq.extend_grammar({'redirect': [[str, unicode]]})
 
         self.make_pdf()

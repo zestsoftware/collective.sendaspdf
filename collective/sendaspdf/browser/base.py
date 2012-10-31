@@ -190,7 +190,12 @@ class BaseView(BrowserView):
 
                 # Value is put before the option name as we
                 # insert them after in another list using l.insert(2, opt)
-                options.append(str(opt_val))
+                if isinstance(opt_val, list):
+                    for x in reversed(opt_val):
+                        options.append(str(x))
+                else:
+                    options.append(str(opt_val))
+
                 options.append('--%s' % opt_name)  
                 break
 

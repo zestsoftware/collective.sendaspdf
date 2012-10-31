@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-import unittest
 import doctest
 
 from Testing import ZopeTestCase as ztc
@@ -10,8 +8,8 @@ try:
     is_plone_3 = False
 except ImportError:
     # Plone 3
-    is_plone_3 = True
     from Products.Five import  zcml
+    is_plone_3 = True
 
 try:
     from Testing.testbrowser import Browser
@@ -22,7 +20,7 @@ except ImportError:
 import transaction
 from Products.Five import fiveconfigure
 from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import PloneSite
+
 ptc.setupPloneSite()
 
 from zope.component import getSiteManager
@@ -33,7 +31,7 @@ from Products.MailHost.interfaces import IMailHost
 import collective.sendaspdf
 from collective.sendaspdf.tests.sendaspdf_parser import SendAsPDFHtmlParser
 from collective.sendaspdf.tests.utils import MockMailHost
-from collective.sendaspdf.emailer import su
+
 
 OPTIONFLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
 

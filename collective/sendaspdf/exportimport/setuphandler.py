@@ -1,12 +1,11 @@
 from zope.component import adapts
-from zope.interface import implements
+
 from Products.GenericSetup.interfaces import ISetupEnviron
 from Products.GenericSetup.utils import exportObjects
 from Products.GenericSetup.utils import importObjects
 from Products.GenericSetup.utils import XMLAdapterBase
 
 from Products.CMFCore.utils import getToolByName
-from Products.GenericSetup.interfaces import IBody
 from collective.sendaspdf.tool import ISendAsPDFTool
 
 class SendAsPdfToolXMLAdapter(XMLAdapterBase):
@@ -79,7 +78,6 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
         for child in node.childNodes:
             if child.nodeName != 'property':
                 continue
-            parent = self.context
 
             name = child.getAttribute('name')
             if name in self.exportfield:
