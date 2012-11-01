@@ -160,7 +160,7 @@ msgstr "Folder waar de PDF opgeslagen wordt"
 msgid "label_filename_title"
 msgstr "De naam van het PDF-bestand in de e-mail."
 
-#. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browser for which the system will not force the download. We recommend to have Chrome in the list"
+#. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browsers for which the system will not force the download. We recommend to have Chrome in the list"
 #: ./tool.py:49
 msgid "label_help_excluded_attachments"
 msgstr "Browsers kunnen de gebruiker waarschuwen dat het downloaden van het PDF-bestand schadelijk is voor de computer. U kunt hier browsers toevoegen die de download niet zullen forceren. We adviseren Chrome toe te voegen aan deze lijst."
