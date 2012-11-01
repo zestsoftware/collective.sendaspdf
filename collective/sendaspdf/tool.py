@@ -49,7 +49,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             description=_(u'label_help_excluded_attachments',
                           default=u'Browsers might warn the user '
                           'that downloading the PDF might harm their '
-                          'computer. You can set here a list of browser'
+                          'computer. You can set here a list of browser '
                           'for which the system will not force the download. '
                           'We recommend to have Chrome in the list'))),
 
