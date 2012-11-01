@@ -26,6 +26,19 @@ And some pages/images::
     ...     _ = self.create_image('blink.png', 'image/png', folder)
 
 
+utils.extract_from_url:
+-----------------------
+
+More test fron the function's doctests.
+
+The system can recognise parameters with special caracters.
+    >>> utils.extract_from_url(
+    ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/require_login?came_from=http%3A//127.0.0.1%3A8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract%3Fwidget_id%3DplonehrmAbsenceWidget%26mode%3Dpercentage%26UID%3Dea267a725dc3ea79b4e67902d221e04e',
+    ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/')
+    ('require_login',
+     {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})
+
+
 utils.get_object_from_url
 -------------------------
 

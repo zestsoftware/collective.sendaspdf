@@ -8,6 +8,7 @@ from collective.sendaspdf.emailer import send_message
 from collective.sendaspdf import SendAsPDFMessageFactory as _
 from collective.sendaspdf.browser.base import BaseView
 
+
 class SendForm(BaseView):
     """ If the user does not have Javascript enabled, he is
     redirected to this page.
@@ -80,7 +81,7 @@ class SendForm(BaseView):
     def process_form(self):
         """
         """
-        form = self.request.form        
+        form = self.request.form
 
         if self.get_user():
             mfrom = '%s <%s>' % (self.get_user_fullname(),
@@ -123,8 +124,8 @@ class SendForm(BaseView):
         member = portal_membership.getAuthenticatedMember()
         if member:
             member_editor = member.getProperty('wysiwyg_editor',
-                                       default_editor)
-        editor =  member_editor or default_editor
+                                               default_editor)
+        editor = member_editor or default_editor
         return editor.lower()
 
     def __call__(self):
@@ -143,7 +144,6 @@ class SendForm(BaseView):
                 msg = _(u'msg_error',
                         default=u'Errors appeared while processing your form')
                 msg_type = 'error'
-                
 
             self.context.plone_utils.addPortalMessage(
                 translate(msg,

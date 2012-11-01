@@ -10,12 +10,12 @@ OPTIONFLAGS = (doctest.ELLIPSIS |
 
 def test_suite():
     func = ZopeDocFileSuite('func.txt',
-                         package='collective.sendaspdf.tests',
-                         optionflags=OPTIONFLAGS,
-                         test_class=SendAsPDFTestCase)
+                            package='collective.sendaspdf.tests',
+                            optionflags=OPTIONFLAGS,
+                            test_class=SendAsPDFTestCase)
     adapter = ZopeDocFileSuite('adapter.txt',
-                         package='collective.sendaspdf.tests',
-                         optionflags=OPTIONFLAGS,
-                         test_class=SendAsPDFTestCase)
+                               package='collective.sendaspdf.tests',
+                               optionflags=OPTIONFLAGS,
+                               test_class=SendAsPDFTestCase)
 
     return TestSuite((func, adapter, ))

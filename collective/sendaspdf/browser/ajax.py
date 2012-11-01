@@ -6,6 +6,7 @@ from jquery.pyproxy.base import clean_string
 from collective.sendaspdf.browser.send import SendForm
 from collective.sendaspdf.utils import update_relative_url
 
+
 class SendAsPDFAjax(SendForm):
     """ This class contains a set of methods that are called
     with jquery.pyproxy.
@@ -19,7 +20,7 @@ class SendAsPDFAjax(SendForm):
                                    self.context)
 
     def add_popup(self, jq):
-        jq.extend_grammar({'send_as_pdf_lightbox': []});
+        jq.extend_grammar({'send_as_pdf_lightbox': []})
 
         jq('#send_as_pdf_popup').remove()
         jq('body').append('<div id="send_as_pdf_popup"></div>')
@@ -43,7 +44,7 @@ class SendAsPDFAjax(SendForm):
             self.index = ZopeTwoPageTemplateFile('templates/ajax.pt')
         else:
             self.index = ZopeTwoPageTemplateFile('templates/send_form.pt')
-        
+
         return self.add_popup(jq)
 
     @jquery
@@ -75,9 +76,9 @@ class SendAsPDFAjax(SendForm):
                     jq('#field_' + field).removeClass('error')
 
             # We hide the previous errors.
-            jq('.error_msg').addClass('dont-show');
-            jq('.error_msg').removeClass('error_msg');
-            
+            jq('.error_msg').addClass('dont-show')
+            jq('.error_msg').removeClass('error_msg')
+
             for error in self.errors:
                 jq('#error_' + error).removeClass('dont-show')
                 jq('#error_' + error).addClass('error_msg')
@@ -109,4 +110,3 @@ class SendAsPDFAjax(SendForm):
     @jquery
     def download(self):
         return self._download()
-    

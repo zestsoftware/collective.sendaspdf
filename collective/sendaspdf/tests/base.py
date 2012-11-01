@@ -6,13 +6,17 @@ from Testing import ZopeTestCase as ztc
 try:
     from Zope2.App import zcml
     is_plone_3 = False
+
+    zcml  # pyflakes
 except ImportError:
     # Plone 3
-    from Products.Five import  zcml
+    from Products.Five import zcml
     is_plone_3 = True
 
 try:
     from Testing.testbrowser import Browser
+
+    Browser  # pyflakes
 except ImportError:
     # Plone 3
     from Products.Five.testbrowser import Browser
@@ -34,6 +38,7 @@ from collective.sendaspdf.tests.utils import MockMailHost
 
 
 OPTIONFLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
+
 
 class SendAsPDFTestCase(ptc.FunctionalTestCase):
     is_plone_3 = is_plone_3
@@ -60,7 +65,8 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
             periodically during special meetings called Plone Sprints.
             Additional functionality is added to Plone with Products,
             which may be distributed through the Plone website or otherwise.
-            The Plone Foundation holds and enforces all copyrights and trademarks.
+            The Plone Foundation holds and enforces all copyrights and
+            trademarks.
             Plone also has legal backing from the council of the Software
             Freedom Law Center.</p>
             <p>MediaWiki's "Monobook" layout is based partially on the
@@ -113,6 +119,7 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         # his hack allows us to get the traceback when the getting a
         # 500 error when using the browser.
         self.portal.error_log._ignored_exceptions = ()
+
         def raising(self, info):
             import traceback
             traceback.print_tb(info[2])
@@ -121,7 +128,7 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
         SiteErrorLog.raising = raising
         transaction.commit()
-        
+
     def beforeTearDown(self):
         self.portal.MailHost = self.portal._original_MailHost
         sm = getSiteManager(context=self.portal)
@@ -157,47 +164,51 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
 
     def create_folder(self, parent, title):
         self.login_as_manager()
-        self.browser.open('%s/createObject?type_name=Folder' % parent.absolute_url())
+        self.browser.open('%s/createObject?type_name=Folder' %
+                          parent.absolute_url())
         self.browser.getControl(name='title').value = title
         self.browser.getControl(name='form.button.save').click()
         return self.browser.url
 
-    def create_page(self, language, title = None, parent = None):
+    def create_page(self, language, title=None, parent=None):
         self.login_as_manager()
         if parent is None:
             parent = self.portal
 
-        self.browser.open('%s/createObject?type_name=Document' % parent.absolute_url())
+        self.browser.open('%s/createObject?type_name=Document' %
+                          parent.absolute_url())
         if title is None:
             title = 'Plone (%s)' % language
 
         self.browser.getControl(name='title').value = title
-        self.browser.getControl(name='text').value = self.data.get(language, 'Oups ...')
+        self.browser.getControl(name='text').value = self.data.get(language,
+                                                                   'Oups ...')
         self.browser.getControl(name='form.button.save').click()
         return self.browser.url
 
-    def create_image(self, img_file, img_file_type, parent = None):
+    def create_image(self, img_file, img_file_type, parent=None):
         self.login_as_manager()
         if parent is None:
             parent = self.portal
 
         def mydir():
-            import os.path, sys
+            import sys
+            import os.path
+
             if __name__ == '__main__':
                 filename = sys.argv[0]
             else:
                 filename = __file__
             return os.path.abspath(os.path.dirname(filename))
 
-
-        self.browser.open('%s/createObject?type_name=Image' % parent.absolute_url())
+        self.browser.open('%s/createObject?type_name=Image' %
+                          parent.absolute_url())
         file_control = self.browser.getControl(name='image_file')
-        file_control.mech_control.add_file(file(mydir() +  '/' + img_file),
+        file_control.mech_control.add_file(file('%s/%s' % (mydir(), img_file)),
                                            img_file_type,
                                            img_file)
         self.browser.getControl(name='form.button.save').click()
         return self.browser.url
-
 
     def setup_data(self):
         self.install_products()
@@ -206,10 +217,11 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
 
         # We also add a page for which the title will contain
         # non-ASCII characters.
-        # Depending on Plone version, the generated ID is not the same, so we first
-        # generate the page with a simple title for which id is safe, then we'll edit
-        # the title.
-        self.cyrilic_title_page_url = self.create_page(None, 'Cyrilic title page')
+        # Depending on Plone version, the generated ID is not the same,
+        # so we first generate the page with a simple title for which id
+        # is safe, then we'll edit the title.
+        self.cyrilic_title_page_url = self.create_page(None,
+                                                       'Cyrilic title page')
         self.browser.open('%s/edit' % self.cyrilic_title_page_url)
         self.browser.getControl(name='title').value = '3цдса'
         self.browser.getControl(name='form.button.save').click()
@@ -221,18 +233,19 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
         parser.feed(self.browser.contents)
         return parser.get_document_actions()
 
-    def list_available_controls(self, form_name, before = None, hidden=[]):
+    def list_available_controls(self, form_name, before=None, hidden=[]):
         """
         Before can be used to print something before the form
         That can be usefull for example when the first line printed
         start with a non-deterministic value as you can not
         use an ellipsis.
         """
-        
+
         if before is not None:
             print before
 
-        # Code from here: http://plone.org/documentation/manual/plone-community-developer-documentation/testing-and-debugging/functional-testing#listing-available-form-controls
+        # Code from the community manual (page not available anymore,
+        # sorry for the source :/ )
         form = self.browser.getForm(name=form_name)
         # get and print all controls
         for ctrl in form.mech_form.controls:

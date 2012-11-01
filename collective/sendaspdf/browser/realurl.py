@@ -1,8 +1,9 @@
 from collective.sendaspdf.browser.base import BaseView
 
+
 class RealURLView(BaseView):
     """ We need this view to build the 'send as pdf'
-    action menu.    
+    action menu.
     """
     def __call__(self):
         base = self.context.REQUEST['ACTUAL_URL']
@@ -15,6 +16,6 @@ class RealURLView(BaseView):
                  if k != '-C' and not (k == 'test' and v == '')])
 
         if get_params:
-           base += '?' + get_params
+            base += '?' + get_params
 
         return base

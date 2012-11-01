@@ -10,8 +10,9 @@
 #
 # Methods returns a <file> object and a list of potential errors.
 
-import pisa, wk
+import pisa
+import wk
 
-#pyflakes
+# pyflakes
 pisa
 wk

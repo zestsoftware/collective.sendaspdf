@@ -1,4 +1,5 @@
-# Code taken from PDFMiner tool pdf2txt: https://github.com/euske/pdfminer/blob/master/tools/pdf2txt.py
+# Code taken from PDFMiner tool pdf2txt:
+# https://github.com/euske/pdfminer/blob/master/tools/pdf2txt.py
 
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import process_pdf
@@ -6,6 +7,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 
 from StringIO import StringIO
+
 
 def display_pdf(content):
     fp = StringIO(content)

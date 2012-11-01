@@ -4,6 +4,11 @@ Changelog
 2.8 (unreleased)
 ----------------
 
+- added pep8/pyflakes checks fo Travis based on collective.polls
+  config. [vincent]
+
+- pep8/pyflakes [vincent + maurits]
+
 - Added option to allow passing the authentication cookie to
   wkhtmltopdf. This fixes some issues with images hidden inside
   non-public folder (but that the user can see in the normal

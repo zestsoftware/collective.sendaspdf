@@ -1,5 +1,6 @@
 from collective.sendaspdf.browser.base import BaseView
 
+
 class PreDownloadPDF(BaseView):
     """ This page is the one called when clicking on the
     'Download as PDF' view.
@@ -13,6 +14,7 @@ class PreDownloadPDF(BaseView):
 
         self.request.form['pdf_name'] = self.filename
         return self.context.restrictedTraverse('@@send_as_pdf_download')()
+
 
 class DownloadPDF(BaseView):
     """ View called when clicking the 'Click here to preview'
@@ -31,13 +33,12 @@ class DownloadPDF(BaseView):
 
         return '%s.pdf' % name
 
-    
     def __call__(self):
         form = self.request.form
         self.check_pdf_accessibility()
 
         if self.errors:
-             return self.index(self)
+            return self.index(self)
 
         self.pdf_file = file('%s/%s' % (self.tempdir,
                                         form['pdf_name']),
@@ -49,8 +50,10 @@ class DownloadPDF(BaseView):
         self.request.response.setHeader("Cache-Control",
                                         "no-cache, must-revalidate")
 
-        if not self.pdf_tool.is_browser_excluded(self.request['HTTP_USER_AGENT']):
-            disposition = 'attachment; filename="%s"' % self.generate_pdf_name()
+        user_agent = self.request['HTTP_USER_AGENT']
+        if not self.pdf_tool.is_browser_excluded(user_agent):
+            disposition = ('attachment; filename="%s"' %
+                           self.generate_pdf_name())
             self.request.response.setHeader('Content-Disposition', disposition)
 
         return self.pdf_file.read()

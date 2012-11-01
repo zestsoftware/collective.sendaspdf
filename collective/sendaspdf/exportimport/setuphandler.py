@@ -8,35 +8,33 @@ from Products.GenericSetup.utils import XMLAdapterBase
 from Products.CMFCore.utils import getToolByName
 from collective.sendaspdf.tool import ISendAsPDFTool
 
+
 class SendAsPdfToolXMLAdapter(XMLAdapterBase):
     adapts(ISendAsPDFTool, ISetupEnviron)
-
 
     _LOGGER_ID = 'sendaspdf'
 
     name = 'sendaspdftool'
 
     exportfield = {
-        'pdf_generator': (lambda x : str(x),
-                          lambda x : x),
-        'tempdir':(lambda x : str(x),
-                   lambda x : x),
-        'excluded_browser_attachment': (lambda x : ';'.join(x),
-                                        lambda x : tuple(x.split(';'))),
-        'salt':(lambda x : str(x),
-                lambda x : x),
-        'mail_title':(lambda x : str(x),
-                      lambda x : x),
-        'mail_content':(lambda x : str(x),
-                        lambda x : x),
-        'filename_in_mail':(lambda x : str(x),
-                            lambda x : x),
-        'always_print_css':(lambda x : str(x),
-                            lambda x : bool(x)),
-        'print_css_types':(lambda x : ';'.join(x),
-                           lambda x : tuple(x.split(';')))
-        }
-
+        'pdf_generator': (lambda x: str(x),
+                          lambda x: x),
+        'tempdir': (lambda x: str(x),
+                    lambda x: x),
+        'excluded_browser_attachment': (lambda x: ';'.join(x),
+                                        lambda x: tuple(x.split(';'))),
+        'salt': (lambda x: str(x),
+                 lambda x: x),
+        'mail_title': (lambda x: str(x),
+                       lambda x: x),
+        'mail_content': (lambda x: str(x),
+                         lambda x: x),
+        'filename_in_mail': (lambda x: str(x),
+                             lambda x: x),
+        'always_print_css': (lambda x: str(x),
+                             lambda x: bool(x)),
+        'print_css_types': (lambda x: ';'.join(x),
+                            lambda x: tuple(x.split(';')))}
 
     def _exportNode(self):
         """Export the object as a DOM node.
@@ -59,7 +57,7 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
 
     def _extractPredicates(self):
         fragment = self._doc.createDocumentFragment()
-        
+
         for k, functions in self.exportfield.iteritems():
             serialize = functions[0]
             v = serialize(self.context[k])
@@ -67,7 +65,7 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
             child.setAttribute('name', k)
             child.setAttribute('value', v)
             fragment.appendChild(child)
-        
+
         return fragment
 
     def _purgePredicates(self):
@@ -87,6 +85,7 @@ class SendAsPdfToolXMLAdapter(XMLAdapterBase):
 
         self.context.update(**out)
 
+
 def importProviders(context):
     """Import actions tool.
     """
@@ -98,6 +97,7 @@ def importProviders(context):
         return
 
     importObjects(tool, '', context)
+
 
 def exportProviders(context):
     """Export actions tool.

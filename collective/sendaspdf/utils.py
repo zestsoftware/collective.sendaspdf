@@ -15,15 +15,15 @@ from Products.Archetypes.config import RENAME_AFTER_CREATION_ATTEMPTS
 try:
     # Python 2.6 (maybe 2.5 too)
     import hashlib
-
-    def md5_hash(string, salt = ''):
-        return hashlib.md5(salt + string).hexdigest()
-except:
+    hashlib  # pyflakes
+except ImportError:
     # Python 2.4
-    import md5
+    import md5 as hashlib
 
-    def md5_hash(string, salt = ''):
-        return md5.md5(salt + string).hexdigest()
+
+def md5_hash(string, salt=''):
+    return hashlib.md5(salt + string).hexdigest()
+
 
 def decode_parameter(p):
     """ Decode a parameter/value from a URL format to
@@ -40,13 +40,14 @@ def decode_parameter(p):
     'kikoolol'
 
     It might mainly be used to decode the 'came_from' parameter.
-    >>> decode_parameter('http%3A//www.prettigpersoneel.nl/nerull-ii/%3Fview%3Demployees')
+    >>> url = 'http%3A//www.prettigpersoneel.nl/nerull-ii/%3Fview%3Demployees'
+    >>> decode_parameter(url)
     'http://www.prettigpersoneel.nl/nerull-ii/?view=employees'
 
     We decode the '%' caracter last so we can not have confusion.
     >>> decode_parameter('%252C')
     '%2C'
-    
+
     If we did not decode it last, we could have obtained ','.
     """
     table = {'24': '$',
@@ -113,15 +114,9 @@ def extract_from_url(url, context_url):
 
     If a GET parameter if present twice, then he corresponding value
     in the dictionnary will be a list containing all values.
-    >>> extract_from_url(context_url + '?p1=12&p2=blabla&p2=blublu', context_url)
+    >>> extract_from_url(context_url + '?p1=12&p2=blabla&p2=blublu',
+    ...                  context_url)
     ('', {'p2': ['blabla', 'blublu'], 'p1': '12'})
-
-    The system can recognise parameters with special caracters.
-    >>> extract_from_url(
-    ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/require_login?came_from=http%3A//127.0.0.1%3A8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract%3Fwidget_id%3DplonehrmAbsenceWidget%26mode%3Dpercentage%26UID%3Dea267a725dc3ea79b4e67902d221e04e',
-    ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/')
-    ('require_login',
-     {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})    
 
     """
     if not url.startswith(context_url):
@@ -130,9 +125,9 @@ def extract_from_url(url, context_url):
     carac_class = '[A-Za-z0-9_ %/\\.\\-]'
 
     reg = r'^' + context_url + '/? ' + \
-            '?((@@)?(' + carac_class + '*)/?)?' + \
-            '(\\?((' + carac_class + '+=' + carac_class+ '*&?)*))?' + \
-            '(#.*)?$'
+          '?((@@)?(' + carac_class + '*)/?)?' + \
+          '(\\?((' + carac_class + '+=' + carac_class + '*&?)*))?' + \
+          '(#.*)?$'
     match = re.split(reg, url)
     if len(match) == 1:
         return None, None
@@ -157,6 +152,7 @@ def extract_from_url(url, context_url):
             except:
                 pass
     return view_name, get_params
+
 
 def find_filename(path, filename, extension='pdf'):
     """ Finds a non-conflicting filename in the
@@ -228,6 +224,7 @@ img_sizes = {'image': [],
              'image_preview': [400, 400],
              'image_large': [768, 768]}
 
+
 def get_object_from_url(context, path):
     """ Returns a tuple object, view name, image size, unparsed items.
 
@@ -269,8 +266,9 @@ def get_object_from_url(context, path):
                     if isinstance(view, BrowserView):
                         return ancestor, element, None, path[position + 1:]
 
-                    # Ho, Plone 3 again. An object in the skin folder can not be
-                    # accessed via getattr (when in a folder, works when in a document ...).
+                    # Ho, Plone 3 again. An object in the skin folder can not
+                    # be accessed via getattr (when in a folder, works when
+                    # in a document ...).
                     obj = view
                     if position == len(path) - 1:
                         return obj, None, None, None
@@ -285,12 +283,14 @@ def get_object_from_url(context, path):
     return obj, None, None, None
 
 
-def update_relative_url(source, context, embedded_images = True):
-    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")', re.MULTILINE|re.I|re.U)
+def update_relative_url(source, context, embedded_images=True):
+    relative_exp = re.compile('((href|src)="([a-zA-Z0-9_=&\-\.\/@\?]+)")',
+                              re.MULTILINE | re.I | re.U)
     protocol_exp = re.compile('^(\w+:\/\/).*$')
     image_exp = re.compile('^.*\.(jpg|jpeg|gif|png).*$')
-    anchor_exp = re.compile('((href)="(#[^"]+)")', re.MULTILINE|re.I|re.U)
-    
+    anchor_exp = re.compile('((href)="(#[^"]+)")',
+                            re.MULTILINE | re.I | re.U)
+
     items = relative_exp.findall(source)
     original_url = context.absolute_url()
 
@@ -300,12 +300,13 @@ def update_relative_url(source, context, embedded_images = True):
     for anchor_item in anchor_items:
         attr = anchor_item[1]
         value = anchor_item[2]
-        source = source.replace('href="%s"' % value, 'href="%s%s"' % (original_url, value))
+        source = source.replace('href="%s"' % value,
+                                'href="%s%s"' % (original_url, value))
 
     for item in items:
         attr = item[1]
         value = item[2]
-                
+
         if protocol_exp.match(value):
             # That should not happen as ':' should not be recognized
             # by relative_exp.
@@ -321,24 +322,31 @@ def update_relative_url(source, context, embedded_images = True):
 
         path = value.split('/')
 
-        portal_path = getMultiAdapter((context, context.REQUEST), name="plone_portal_state").portal().absolute_url()
+        portal = getMultiAdapter((context, context.REQUEST),
+                                 name="plone_portal_state").portal()
+        portal_path = portal.absolute_url()
         default_replacement = '%s=%s/%s' % (attr, portal_path, value)
         if get_params:
             default_replacement = '%s?%s' % (default_replacement, get_params)
 
-        linked_obj, view, img_size, left_path = get_object_from_url(context, path)
+        linked_obj, view, img_size, left_path = get_object_from_url(context,
+                                                                    path)
 
         if linked_obj is None:
-            source = source.replace('%s="%s"' % (attr, value), default_replacement)
+            source = source.replace('%s="%s"' % (attr, value),
+                                    default_replacement)
             continue
 
         replacement = linked_obj.absolute_url()
         if view:
             replacement += '/%s' % view
 
-        if image_exp.match(value) and attr == 'src' and \
-               linked_obj != context and mtool.checkPermission('View', linked_obj):
+        is_img = image_exp.match(value)
+        is_src = (attr == 'src')
+        no_context = (linked_obj != context)
+        can_view = mtool.checkPermission('View', linked_obj)
 
+        if is_img and is_src and no_context and can_view:
             if not embedded_images:
                 replacement = '%s' % linked_obj.absolute_url()
                 if view in ['images', '@@images']:
@@ -348,19 +356,26 @@ def update_relative_url(source, context, embedded_images = True):
                     replacement += '/' + img_size
             else:
                 try:
-                    filetype = linked_obj.getImage().getFilename().split('.')[-1]
+                    filename = linked_obj.getImage().getFilename()
+                    filetype = filename.split('.')[-1]
                     content = linked_obj.getImageAsFile().read()
 
-                    # That's the default image (in it's full size). We'll now try to
-                    # resize it.
-                    if view in ['images', '@@images'] and left_path and 'image_%s' % left_path[-1] in img_sizes:
+                    # That's the default image (in it's full size). We'll now
+                    # try to resize it.
+                    is_img_view = view in ['images', '@@images']
+                    is_img_size = (left_path and
+                                   'image_%s' % left_path[-1] in img_sizes)
+
+                    if is_img_view and is_img_size:
                         # Plone 4
                         img_view = linked_obj.restrictedTraverse('@@images')
                         img_w, img_h = img_sizes['image_%s' % left_path[-1]]
-                        content = img_view.scale(height = img_h, width = img_w).data
+                        content = img_view.scale(height=img_h,
+                                                 width=img_w).data
 
                     elif img_size:
-                        content = linked_obj.restrictedTraverse(str(img_size)).data
+                        resized = linked_obj.restrictedTraverse(str(img_size))
+                        content = resized.data
 
                 except AttributeError:
                     # that's an image in the skin folder.
@@ -372,8 +387,7 @@ def update_relative_url(source, context, embedded_images = True):
 
                 replacement = 'data:image/%s;base64,%s' % (
                     filetype,
-                    base64.encodestring(content)
-                    )
+                    base64.encodestring(content))
 
         if get_params:
             replacement += '?%s' % (get_params)

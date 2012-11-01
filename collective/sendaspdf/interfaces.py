@@ -1,7 +1,8 @@
 from zope.interface import Interface
 
+
 class ISendAsPDFOptionsMaker(Interface):
-    """ 
+    """
     """
 
     def overrideAll():
@@ -10,7 +11,7 @@ class ISendAsPDFOptionsMaker(Interface):
         provided by the user or specified in the request.
         """
 
-    def getOptions(context = None):
+    def getOptions(context=None):
         """ Returns a dictionary of options that will be applied
         to generated PDF.
         """

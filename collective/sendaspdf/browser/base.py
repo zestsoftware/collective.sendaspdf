@@ -12,6 +12,7 @@ from collective.sendaspdf.utils import md5_hash
 from collective.sendaspdf.utils import extract_from_url
 from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
 
+
 class BaseView(BrowserView):
     """ Class used to factorize some code for the different views
     used in the product.
@@ -25,7 +26,7 @@ class BaseView(BrowserView):
 
         # The list of errors found when checking the form.
         self.errors = []
-        
+
         # We get the configuration from the portal_sendaspdf
         self.pdf_tool = getToolByName(self.context,
                                       'portal_sendaspdf')
@@ -117,7 +118,6 @@ class BaseView(BrowserView):
 
         return update_relative_url(view(), self.context)
 
-
     def generate_temp_filename(self):
         """ Generates the filename used to store the PDF file.
         Basically the md5 hash of th user's email followed
@@ -196,7 +196,7 @@ class BaseView(BrowserView):
                 else:
                     options.append(str(opt_val))
 
-                options.append('--%s' % opt_name)  
+                options.append('--%s' % opt_name)
                 break
 
         return options
@@ -219,18 +219,17 @@ class BaseView(BrowserView):
         self.filename = filename
         url = self.context.absolute_url()
 
-        if self.pdf_tool.always_print_css:
-            print_css = True
-        else:
-            print_css = self.context.portal_type in \
-                        self.pdf_tool.print_css_types
+        print_css = (self.pdf_tool.always_print_css or
+                     self.context.portal_type in self.pdf_tool.print_css_types)
 
-        export_file, err = transform_module.html_to_pdf(source,
-                                                        self.tempdir,
-                                                        filename,
-                                                        url,
-                                                        print_css,
-                                                        self.get_extra_options())
+        export_file, err = transform_module.html_to_pdf(
+            source,
+            self.tempdir,
+            filename,
+            url,
+            print_css,
+            self.get_extra_options())
+
         if err:
             self.errors.append('pdf_creation_failed')
             return

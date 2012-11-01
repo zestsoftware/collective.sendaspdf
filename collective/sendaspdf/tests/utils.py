@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from Products.Five.browser import BrowserView
 from Products.SecureMailHost.SecureMailHost import SecureMailHost as MailBase
 
+
 class LongView(BrowserView):
     """ A view that takes a loooooong time
     to answer (well, about 20 seconds).
@@ -23,6 +24,7 @@ class LongView(BrowserView):
             pass
 
         return 'Ho, finished :)'
+
 
 class MockMailHost(MailBase):
     """A MailHost that collects messages instead of sending them.
@@ -51,4 +53,4 @@ class MockMailHost(MailBase):
         self.messages.append(result)
 
     def validateSingleEmailAddress(self, address):
-        return True # why not
+        return True

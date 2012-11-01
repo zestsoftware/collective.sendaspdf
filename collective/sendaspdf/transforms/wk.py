@@ -24,17 +24,18 @@ simple_options = ['book', 'collate',
                   'forms', 'grayscale', 'lowquality', 'no-background',
                   'header-line', 'footer-line',
                   'toc', 'toc-disable-back-links', 'toc-disable-links']
-                  
-valued_options = ['copies', 'cover', 'dpi',  
-                  'margin-top','margin-bottom', 'margin-left', 'margin-right',
+
+valued_options = ['copies', 'cover', 'dpi',
+                  'margin-top', 'margin-bottom', 'margin-left', 'margin-right',
                   'minimum-font-size', 'orientation',
                   'page-height', 'page-offset', 'page-size', 'page-width',
-                  'header-font-name', 'header-html', 'header-font-size', 'header-spacing',
-                  'header-left', 'header-center','header-right', 
-                  'footer-font-name', 'footer-html', 'footer-font-size', 'footer-spacing',
-                  'footer-left', 'footer-center','footer-right', 
+                  'header-font-name', 'header-html', 'header-font-size',
+                  'header-spacing', 'header-left', 'header-center',
+                  'header-right', 'footer-font-name', 'footer-html',
+                  'footer-font-size', 'footer-spacing',
+                  'footer-left', 'footer-center', 'footer-right',
                   'toc-depth', 'toc-header-text', 'cookie']
-                  
+
 
 def html_to_pdf(source, export_dir, filename,
                 original_url, use_print_css, extra_options=[]):
@@ -83,8 +84,8 @@ def html_to_pdf(source, export_dir, filename,
         proc.communicate()
         timer.cancel()
     except:
-        logger.error('Running wkhtmltopdf failed. Please check that ' + \
-                     'you use a version compatible with your OS and ' + \
+        logger.error('Running wkhtmltopdf failed. Please check that '
+                     'you use a version compatible with your OS and '
                      'the version is 0.9.')
         return None, ['pdf_generation_failed']
 
@@ -100,5 +101,5 @@ def html_to_pdf(source, export_dir, filename,
     except IOError:
         logger.error('No PDF output file')
         return None, ['pdf_generation_failed']
-        
+
     return pdf_file, None

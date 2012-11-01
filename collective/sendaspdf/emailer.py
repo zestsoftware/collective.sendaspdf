@@ -1,7 +1,7 @@
-################################################################################
+##############################################################################
 # Stollen from watcher list
-# http://svn.plone.org/svn/collective/collective.watcherlist/trunk/collective/watcherlist/
-################################################################################
+# https://github.com/collective/collective.watcherlist
+##############################################################################
 
 import logging
 from email.MIMEText import MIMEText
@@ -28,6 +28,7 @@ if zope2_egg and (zope2_egg.parsed_version >=
 logger = logging.getLogger('collective.sendaspdf')
 DEFAULT_CHARSET = 'utf-8'
 
+
 def get_charset():
     """Character set to use for encoding the email.
 
@@ -47,10 +48,12 @@ def get_charset():
         charset = getSiteEncoding(portal)
     return charset
 
+
 def su(value):
     """Return safe unicode version of value.
     """
     return safe_unicode(value, encoding=get_charset())
+
 
 def get_mail_host():
     """Get the MailHost object.
@@ -125,8 +128,9 @@ def prepare_mail_message(msg, attachment, filename):
     email_msg.attach(attach)
     return email_msg
 
+
 def send_message(mfrom, mto, subject, message, attachment, filename):
-    """ 
+    """
     """
     message = prepare_mail_message(message, attachment, filename)
 
@@ -147,12 +151,12 @@ def send_message(mfrom, mto, subject, message, attachment, filename):
                                  subject=subject,
                                  charset=header_charset)
         else:
-           mail_host.send(message,
-                          mto=mto,
-                          mfrom=mfrom,
-                          subject=subject,
-                          immediate=True,
-                          charset=header_charset)
+            mail_host.send(message,
+                           mto=mto,
+                           mfrom=mfrom,
+                           subject=subject,
+                           immediate=True,
+                           charset=header_charset)
 
     except (socket.error, SMTPException):
         logger.warn('Could not send email to %s with subject %s',

@@ -4,6 +4,7 @@ from OFS.interfaces import IFolder
 
 from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
 
+
 class FolderOptionsMaker(object):
     implements(ISendAsPDFOptionsMaker)
     component.adapts(IFolder)
