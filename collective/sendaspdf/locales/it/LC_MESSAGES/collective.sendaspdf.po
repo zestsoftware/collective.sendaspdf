@@ -166,7 +166,6 @@ msgstr "Nome del file PDF nella mail"
 
 #. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browser for which the system will not force the download. We recommend to have Chrome in the list"
 #: ./tool.py:49
-#, fuzzy
 msgid "label_help_excluded_attachments"
 msgstr "Alcuni browser potrebbero notificare all'utente che lo scaricamento del PDF danneggerà il loro computer. Inserire qui una lista di browser per i quali il sistema non forzerà il download. Si raccomanda di inserire anche Chrome in questa lista"
 
