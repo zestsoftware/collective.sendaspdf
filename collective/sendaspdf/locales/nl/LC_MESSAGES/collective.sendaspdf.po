@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: collective.sendaspdf 1.0\n"
 "POT-Creation-Date: 2012-11-01 13:00+0000\n"
 "PO-Revision-Date: 2012-02-27 13:29+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl.>\n"
+"Language-Team: Zest Software <info@zestsoftware.nl.>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
+"Domain: collective.sendaspdf\n"
 
 #: ./profiles/default/actions.xml
 msgid "Download as PDF"
@@ -88,7 +88,7 @@ msgstr "Een inhoudsopgave zal aan de gegenereerde bestanden worden toegevoegd"
 #. Default: "Allow passing the user's cookie to wkhtmltopdf"
 #: ./tool.py:103
 msgid "help_allow cookie"
-msgstr ""
+msgstr "Sta toe het cookie van de gebruiker door te geven aan wkhtmltopdf"
 
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
 #: ./tool.py:113
@@ -102,7 +102,6 @@ msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebr
 
 #. Default: "PDF generated will have a book style (will override custom margins)"
 #: ./tool.py:126
-#, fuzzy
 msgid "help_use_book_style"
 msgstr "PDF zal een boek stijl hebben (overschrijft alle handmatige marges)"
 
@@ -114,7 +113,7 @@ msgstr "Voeg inhoudsopgave toe"
 #. Default: "Allow passing cookies to sendaspdf"
 #: ./tool.py:101
 msgid "label_allow_cookie"
-msgstr ""
+msgstr "Sta toe cookie door te geven aan sendaspdf"
 
 #. Default: "Attachments"
 #: ./browser/templates/send_form.pt:126
@@ -163,7 +162,6 @@ msgstr "De naam van het PDF-bestand in de e-mail."
 
 #. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browserfor which the system will not force the download. We recommend to have Chrome in the list"
 #: ./tool.py:49
-#, fuzzy
 msgid "label_help_excluded_attachments"
 msgstr "Browsers kunnen de gebruiker waarschuwen dat het downloaden van het PDF-bestand schadelijk is voor de computer. U kunt hier browsers toevoegen die de download niet zullen forceren. We adviseren Chrome toe te voegen aan deze lijst."
 
@@ -250,7 +248,7 @@ msgstr "Inhoudsopgave"
 #. Default: "Use book style"
 #: ./tool.py:124
 msgid "label_use_book_style"
-msgstr ""
+msgstr "Gebruik de boek stijl"
 
 #. Default: "wkhtmltopdf: Simple shell utility to convert html to pdf using the webkit (Safari, Chrome) rendering engine (http://code.google.com/p/wkhtmltopdf/)"
 #: ./tool.py:232
