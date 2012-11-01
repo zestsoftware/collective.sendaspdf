@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-06-15 11:16+0000\n"
+"POT-Creation-Date: 2012-11-01 13:00+0000\n"
 "PO-Revision-Date: 2012-02-27 13:29+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,30 +81,40 @@ msgid "error_pdf_creation"
 msgstr "Er is een fout opgetreden tijdens het maken van de PDF, neem contact op met Websitebeheerder."
 
 #. Default: "A table of contents will be prepended to the generated files."
-#: ./tool.py:147
+#: ./tool.py:136
 msgid "help_add_toc"
 msgstr "Een inhoudsopgave zal aan de gegenereerde bestanden worden toegevoegd"
 
+#. Default: "Allow passing the user's cookie to wkhtmltopdf"
+#: ./tool.py:103
+msgid "help_allow cookie"
+msgstr ""
+
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
-#: ./tool.py:120
+#: ./tool.py:113
 msgid "help_print_css"
 msgstr "U kan hier registreren welke typen de printbare versie moeten gebruiken (momenteel werkt dit alleen als u wkhtmltopdf gebruikt). Een type per regel."
 
 #. Default: "Always use the print CSS (only validwith wkhtmltopdf, xhtml2pdf will use the print CSS whatever you chose)"
-#: ./tool.py:107
+#: ./tool.py:92
 msgid "help_print_css_always"
 msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebruikt)"
 
 #. Default: "PDf generated will have a book style (will override custom margins)"
-#: ./tool.py:135
+#: ./tool.py:126
 #, fuzzy
 msgid "help_use_book_style"
 msgstr "PDF zal een boek stijl hebben (overschrijft alle handmatige marges)"
 
 #. Default: "Add table of contents"
-#: ./tool.py:145
+#: ./tool.py:134
 msgid "label_add_toc"
 msgstr "Voeg inhoudsopgave toe"
+
+#. Default: "Allow passing cookies to sendaspdf"
+#: ./tool.py:101
+msgid "label_allow_cookie"
+msgstr ""
 
 #. Default: "Attachments"
 #: ./browser/templates/send_form.pt:126
@@ -137,53 +147,53 @@ msgid "label_email_address_recipient"
 msgstr "E-mailadres van de ontvanger"
 
 #. Default: "List of browsers for which PDF filename will not be forced"
-#: ./tool.py:51
+#: ./tool.py:46
 msgid "label_excluded_browsersattachments"
 msgstr "Lijst van browsers waar PDF bestandsnaam niet zal worden geforceerd"
 
 #. Default: "Directory where PDF files will be stored"
-#: ./tool.py:42
+#: ./tool.py:39
 msgid "label_export_dir"
 msgstr "Folder waar de PDF opgeslagen wordt"
 
 #. Default: "Name of the PDF file in the mail"
-#: ./tool.py:96
+#: ./tool.py:83
 msgid "label_filename_title"
 msgstr "De naam van het PDF-bestand in de e-mail."
 
-#. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browser for which the system will not force the download. We recommend to have Chrome in the list"
-#: ./tool.py:54
+#. Default: "Browsers might warn the user that downloading the PDF might harm their computer. You can set here a list of browserfor which the system will not force the download. We recommend to have Chrome in the list"
+#: ./tool.py:49
 #, fuzzy
 msgid "label_help_excluded_attachments"
 msgstr "Browsers kunnen de gebruiker waarschuwen dat het downloaden van het PDF-bestand schadelijk is voor de computer. U kunt hier browsers toevoegen die de download niet zullen forceren. We adviseren Chrome toe te voegen aan deze lijst."
 
 #. Default: "Default body of e-mails"
-#: ./tool.py:86
+#: ./tool.py:75
 msgid "label_mail_content"
 msgstr "Standaard bericht"
 
 #. Default: "Default title of e-mails"
-#: ./tool.py:75
+#: ./tool.py:66
 msgid "label_mail_title"
 msgstr "Standaard titel"
 
 #. Default: "Margin bottom"
-#: ./tool.py:178
+#: ./tool.py:161
 msgid "label_margin_bottom"
 msgstr "Marge onderkant"
 
 #. Default: "Margin left"
-#: ./tool.py:188
+#: ./tool.py:169
 msgid "label_margin_left"
 msgstr "Linker marge"
 
 #. Default: "Margin right"
-#: ./tool.py:168
+#: ./tool.py:153
 msgid "label_margin_right"
 msgstr "Rechter marge"
 
 #. Default: "Margin top"
-#: ./tool.py:158
+#: ./tool.py:145
 msgid "label_margin_top"
 msgstr "Marge bovenkant"
 
@@ -198,27 +208,27 @@ msgid "label_name_recipient"
 msgstr "Naam van de ontvanger"
 
 #. Default: "PDF generator"
-#: ./tool.py:32
+#: ./tool.py:31
 msgid "label_pdf_generator"
 msgstr "PDF generator"
 
 #. Default: "XHTML2PDF: HTML/CSS to PDF converter written in Python (http://www.xhtml2pdf.com/)"
-#: ./tool.py:245
+#: ./tool.py:228
 msgid "label_pisa"
 msgstr "XHTML2PDF: HTML/CSS naar PDF omvormer geschreven in Python (http://www.xhtml2pdf.com/)"
 
 #. Default: "Portal types using print css"
-#: ./tool.py:118
+#: ./tool.py:111
 msgid "label_print_css"
 msgstr "Typen die de printbare versie gebruiken"
 
 #. Default: "Always use print CSS"
-#: ./tool.py:105
+#: ./tool.py:90
 msgid "label_print_css_always"
 msgstr "Altijd de printbare versie gebruiken"
 
 #. Default: "SALT used when hasing users' e-mails"
-#: ./tool.py:67
+#: ./tool.py:60
 msgid "label_salt"
 msgstr "Sleutel voor het versleutelen van de e-mailadressen van de gebruikers"
 
@@ -233,17 +243,17 @@ msgid "label_title"
 msgstr "Titel"
 
 #. Default: "Table of content"
-#: ./tool.py:343
+#: ./tool.py:325
 msgid "label_toc"
 msgstr "Inhoudsopgave"
 
 #. Default: "Use book style"
-#: ./tool.py:133
+#: ./tool.py:124
 msgid "label_use_book_style"
 msgstr ""
 
 #. Default: "wkhtmltopdf: Simple shell utility to convert html to pdf using the webkit (Safari, Chrome) rendering engine (http://code.google.com/p/wkhtmltopdf/)"
-#: ./tool.py:249
+#: ./tool.py:232
 msgid "label_wk"
 msgstr "wkhtmltopdf: gebruik WebKit (Safari, Chrome) om HTML naar PDF om te zetten (http://code.google.com/p/wkhtmltopdf/)"
 
