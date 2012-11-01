@@ -100,7 +100,7 @@ msgstr "Vous pouvez spécifier ici une liste de types pour lesquels le système 
 msgid "help_print_css_always"
 msgstr "Toujours utiliser la version imprimable lors de la génération des PDFs."
 
-#. Default: "PDf generated will have a book style (will override custom margins)"
+#. Default: "PDF generated will have a book style (will override custom margins)"
 #: ./tool.py:126
 msgid "help_use_book_style"
 msgstr ""

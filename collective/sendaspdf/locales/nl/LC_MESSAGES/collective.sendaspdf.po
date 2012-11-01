@@ -100,7 +100,7 @@ msgstr "U kan hier registreren welke typen de printbare versie moeten gebruiken 
 msgid "help_print_css_always"
 msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebruikt)"
 
-#. Default: "PDf generated will have a book style (will override custom margins)"
+#. Default: "PDF generated will have a book style (will override custom margins)"
 #: ./tool.py:126
 #, fuzzy
 msgid "help_use_book_style"

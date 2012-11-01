@@ -104,7 +104,7 @@ msgstr "Qui si può specificare una lista di tipi di contenuto del portale per i
 msgid "help_print_css_always"
 msgstr "Utilizza sempre i CSS per la stampa (valido solo per wkhtmltopdf, xhtml2pdf utilizzerà i CSS per la stampa in ogni caso)"
 
-#. Default: "PDf generated will have a book style (will override custom margins)"
+#. Default: "PDF generated will have a book style (will override custom margins)"
 #: ./tool.py:126
 msgid "help_use_book_style"
 msgstr "I pdf generati avranno lo stile libro (sovrascriverà i margini personalizzati)"

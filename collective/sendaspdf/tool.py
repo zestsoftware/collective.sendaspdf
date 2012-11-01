@@ -124,7 +124,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             label=_(u'label_use_book_style',
                     default=u'Use book style'),
             description=_(u'help_use_book_style',
-                          default=u'PDf generated will have a book '
+                          default=u'PDF generated will have a book '
                           'style (will override custom margins)')),
         schemata='wk'),
 

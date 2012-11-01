@@ -100,7 +100,7 @@ msgstr ""
 msgid "help_print_css_always"
 msgstr ""
 
-#. Default: "PDf generated will have a book style (will override custom margins)"
+#. Default: "PDF generated will have a book style (will override custom margins)"
 #: ./tool.py:126
 msgid "help_use_book_style"
 msgstr ""
