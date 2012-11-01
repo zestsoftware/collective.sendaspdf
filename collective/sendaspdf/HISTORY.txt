@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.8 (unreleased)
+2.8 (2012-11-01)
 ----------------
 
 - added pep8/pyflakes checks fo Travis based on collective.polls
