@@ -47,7 +47,7 @@ def decode_parameter(p):
     We decode the '%' caracter last so we can not have confusion.
     >>> decode_parameter('%252C')
     '%2C'
-    
+
     If we did not decode it last, we could have obtained ','.
     """
     table = {'24': '$',
@@ -122,7 +122,7 @@ def extract_from_url(url, context_url):
     ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/require_login?came_from=http%3A//127.0.0.1%3A8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract%3Fwidget_id%3DplonehrmAbsenceWidget%26mode%3Dpercentage%26UID%3Dea267a725dc3ea79b4e67902d221e04e',
     ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/')
     ('require_login',
-     {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})    
+     {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})
 
     """
     if not url.startswith(context_url):
@@ -291,7 +291,7 @@ def update_relative_url(source, context, embedded_images = True):
     protocol_exp = re.compile('^(\w+:\/\/).*$')
     image_exp = re.compile('^.*\.(jpg|jpeg|gif|png).*$')
     anchor_exp = re.compile('((href)="(#[^"]+)")', re.MULTILINE|re.I|re.U)
-    
+
     items = relative_exp.findall(source)
     original_url = context.absolute_url()
 
@@ -306,7 +306,7 @@ def update_relative_url(source, context, embedded_images = True):
     for item in items:
         attr = item[1]
         value = item[2]
-                
+
         if protocol_exp.match(value):
             # That should not happen as ':' should not be recognized
             # by relative_exp.

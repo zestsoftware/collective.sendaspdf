@@ -11,7 +11,7 @@
         <span tal:replace="here/Title|nothing"
               class="documentFirstHeading">Title or id</span>
       </h1>
-      
+
       <form method="POST">
         <input type="hidden" name="answer" value="42" />
         <label>
@@ -20,9 +20,9 @@
         </label>
         <input type="submit" value="Hop" name="submit" />
       </form>
-      
+
       <br class="clear" />
-      
+
     </div>
   </body>
 </html>

@@ -17,7 +17,7 @@
          tal:attributes="class python: view.show_error_message('name') and '' or 'dont-show'"
          i18n:translate="error_empty_name">
     You have to specify your name.</div>
-    
+
     <input type="text"
            id="name"
            name="name"
@@ -40,12 +40,12 @@
          tal:attributes="class python: view.show_error_message('email') and '' or 'dont-show'"
          i18n:translate="error_empty_email">
     You have to specify your e-mail.</div>
-    
+
     <div id="error_email_invalid"
          tal:attributes="class python: view.show_error_message('invalid_email') and '' or 'dont-show'"
          i18n:translate="error_invalid_email">
     This e-mail address is not valid.</div>
-    
+
     <input type="text" id="email"
            name="email" size="25"
            tal:attributes="value values/email | nothing" />
@@ -65,7 +65,7 @@
          tal:attributes="class python: view.show_error_message('name_recipient') and '' or 'dont-show'"
          i18n:translate="error_empty_name_recipient">
     You have to specify the recipient's name.</div>
-    
+
     <input type="text"
            id="name_recipient"
            name="name_recipient"
@@ -88,12 +88,12 @@
          tal:attributes="class python: view.show_error_message('email_recipient') and '' or 'dont-show'"
          i18n:translate="error_empty_email_recipient">
     You have to specify the recipient's e-mail.</div>
-    
+
     <div id="error_invalid_email_recipient"
          tal:attributes="class python: view.show_error_message('invalid_email_recipient') and '' or 'dont-show'"
          i18n:translate="error_invalid_email">
     This e-mail address is not valid.</div>
-    
+
     <input type="text" id="email_recipient"
            name="email_recipient" size="25"
            tal:attributes="value values/email_recipient | nothing" />
@@ -113,7 +113,7 @@
          tal:attributes="class python: view.show_error_message('title') and '' or 'dont-show'"
          i18n:translate="error_empty_title">
     You have to specify a title for the e-mail.</div>
-    
+
     <input type="text"
            id="title"
            name="title"
