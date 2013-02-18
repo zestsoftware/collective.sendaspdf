@@ -18,3 +18,4 @@ notifications:
   irc:
   email:
     - v.pretre@zestsoftware.nl
+    - m.van.rees@zestsoftware.nl
