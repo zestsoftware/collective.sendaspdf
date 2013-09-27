@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.9 (unreleased)
+2.9 (2013-09-27)
 ----------------
 
 - First try to import pisa from the newer xhtml2pdf library.
