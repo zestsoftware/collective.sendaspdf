@@ -15,7 +15,12 @@ import socket
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import getSiteEncoding
 from Products.CMFPlone.utils import safe_unicode
-from zope.app.component.hooks import getSite
+try:
+    from zope.component.hooks import getSite
+    getSite  # pyflakes
+except ImportError:
+    # BBB for Plone 3
+    from zope.app.component.hooks import getSite
 from zope.component import getMultiAdapter
 
 zope2_egg = pkg_resources.working_set.find(
