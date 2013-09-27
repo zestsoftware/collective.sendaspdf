@@ -9,16 +9,16 @@ setup(name='collective.sendaspdf',
       version=version,
       description="An open source product for Plone to download or email a " +
                   "page seen by the user as a PDF file.",
-      long_description=open("README.rst").read() + "\n" +
-                       open(os.path.join("collective",
-                                         "sendaspdf",
-                                         "HISTORY.txt")).read(),
+      long_description=(open("README.rst").read() + "\n" +
+                        open(os.path.join("collective",
+                                          "sendaspdf",
+                                          "HISTORY.txt")).read()),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-        "Framework :: Plone",
-        "Programming Language :: Python",
-        ],
+          "Framework :: Plone",
+          "Programming Language :: Python",
+          ],
       keywords='',
       author='Zest Software',
       author_email='v.pretre@zestsoftware.nl',
@@ -31,7 +31,6 @@ setup(name='collective.sendaspdf',
       install_requires=[
           'setuptools',
           'jquery.pyproxy>=0.3',
-          # -*- Extra requirements: -*-
       ],
       entry_points="""
       # -*- Entry points: -*-
@@ -39,6 +38,4 @@ setup(name='collective.sendaspdf',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )
