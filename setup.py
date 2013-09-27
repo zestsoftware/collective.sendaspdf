@@ -1,14 +1,11 @@
 from setuptools import setup, find_packages
-import os
 
 setup(name='collective.sendaspdf',
       version='2.9.dev0',
       description="An open source product for Plone to download or email a " +
                   "page seen by the user as a PDF file.",
       long_description=(open("README.rst").read() + "\n" +
-                        open(os.path.join("collective",
-                                          "sendaspdf",
-                                          "HISTORY.txt")).read()),
+                        open("CHANGES.rst").read()),
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
