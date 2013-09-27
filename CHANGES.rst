@@ -4,6 +4,12 @@ Changelog
 2.9 (unreleased)
 ----------------
 
+- First try to import pisa from the newer xhtml2pdf library.
+  Note that it can be hard for both libraries, including their
+  dependencies, to find versions that work on Python 2.4 (Plone 3).
+  Generally, wkhtmltopdf is recommended.
+  [maurits]
+
 - No longer convert everything to ascii for pisa.
   [maurits]
 

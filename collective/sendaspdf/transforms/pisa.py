@@ -9,7 +9,15 @@ def html_to_pdf(source, export_dir, filename, original_url,
                 use_print_css, extra_options=[]):
     # We import pisa inside the function so it does not raise
     # import exception if pisa is not installed.
-    import ho.pisa as pisa
+    try:
+        # First try newer version of library under a different name.
+        import xhtml2pdf.pisa as pisa
+        pisa  # pyflakes
+    except ImportError:
+        # Try the old library.  Note that you can also get the above
+        # ImportError simply because you are on Python 2.4 and
+        # xhtml2pdf.pisa tries and fails to import hashlib.
+        import ho.pisa as pisa
 
     file_path = '%s/%s' % (export_dir, filename)
 
