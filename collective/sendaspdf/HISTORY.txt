@@ -15,6 +15,9 @@ Changelog
   can happen in some cases.
   [maurits]
 
+- Moved code to https://github.com/zestsoftware/jquery.pyproxy
+  [vincent, maurits]
+
 
 2.8 (2012-11-01)
 ----------------
