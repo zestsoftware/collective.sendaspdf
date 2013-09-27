@@ -4,7 +4,12 @@ Changelog
 2.9 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- When no view_name is given, do not try to get the immediate view,
+  but just display the context.  This will let the standard Zope and
+  Plone machinery do its work.  Do the same when traversing to 'view'
+  does not work even though viewing this url works just fine.  That
+  can happen in some cases.
+  [maurits]
 
 
 2.8 (2012-11-01)

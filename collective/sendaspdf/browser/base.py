@@ -105,16 +105,19 @@ class BaseView(BrowserView):
             for key in get_params:
                 self.request.form[key] = get_params[key]
 
-        if not view_name:
-            ttool = getToolByName(self.context, 'portal_types')
-            if self.context.portal_type in ttool:
-                context_type = ttool[self.context.portal_type]
-                view_name = context_type.getProperty('immediate_view')
-
         try:
             view = self.context.restrictedTraverse(view_name)
         except:
-            return
+            # For some reason, 'view' as view name can fail (at least
+            # in a client project in Plone 3.3.5), where calling the
+            # same url in a browser works just fine...  The error here is:
+            # AttributeError: 'view' object has no attribute '__of__'
+            # Just take the context as view then.
+
+            # Note that this has the same effect as calling
+            # self.context.restrictedTraverse(x), where x is None or
+            # an empty string.
+            view = self.context
 
         return update_relative_url(view(), self.context)
 
@@ -242,6 +245,8 @@ class BaseView(BrowserView):
         """ Fetches the page source and generates a PDF.
         """
         source = self.get_page_source()
+        if not source:
+            self.errors.append('no_source')
         if not self.errors:
             self.generate_pdf_file(source)
 
