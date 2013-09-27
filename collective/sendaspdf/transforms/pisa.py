@@ -16,7 +16,7 @@ def html_to_pdf(source, export_dir, filename, original_url,
     pdf_file = file(file_path, "wb")
     link_callback = pisa.pisaLinkLoader(original_url).getFileName
 
-    pdf = pisa.CreatePDF(str(source.encode('ascii', 'replace')),
+    pdf = pisa.CreatePDF(source,
                          pdf_file,
                          log_warn=1,
                          log_err=1,

@@ -4,6 +4,9 @@ Changelog
 2.9 (unreleased)
 ----------------
 
+- No longer convert everything to ascii for pisa.
+  [maurits]
+
 - Do the possible encoding to utf-8 in one spot, before calling
   a html_to_pdf transform method.
   [maurits]
