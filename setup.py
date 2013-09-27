@@ -30,7 +30,7 @@ setup(name='collective.sendaspdf',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'jquery.pyproxy',
+          'jquery.pyproxy>=0.3',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

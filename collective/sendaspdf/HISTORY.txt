@@ -4,6 +4,10 @@ Changelog
 2.9 (unreleased)
 ----------------
 
+- Do not use deprecated clean_string from jquery.pyproxy anymore.
+  Requires jquery.pyproxy 0.3 or higher.
+  [maurits]
+
 - When no view_name is given, do not try to get the immediate view,
   but just display the context.  This will let the standard Zope and
   Plone machinery do its work.  Do the same when traversing to 'view'

@@ -1,7 +1,6 @@
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 from jquery.pyproxy.plone import jquery, JQueryProxy
-from jquery.pyproxy.base import clean_string
 
 from collective.sendaspdf.browser.send import SendForm
 from collective.sendaspdf.utils import update_relative_url
@@ -27,7 +26,7 @@ class SendAsPDFAjax(SendForm):
 
         # the self.index(self) looks really weird, but it does
         # not work in plone 4 with just self.index().
-        jq('#send_as_pdf_popup').html(clean_string(self.index(self)))
+        jq('#send_as_pdf_popup').html(self.index(self))
         jq('#send_as_pdf_popup').send_as_pdf_lightbox()
 
         return jq
@@ -60,7 +59,7 @@ class SendAsPDFAjax(SendForm):
         if not self.errors:
             self.process_form()
             self.index = ZopeTwoPageTemplateFile('templates/ajax.pt')
-            jq('#send_as_pdf_popup').html(clean_string(self.index(self)))
+            jq('#send_as_pdf_popup').html(self.index(self))
         else:
             # First update the fields class.
             for field in ['name_recipient',
