@@ -7,12 +7,14 @@ install:
   - sudo apt-get install -qq pep8 pyflakes
   - python bootstrap.py
   - bin/buildout
-  - parts/wkhtmltopdf/wkhtmltopdf http://www.google.com google.pdf
+  - parts/wkhtmltopdf/wkhtmltopdf --version
+  - parts/wkhtmltopdf/wkhtmltopdf --help
 
 script:
   - bin/test -m collective.sendaspdf
   - pyflakes collective
   - pep8 collective 
+  - parts/wkhtmltopdf/wkhtmltopdf http://www.google.com google.pdf
 
 notifications:
   irc:
