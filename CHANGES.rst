@@ -4,6 +4,10 @@ Changelog
 2.9 (unreleased)
 ----------------
 
+- Do the possible encoding to utf-8 in one spot, before calling
+  a html_to_pdf transform method.
+  [maurits]
+
 - Do not use deprecated clean_string from jquery.pyproxy anymore.
   Requires jquery.pyproxy 0.3 or higher.
   [maurits]

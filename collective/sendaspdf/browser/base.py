@@ -225,6 +225,12 @@ class BaseView(BrowserView):
         print_css = (self.pdf_tool.always_print_css or
                      self.context.portal_type in self.pdf_tool.print_css_types)
 
+        # When the source is sent through Ajax, it's already encoded
+        # as a utf-8 string.  When using it without javascript, the
+        # source comes from a view, which always returns unicode.  In
+        # that case we need to encode it.
+        if isinstance(source, unicode):
+            source = source.encode('utf-8')
         export_file, err = transform_module.html_to_pdf(
             source,
             self.tempdir,
