@@ -4,7 +4,9 @@ Changelog
 2.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Added posibility of disabling auto cleanup step. Can be set in the 
+plone control panel. Default is enabled.
+[olimpiurob]
 
 
 2.9 (2013-09-27)

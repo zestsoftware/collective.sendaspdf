@@ -53,6 +53,16 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                           'for which the system will not force the download. '
                           'We recommend to have Chrome in the list'))),
 
+    atapi.BooleanField(
+        name='auto_cleanup_pdf',
+        default=True,
+        widget=atapi.BooleanWidget(
+            label=_(u'label_auto_cleanup_pdf',
+                    default=u'Auto cleanup'),
+            description=_(u'help_auto_cleanup_pdf',
+                          default=u'Automatic cleanup of temporarily '
+                          'generated pdf files'))),
+
     atapi.StringField(
         name='salt',
         default='salt_as_pdf',
@@ -269,14 +279,18 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         return metadata['last_clean']
 
     def registerPDF(self, filename):
-        """ Registers a PDF filename in the list.
+        """ Registers a PDF filename in the list if auto_cleanup is enabled.
         """
-        now = datetime.now()
-        pdfs = self.getPDFList()
-        pdfs[filename] = now
+        auto_cleanup = self.getAuto_cleanup_pdf()
 
-        if (now - self.get_last_clean()).seconds > 1000:
-            self.cleanPDFs()
+        if auto_cleanup:
+            now = datetime.now()
+            pdfs = self.getPDFList()
+
+            pdfs[filename] = now
+
+            if (now - self.get_last_clean()).seconds > 1000:
+                self.cleanPDFs()
 
     def cleanPDFs(self):
         """ Removes from the filesystem the list of PDF
