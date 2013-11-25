@@ -4,21 +4,21 @@ SendAsPDF functional test cases
 Setup and check
 ---------------
 
-First step, we have to set up the system:
+First step, we have to set up the system::
 
     >>> self.setup_data()
 
-Let's first test if our pages are there (there is some problems with
-Plone 3 when displaying the 'folder_contents' view due to the page
+Let's first test if our pages are there (there is some problem with
+Plone 3 when displaying the ``folder_contents`` view due to the page
 containing non-ascii characters in the title, so we use the
-folder_listing view)::
+``folder_listing`` view)::
 
     >>> self.login_as_manager()
     >>> self.browser.open('http://nohost/plone/selectViewTemplate?templateId=folder_listing')
     >>> ['Plone (%s)' % lang in self.browser.contents for lang in self.data.keys()]
     [True, True, True]
 
-And if they contain what they are supposed to contain:
+And check if they contain what they are supposed to contain::
 
     >>> for lang, text in self.data.items():
     ...     self.browser.open('http://nohost/plone/plone-%s' % lang)
@@ -39,8 +39,8 @@ Ok, now we can test that we can send those pages as PDF.
 1 - Links availability
 ----------------------
 
-collective.sendaspdf adds link at the bottom of the page to allow
-sending the page as a PDF file or to download it.
+``collective.sendaspdf`` adds link at the bottom of the page to allow
+sending the page as a PDF file or to download it::
 
     >>> self.browser.open('http://nohost/plone/')
     >>> self.get_sendaspdf_actions()
@@ -50,7 +50,7 @@ sending the page as a PDF file or to download it.
      'href': '.../plone/front-page/download_as_pdf?page_url=http://nohost/plone/'}]
 
 
-If we open another page, the link URL changes (well, makes sense ...):
+If we open another page, the link URL changes (well, makes sense ...)::
 
     >>> self.browser.open('http://nohost/plone/plone-fr')
     >>> self.get_sendaspdf_actions()
@@ -61,7 +61,7 @@ If we open another page, the link URL changes (well, makes sense ...):
 
 
 If we open the page with GET parameters, they will also be kept for
-the PDF generation (not in the same order, but that is not a real problem):
+the PDF generation (not in the same order, but that is not a real problem)::
 
     >>> self.browser.open('http://nohost/plone/plone-fr?first=1&second=two&third=trois')
     >>> self.get_sendaspdf_actions()
@@ -71,8 +71,8 @@ the PDF generation (not in the same order, but that is not a real problem):
      'href': '.../plone/plone-fr/download_as_pdf?page_url=http://nohost/plone/plone-fr?second=two&third=trois&first=1'}]
 
 
-Parameters posted as POST will not be taken into account when
-computing the page URL:
+Parameters posted as ``POST`` will not be taken into account when
+computing the page URL::
 
     >>> self.browser.open('http://nohost/plone/post_form/')
     >>> self.browser.getControl(name='text').value='Some text here'
@@ -84,9 +84,9 @@ computing the page URL:
       'href': '.../plone/front-page/download_as_pdf?page_url=http://nohost/plone/'}]
 
 
-Theoritically, we should be able to split GET and POST parameters, in
-order to use the GET parameters when computing the new URI.
-In practice it does not work yet:
+Theoretically, we should be able to split ``GET`` and ``POST`` parameters, in
+order to use the ``GET`` parameters when computing the new URI.
+In practice it does not work yet::
 
     >>> self.browser.open('http://nohost/plone/mixed_form/')
     >>> self.browser.getControl(name='text').value='Some text here'
@@ -97,7 +97,7 @@ In practice it does not work yet:
      {'text': 'Download as PDF',
       'href': '.../plone/front-page/download_as_pdf?page_url=http://nohost/plone/'}]
 
-This should be the extracted links:
+This should be the extracted links::
 
     [{'text': 'Send as PDF',
       'href': '.../plone/front-page/send_as_pdf?page_url=http://nohost/plone/?a_get_param=12},
@@ -107,13 +107,14 @@ This should be the extracted links:
 2 - Tool setup
 --------------
 
-collective.sendaspdf allows some settings in the plone control panel:
+``collective.sendaspdf`` allows some settings in the Plone control panel::
 
     >>> self.browser.open('http://nohost/plone/')
     >>> self.browser.getLink('Site Setup').click()
 
-The URL differs in Plone 3 and 4, but this should be ok to check we
-really are in the control panel:
+The URL differs in Plone 3 and 4, but this should be OK to check we
+really are in the control panel::
+
     >>> self.browser.url in ['http://nohost/plone/plone_control_panel',
     ...                      'http://nohost/plone/@@overview-controlpanel']
     True
@@ -125,7 +126,7 @@ really are in the control panel:
     >>> self.browser.url
     'http://nohost/plone/portal_sendaspdf'
 
-Now we'll check the default settings are there and correct:
+Now we'll check that the default settings are there and correct::
 
     >>> self.list_available_controls(form_name='edit_form',
     ...                              hidden=['mail_content_text_format:default'])
@@ -151,13 +152,13 @@ Now we'll check the default settings are there and correct:
     ...
 
 We will not test if we can correctly change settings etc, that's
-handled by Archetype which works quite well for this kind of things.
+handled by Archetypes which works quite well for this kind of thing.
 We'll edit them later for some tests (for example the email generation).
 
 3 - PDF download
 ----------------
 
-First, we will download the PDF generated by the english page about Plone:
+First, we will download the PDF generated by the English page about Plone::
 
     >>> self.browser.open('http://nohost/plone/')
     >>> self.browser.getLink('Download as PDF').click()
@@ -171,7 +172,7 @@ First, we will download the PDF generated by the english page about Plone:
 
 Let's test the pages we've created previously (the output sucks a bit,
 there's a space appearing after Plone's "p", but the thing to test
-here is how we handle non-ASCII characters):
+here is how we handle non-ASCII characters)::
 
     >>> self.browser.open('http://nohost/plone/plone-en')
     >>> self.browser.getLink('Download as PDF').click()
@@ -181,12 +182,12 @@ here is how we handle non-ASCII characters):
     P lone is a free and open source...
     ...
 
-We'll also test that the filename is correct:
+We'll also test that the filename is correct::
 
     >>> self.browser.headers.get('content-disposition')
     'attachment; filename="Plone (en).pdf"'
 
-Same thing for the French page:
+Same thing for the French page::
 
     >>> self.browser.open('http://nohost/plone/plone-fr')
     >>> self.browser.getLink('Download as PDF').click()
@@ -200,7 +201,7 @@ Same thing for the French page:
     >>> self.browser.headers.get('content-disposition')
     'attachment; filename="Plone (fr).pdf"'
 
-And the Japanese one:
+And the Japanese one::
 
     >>> self.browser.open('http://nohost/plone/plone-jp')
     >>> self.browser.getLink('Download as PDF').click()
@@ -213,7 +214,7 @@ And the Japanese one:
     >>> self.browser.headers.get('content-disposition')
     'attachment; filename="Plone (jp).pdf"'
 
-Now the one with Cyrilic in the title:
+Now the one with Cyrilic in the title::
 
     >>> self.browser.open(self.cyrilic_title_page_url)
     >>> self.browser.getLink('Download as PDF').click()
@@ -221,7 +222,7 @@ Now the one with Cyrilic in the title:
 There is a problem with setting headers containing non-ascii
 characters. So instead we use the id of the page (note that the page
 id is quite different from the title, see
-collective.sendaspdf/tests/base.cfg, around line 172 for more explanations):
+``collective.sendaspdf/tests/base.cfg``, around line 172 for more explanations)::
 
     >>> self.cyrilic_title_page_url
     'http://nohost/plone/cyrilic-title-page'
@@ -236,12 +237,12 @@ collective.sendaspdf/tests/base.cfg, around line 172 for more explanations):
     'attachment; filename="cyrilic-title-page.pdf"'
 
 
-4 - Relative path replacments
------------------------------
+4 - Relative path replacements
+-------------------------------
 
 The tool is updating the relative paths in the document's content to
 avoid dead links.
-For that, we need a bit of context.
+For that, we need a bit of context::
 
     >>> _ = self.create_folder(self.portal, 'root')
     >>> _ = self.create_folder(self.portal['root'], 'sub_folder1')

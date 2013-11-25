@@ -29,9 +29,10 @@ And some pages/images::
 utils.extract_from_url:
 -----------------------
 
-More test fron the function's doctests.
+More tests from the function's doctests.
 
-The system can recognise parameters with special caracters.
+The system can recognise parameters with special characters::
+
     >>> utils.extract_from_url(
     ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/require_login?came_from=http%3A//127.0.0.1%3A8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract%3Fwidget_id%3DplonehrmAbsenceWidget%26mode%3Dpercentage%26UID%3Dea267a725dc3ea79b4e67902d221e04e',
     ...     'http://127.0.0.1:8080/hostedhrm/acl_users/credentials_cookie_auth/')
@@ -78,7 +79,7 @@ As usual with Zope, there's some dark Acquisition magic taking effect::
     (<ATDocument at /plone/folder1/my-page used for /plone/folder1/folder1.1/a-new-page>, None, None, None)
 
 
-This system can also handle data existing in skin folder (depending in
+This system can also handle data existing in skin folder (depending on the
 Plone version, the name displayed may change so we use ellipsis to
 keep the tests running, the important thing is that it's getting the
 FS image object) ::
@@ -112,8 +113,8 @@ the last part of the tuple::
 
 
 This is mainly used for images inserted in Plone 4 with TinyMCE, the
-URL is <path_to_my_image>@@images/image/thumb).
-The @@images view does not exist in Plone 3, that explains the ugly
+URL is ``<path_to_my_image>@@images/image/thumb``.
+The ``@@images`` view does not exist in Plone 3, that explains the ugly
 hack :/ ::
 
     >>> if self.is_plone_3:
@@ -123,8 +124,8 @@ hack :/ ::
     (<ATImage at /plone/folder1/folder1.1/blink.png>, '@@images', None, ('image', 'thumb'))
 
 
-With Plone 3, the path was <path_to_my_image>image_thumb. In that
-case, the size appears in the third argument of the tuple:
+With Plone 3, the path was ``<path_to_my_image>image_thumb``. In that
+case, the size appears in the third argument of the tuple::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('blink.png', 'image_thumb', ))
     (<ATImage at /plone/folder1/folder1.1/blink.png used for /plone/folder1/folder1.1/a-new-page>, None, 'image_thumb', ())
