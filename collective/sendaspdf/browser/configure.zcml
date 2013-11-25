@@ -48,7 +48,7 @@
       permission="zope2.View"
       />
 
-  <!-- Page used in portal actons to get the real url
+  <!-- Page used in portal actions to get the real url
       of the current page (including GET parameters). -->
   <browser:page
       for="*"

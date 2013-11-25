@@ -79,8 +79,8 @@ The quickest (but not cleanest) way to override/define options is to
 set them in the link to download the PDF.
 
 There's two types of options: valued or not valued. The valued ones
-are defined in ``collective/sendaspdf/transforms/<transformer
-name>.py/valued_options::
+are defined in 
+``collective/sendaspdf/transforms/<transformer name>.py/valued_options``::
 
     >>> from collective.sendaspdf.transforms import wk
     >>> wk.valued_options
@@ -91,13 +91,13 @@ name>.py/valued_options::
      'footer-spacing', 'footer-left', 'footer-center', 'footer-right', 'toc-depth', 'toc-header-text',
      'cookie']
 
-The non-valued ones are defined in the ``simple_options`` attribute:
+The non-valued ones are defined in the ``simple_options`` attribute::
 
     >>> wk.simple_options
-    ['book', 'collate', 'disable-external-links', 'disable-internal-links', 'disable-pdf-compression',
-     'disable-smart-shrinking', 'forms', 'grayscale', 'lowquality', 'no-background', 'header-line',
+    ['book', 'collate', 'disable-external-links', 'disable-internal-links',
+     'disable-pdf-compression', 'disable-smart-shrinking', 'forms',
+     'grayscale', 'lowquality', 'no-background', 'header-line',
      'footer-line', 'toc', 'toc-disable-back-links', 'toc-disable-links']
-
 
 First, we create a simple function to generate a link to download a
 PDF with options. Those parameters are simple GET parameters::
@@ -153,7 +153,7 @@ Adapter solution
 ----------------
 
 The second solution to customize the PDF generation is to create an
-adapter implementing ISendAsPDFOptionsMaker::
+adapter implementing ``ISendAsPDFOptionsMaker``::
 
     >>> from collective.sendaspdf.interfaces import ISendAsPDFOptionsMaker
 
@@ -176,6 +176,7 @@ Let's first check that our adapter can be called::
     <collective.sendaspdf.tests.folder_adapter.FolderOptionsMaker object at ...>
 
 Adapters must define two methods:
+
  - ``overrideAll`` returns a boolean telling if the settings
    given by the adapter have to override the ones specified in the tool
    or in the request::
@@ -184,7 +185,7 @@ Adapters must define two methods:
     False
 
  - ``getOptions`` returns a dictionary of options that must be passed
-   to the pdf maker. 
+   to the pdf maker::
 
     >>> adapter.getOptions()
     {'footer-center': 'Plone site',
@@ -266,8 +267,8 @@ the ones specified in the request and the tool.
 Caveats / things to remember
 ----------------------------
 
-The adapter is called based on the page context, not the page source url.
-For example, if I call the page download a pdf with the portal as
+The adapter is called based on the page context, not the page source URL.
+For example, if I call the page to download a PDF with the portal as
 context, then the previously created adapter will be used, whatever
 the downloaded page is::
 

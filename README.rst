@@ -1,29 +1,29 @@
 Introduction
 ============
 
-collective.sendaspdf is an open source product for Plone that
+``collective.sendaspdf`` is an open source product for Plone that
 allows downloading the page seen by the user as a PDF file. It also
-provide a form to send the page by e-mail (a screenshot of the current
+provides a form to send the page by e-mail (a screenshot of the current
 page in a PDF format being joined to the e-mail).
 
-It relies on two products to generate the PDF files:
+It relies on either of two products to generate the PDF files:
 
-- xhtml2pdf: http://www.xhtml2pdf.com/
+- ``xhtml2pdf``: http://www.xhtml2pdf.com/
 
-- wkhtmltopdf: http://code.google.com/p/wkhtmltopdf/
+- ``wkhtmltopdf``: http://code.google.com/p/wkhtmltopdf/
 
-The site manager can easily chose which solution he prefers for
+The site manager can easily choose which solution he prefers for
 the generation.
 
 Installing
 ==========
 
-To install the package, you can simply add 'collective.sendaspdf'
+To install the package, you can simply add ``collective.sendaspdf``
 to the eggs list in your buildout.
 Then install it using Zope's quick installer or Plone's add-on
 products manager.
 
-To install xhtml2pdf, add the following to your buildout eggs
+To install ``xhtml2pdf``, add the following to your buildout eggs
 directory::
 
      pisa
@@ -31,16 +31,16 @@ directory::
      html5lib
      reportlab
 
-collective.sendaspdf has been tested with development versions of
-pisa and html5lib. With the latest releases (when writing this
-README - html5lib 0.9 and pisa 3.0.33) some pages could not be
+``collective.sendaspdf`` has been tested with development versions of
+``pisa`` and ``html5lib``. With the latest releases (when writing this
+README - ``html5lib`` 0.9 and ``pisa`` 3.0.33) some pages could not be
 rendered.
 
-To install wkhtmltopdf, go to the projects page and download an
+To install ``wkhtmltopdf``, go to the projects page and download an
 executable version for your OS. Install it so the command
-'wkhtmltopdf' is in the PATH.
+``wkhtmltopdf`` is in the PATH.
 You can also update your buildout to automatically download 
-wkhtmltopdf and have it used by your instance using the following
+``wkhtmltopdf`` and have it used by your instance using the following
 recipes::
 
   [buildout]
@@ -69,7 +69,7 @@ recipes::
        mv wkhtmltopdf-amd64 wkhtmltopdf
        chmod +x wkhtmltopdf
 
-As you can see in this configuration, the zserver-threads number has
+As you can see in this configuration, the ``zserver-threads`` number has
 been pushed to 7. This avoids troubles with threads locks when
 multiple PDFs are rendered at the same time.
 7 threads work fine when rendering 5 PDFs of the same page at the same
