@@ -10,5 +10,6 @@ dist*
 bin/
 develop-eggs/
 eggs/
+local.cfg
 parts/
 var/
