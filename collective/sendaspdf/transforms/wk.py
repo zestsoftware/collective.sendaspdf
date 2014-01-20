@@ -56,14 +56,16 @@ def html_to_pdf(source, export_dir, filename,
     # Run the wkhtmltopdf command.
     args = [wk_command,
             '--disable-javascript',
+            '--encoding',
+            'utf-8',
             'file://%s/%s' % (export_dir, html_filename),
             '%s/%s' % (export_dir, filename)]
 
     if use_print_css:
-        args.insert(2, '--print-media-type')
+        args.insert(4, '--print-media-type')
 
     for opt in extra_options:
-        args.insert(2, opt)
+        args.insert(4, opt)
 
     try:
         proc = subprocess.Popen(args,
