@@ -4,7 +4,9 @@ Changelog
 2.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Pass ``--encoding utf-8`` to wkhtmltopdf.  Fixes possible encoding
+  error.
+  [jean]
 
 
 2.9 (2013-09-27)
