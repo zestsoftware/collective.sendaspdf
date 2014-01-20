@@ -118,11 +118,21 @@ def extract_from_url(url, context_url):
     ...                  context_url)
     ('', {'p2': ['blabla', 'blublu'], 'p1': '12'})
 
+    Check issue 11, where there are problems with colons in the
+    querystring.  Could be better to use urlparse.parse_qs
+    See https://github.com/zestsoftware/collective.sendaspdf/issues/11
+    >>> extract_from_url(context_url + '?ref=562a&to_date=2013-12-31 00:00',
+    ...                  context_url)
+    ('', {'ref': '562a', 'to_date': '2013-12-31 00:00'})
+    >>> extract_from_url(context_url + '?ref=562a&to_date=2013-12-31',
+    ...                  context_url)
+    ('', {'ref': '562a', 'to_date': '2013-12-31'})
+
     """
     if not url.startswith(context_url):
         return None, None
 
-    carac_class = '[A-Za-z0-9_ %/\\.\\-]'
+    carac_class = '[A-Za-z0-9_ %/\\.\\-:]'
 
     reg = r'^' + context_url + '/? ' + \
           '?((@@)?(' + carac_class + '*)/?)?' + \
