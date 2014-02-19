@@ -7,6 +7,9 @@ install:
   - sudo apt-get install -qq pep8 pyflakes
   - python bootstrap.py
   - bin/buildout
+  - ls -l parts/wkhtmltopdf/
+  - ./parts/wkhtmltopdf/wkhtmltopdf
+  - parts/wkhtmltopdf/wkhtmltopdf
   - parts/wkhtmltopdf/wkhtmltopdf --version
   - parts/wkhtmltopdf/wkhtmltopdf --help
 

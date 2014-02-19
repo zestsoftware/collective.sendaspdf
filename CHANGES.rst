@@ -1,12 +1,20 @@
 Changelog
 =========
 
-2.10 (unreleased)
+2.11 (unreleased)
 -----------------
 
 - Added posibility of disabling auto cleanup step. Can be set in the 
 plone control panel. Default is enabled.
 [olimpiurob]
+
+
+2.10 (2014-01-20)
+-----------------
+
+- Pass ``--encoding utf-8`` to wkhtmltopdf.  Fixes possible encoding
+  error.
+  [jean]
 
 
 2.9 (2013-09-27)

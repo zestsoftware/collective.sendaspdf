@@ -80,7 +80,7 @@ def decode_parameter(p):
 
 
 def extract_from_url(url, context_url):
-    """ Extracts the view name and the list of get
+    """ Extracts the view name and the list of GET
     parameters from an URL, using the base context URL
     to extract the view name.
 
@@ -92,7 +92,7 @@ def extract_from_url(url, context_url):
     (None, None)
 
     If the two addresses are the same, we do not have any
-    get parameter or view.
+    GET parameter or view.
     >>> context_url = 'http://bla.com/my_folder/my_context'
     >>> extract_from_url(context_url, context_url)
     ('', {})
@@ -112,17 +112,27 @@ def extract_from_url(url, context_url):
     >>> extract_from_url(context_url + '?p1=12&p2=blabla', context_url)
     ('', {'p2': 'blabla', 'p1': '12'})
 
-    If a GET parameter if present twice, then he corresponding value
-    in the dictionnary will be a list containing all values.
+    If a GET parameter is present twice, then the corresponding value
+    in the dictionary will be a list containing all values.
     >>> extract_from_url(context_url + '?p1=12&p2=blabla&p2=blublu',
     ...                  context_url)
     ('', {'p2': ['blabla', 'blublu'], 'p1': '12'})
+
+    Check issue 11, where there are problems with colons in the
+    querystring.  Could be better to use urlparse.parse_qs
+    See https://github.com/zestsoftware/collective.sendaspdf/issues/11
+    >>> extract_from_url(context_url + '?ref=562a&to_date=2013-12-31 00:00',
+    ...                  context_url)
+    ('', {'ref': '562a', 'to_date': '2013-12-31 00:00'})
+    >>> extract_from_url(context_url + '?ref=562a&to_date=2013-12-31',
+    ...                  context_url)
+    ('', {'ref': '562a', 'to_date': '2013-12-31'})
 
     """
     if not url.startswith(context_url):
         return None, None
 
-    carac_class = '[A-Za-z0-9_ %/\\.\\-]'
+    carac_class = '[A-Za-z0-9_ %/\\.\\-:]'
 
     reg = r'^' + context_url + '/? ' + \
           '?((@@)?(' + carac_class + '*)/?)?' + \
@@ -134,7 +144,7 @@ def extract_from_url(url, context_url):
 
     view_name = match[3]
 
-    # We still need to extract parameters more propertly.
+    # We still need to extract parameters more properly.
     get_params = {}
     if match[6]:
         for couple in match[5].split('&'):
