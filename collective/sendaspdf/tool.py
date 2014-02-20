@@ -282,15 +282,16 @@ class SendAsPDFTool(ImmutableId, ATDocument):
         """ Registers a PDF filename in the list if auto_cleanup is enabled.
         """
         auto_cleanup = self.getAuto_cleanup_pdf()
+        if not auto_cleanup:
+            return
 
-        if auto_cleanup:
-            now = datetime.now()
-            pdfs = self.getPDFList()
+        now = datetime.now()
+        pdfs = self.getPDFList()
 
-            pdfs[filename] = now
+        pdfs[filename] = now
 
-            if (now - self.get_last_clean()).seconds > 1000:
-                self.cleanPDFs()
+        if (now - self.get_last_clean()).seconds > 1000:
+            self.cleanPDFs()
 
     def cleanPDFs(self):
         """ Removes from the filesystem the list of PDF
