@@ -4,7 +4,10 @@ Changelog
 2.11 (unreleased)
 -----------------
 
-- Added posibility of disabling auto cleanup step. Can be set in the
+- Make it compatible with wkhtmltopdf 0.12.0 and improved logging on errors
+  [avoinea]
+
+- Added possibility of disabling auto cleanup step. Can be set in the
   plone control panel. Default is enabled.
   [olimpiurob]
 
