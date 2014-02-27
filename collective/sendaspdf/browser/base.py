@@ -171,6 +171,8 @@ class BaseView(BrowserView):
         else:
             opts_order.append(adapter_options)
 
+        toc_options = []
+
         # First we check the options for which no value is
         # needed.
         # For each one, it is possible to define a --no-xxx
@@ -181,8 +183,14 @@ class BaseView(BrowserView):
                     break
 
                 if opts.get(opt_name, None is not None):
-                    options.append('--%s' % opt_name)
+                    if opt_name == 'toc':
+                        toc_options.append(opt_name)
+                    elif opt_name.startswith('toc'):
+                        toc_options.insert(0, '--%s' % opt_name)
+                    else:
+                        options.append('--%s' % opt_name)
                     break
+
         # Then we check values that expect a value.
         for opt_name in transform_module.valued_options:
             for opts in opts_order:
@@ -190,6 +198,12 @@ class BaseView(BrowserView):
 
                 if opt_val is None:
                     continue
+
+                # Handle toc options
+                if opt_name.startswith('toc'):
+                    toc_options.insert(0, '--%s' % opt_name)
+                    toc_options.insert(0, str(opt_val))
+                    break
 
                 # Value is put before the option name as we
                 # insert them after in another list using l.insert(2, opt)
@@ -202,7 +216,8 @@ class BaseView(BrowserView):
                 options.append('--%s' % opt_name)
                 break
 
-        return options
+        toc_options.extend(options)
+        return toc_options
 
     def generate_pdf_file(self, source):
         """ Generates a PDF file from the given source
