@@ -2,6 +2,10 @@ language: python
 python:
   - 2.7
 
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y xz
+  
 install:
   - $(which echo) -e "[buildout]\nextends = buildout.d/travis.cfg" > buildout.cfg
   - sudo apt-get install -qq pep8 pyflakes
@@ -22,5 +26,5 @@ script:
 notifications:
   irc:
   email:
-    - v.pretre@zestsoftware.nl
+    - f.van.dijk@zestsoftware.nl
     - m.van.rees@zestsoftware.nl
