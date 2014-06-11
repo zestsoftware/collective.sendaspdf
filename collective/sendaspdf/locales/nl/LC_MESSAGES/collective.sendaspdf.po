@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: collective.sendaspdf 1.0\n"
 "POT-Creation-Date: 2014-06-11 16:16+0000\n"
-"PO-Revision-Date: 2012-02-27 13:29+0100\n"
+"PO-Revision-Date: 2014-06-11 18:29+0200\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl.>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl.>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Sta toe het cookie van de gebruiker door te geven aan wkhtmltopdf"
 #. Default: "Automatic cleanup of temporarily generated pdf files"
 #: ./tool.py:62
 msgid "help_auto_cleanup_pdf"
-msgstr ""
+msgstr "Automatische verwijdering van tijdelijk aangemaakte PDF-bestanden"
 
 #. Default: "You can register here a list of portal types for which the system must use the print CSS instead of the screen one (currently only working if you use wkhtmltopdf. xhtml2pdf uses the print CSS by default). One type per line"
 #: ./tool.py:123
@@ -107,9 +107,8 @@ msgstr "Gebruik altijd de printbare versie (alleen geldig als u wkhtmltopdf gebr
 
 #. Default: "PDF generated will have a book style (will override custom margins). This is not supported by all wkhtmltopdf versions."
 #: ./tool.py:136
-#, fuzzy
 msgid "help_use_book_style"
-msgstr "PDF zal een boek stijl hebben (overschrijft alle handmatige marges)"
+msgstr "PDF zal een boek stijl hebben (overschrijft alle handmatige marges). Dit wordt niet ondersteund door alle wkhtmltopdf versies."
 
 #. Default: "Add table of contents"
 #: ./tool.py:146
@@ -129,7 +128,7 @@ msgstr "Bijlagen"
 #. Default: "Auto cleanup"
 #: ./tool.py:60
 msgid "label_auto_cleanup_pdf"
-msgstr ""
+msgstr "Automatische opschoning"
 
 #. Default: "Cancel"
 #: ./browser/templates/send_form.pt:193
