@@ -136,6 +136,9 @@ Now we'll check that the default settings are there and correct::
      <ItemControl name='pdf_generator' type='select' optionValue='wk' selected=True>]
     tempdir: /tmp/ (text)
     excluded_browser_attachment:lines:  (textarea)
+    auto_cleanup_pdf:boolean: True (checkbox)
+    [<ItemControl name='auto_cleanup_pdf:boolean' type='checkbox' optionValue='on' selected=True>]
+    auto_cleanup_pdf:boolean:default:  (hidden)
     salt: salt_as_pdf (text)
     mail_title:  (text)
     mail_content_text_format: text/html (hidden)
