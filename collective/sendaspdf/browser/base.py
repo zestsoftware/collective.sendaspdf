@@ -180,7 +180,7 @@ class BaseView(BrowserView):
                 if opts.get('--no-%s' % opt_name):
                     break
 
-                if opts.get(opt_name, None):
+                if opts.get(opt_name, None) is not None:
                     options.append('--%s' % opt_name)
                     break
         # Then we check values that expect a value.
