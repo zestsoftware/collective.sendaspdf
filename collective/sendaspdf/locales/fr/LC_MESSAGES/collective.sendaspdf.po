@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-10-07 08:37+0000\n"
+"POT-Creation-Date: 2014-06-11 16:16+0000\n"
 "PO-Revision-Date: 2012-11-01 14:01+0100\n"
 "Last-Translator: Vincent Pretre\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgid "error_pdf_creation"
 msgstr "Une erreur est apparue lors de la génération du fichier PDF, veuillez contacter l'admnistrateur du site."
 
 #. Default: "A table of contents will be prepended to the generated files."
-#: ./tool.py:146
+#: ./tool.py:148
 msgid "help_add_toc"
 msgstr "Un sommaire sera ajouté au document"
 
@@ -105,15 +105,16 @@ msgstr "Vous pouvez spécifier ici une liste de types pour lesquels le système 
 msgid "help_print_css_always"
 msgstr "Toujours utiliser la version imprimable lors de la génération des PDFs."
 
-#. Default: "PDF generated will have a book style (will override custom margins)"
+#. Default: "PDF generated will have a book style (will override custom margins). This is not supported by all wkhtmltopdf versions."
 #: ./tool.py:136
+#, fuzzy
 msgid "help_use_book_style"
 msgstr ""
 "Le document utilisera le style \"livre\" (note: les marges que vous\n"
 "definirez ne seront pas prises en compte)"
 
 #. Default: "Add table of contents"
-#: ./tool.py:144
+#: ./tool.py:146
 msgid "label_add_toc"
 msgstr "Generer un sommaire"
 
@@ -188,22 +189,22 @@ msgid "label_mail_title"
 msgstr "Titre par défaut des e-mails"
 
 #. Default: "Margin bottom"
-#: ./tool.py:171
+#: ./tool.py:173
 msgid "label_margin_bottom"
 msgstr "Marge basse"
 
 #. Default: "Margin left"
-#: ./tool.py:179
+#: ./tool.py:181
 msgid "label_margin_left"
 msgstr "Marge gauche"
 
 #. Default: "Margin right"
-#: ./tool.py:163
+#: ./tool.py:165
 msgid "label_margin_right"
 msgstr "Marge droite"
 
 #. Default: "Margin top"
-#: ./tool.py:155
+#: ./tool.py:157
 msgid "label_margin_top"
 msgstr "Marge haute"
 
@@ -223,7 +224,7 @@ msgid "label_pdf_generator"
 msgstr "Outil de génération des fichiers PDF"
 
 #. Default: "XHTML2PDF: HTML/CSS to PDF converter written in Python (http://www.xhtml2pdf.com/)"
-#: ./tool.py:238
+#: ./tool.py:240
 msgid "label_pisa"
 msgstr "XHTML2PDF: convertisseur HTML/CSS vers PDF écrit en Python (http://www.xhtml2pdf.com/)"
 
@@ -253,7 +254,7 @@ msgid "label_title"
 msgstr "Titre de l'e-mail"
 
 #. Default: "Table of content"
-#: ./tool.py:339
+#: ./tool.py:342
 msgid "label_toc"
 msgstr "Sommaire"
 
@@ -263,7 +264,7 @@ msgid "label_use_book_style"
 msgstr "Utiliser le style \"livre\""
 
 #. Default: "wkhtmltopdf: Simple shell utility to convert html to pdf using the webkit (Safari, Chrome) rendering engine (http://code.google.com/p/wkhtmltopdf/)"
-#: ./tool.py:242
+#: ./tool.py:244
 msgid "label_wk"
 msgstr "wkhtmltopdf: utilitaire utilisant WebKit (Safari, Chrome) pour transformer une page web en fichier PDF (http://code.google.com/p/wkhtmltopdf/)"
 
