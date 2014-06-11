@@ -4,7 +4,8 @@ Changelog
 2.11 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- In the test buildout, use wkhtmltopdf 0.12.1-dev (OSX) or 0.12.0 (Linux).
+  [maurits, jean]
 
 
 2.10 (2014-01-20)

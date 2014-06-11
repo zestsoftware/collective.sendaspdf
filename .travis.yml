@@ -12,10 +12,10 @@ install:
   - python bootstrap.py
   - bin/buildout
   - ls -l parts/wkhtmltopdf/
-  - ./parts/wkhtmltopdf/wkhtmltopdf
-  - parts/wkhtmltopdf/wkhtmltopdf
-  - parts/wkhtmltopdf/wkhtmltopdf --version
-  - parts/wkhtmltopdf/wkhtmltopdf --help
+  - ls -l parts/wkhtmltopdf/wkhtmltox/bin
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --version
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help
 
 script:
   - bin/test -m collective.sendaspdf
