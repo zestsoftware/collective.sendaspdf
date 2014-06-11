@@ -135,7 +135,9 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                     default=u'Use book style'),
             description=_(u'help_use_book_style',
                           default=u'PDF generated will have a book '
-                          'style (will override custom margins)')),
+                          'style (will override custom margins). '
+                          'This is not supported by all wkhtmltopdf '
+                          'versions.')),
         schemata='wk'),
 
     atapi.BooleanField(

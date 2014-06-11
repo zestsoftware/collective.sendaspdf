@@ -180,7 +180,9 @@ class BaseView(BrowserView):
                 if opts.get('--no-%s' % opt_name):
                     break
 
-                if opts.get(opt_name, None) is not None:
+                # Check for None or False.  A zero may be a perfectly
+                # valid option value that we want to add.
+                if opts.get(opt_name, None) not in (None, False):
                     options.append('--%s' % opt_name)
                     break
         # Then we check values that expect a value.
