@@ -14,9 +14,6 @@ install:
   - ls -l ./parts/wkhtmltopdf/
   - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin
   - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf || true
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --version || true
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help || true
-  - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help || true
 
 script:
   - bin/test -m collective.sendaspdf
