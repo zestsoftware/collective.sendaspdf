@@ -13,10 +13,10 @@ install:
   - bin/buildout
   - ls -l ./parts/wkhtmltopdf/
   - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin
-  - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --version
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf || true
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --version || true
+  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help || true
+  - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help || true
 
 script:
   - bin/test -m collective.sendaspdf
