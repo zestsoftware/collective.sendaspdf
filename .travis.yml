@@ -11,8 +11,9 @@ install:
   - sudo apt-get install -qq pep8 pyflakes
   - python bootstrap.py
   - bin/buildout
-  - ls -l parts/wkhtmltopdf/
-  - ls -l parts/wkhtmltopdf/wkhtmltox/bin
+  - ls -l ./parts/wkhtmltopdf/
+  - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin
+  - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf
   - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf
   - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --version
   - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf --help
