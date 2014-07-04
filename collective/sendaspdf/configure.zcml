@@ -21,4 +21,13 @@
       description='Extension profile for the custom version of collective.sendaspdf'
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="collective.sendaspdf - uninstall"
+      directory="profiles/uninstall"
+      description="Uninstall collective.sendaspdf"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
 </configure>

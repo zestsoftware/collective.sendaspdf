@@ -3,6 +3,8 @@ Changelog
 
 2.11 (unreleased)
 -----------------
+- Add uninstall profile in order to clean and easily uninstall this package
+  [avoinea]
 
 - Make it compatible with wkhtmltopdf 0.12.0 and improved logging on errors
   [avoinea]
