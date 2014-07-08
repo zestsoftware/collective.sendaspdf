@@ -72,9 +72,7 @@ def html_to_pdf(source, export_dir, filename,
                                 stdin=TemporaryFile(),
                                 stdout=TemporaryFile(),
                                 stderr=TemporaryFile())
-        timer = Timer(10,
-                      lambda p: p.kill,
-                      [proc])
+        timer = Timer(10, proc.kill)
         timer.start()
         proc.communicate()
         timer.cancel()

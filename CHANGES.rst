@@ -3,6 +3,9 @@ Changelog
 
 2.11 (unreleased)
 -----------------
+- Fix timeout as the Popen kill method was never called
+  [avoinea]
+
 - Add uninstall profile in order to clean and easily uninstall this package
   [avoinea]
 
