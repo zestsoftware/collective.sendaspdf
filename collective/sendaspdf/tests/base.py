@@ -75,7 +75,7 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
             Nations, City of Bern (Switzerland), New South Wales Government
             (Australia), and European Environment Agency.""",
 
-            'fr':  """
+            'fr': """
             <p>Plone est un système de gestion de contenu Web libre publié
             selon les termes de la GNU GPL. Il est construit au-dessus du
             serveur d'applications Zope et de son extension CMF

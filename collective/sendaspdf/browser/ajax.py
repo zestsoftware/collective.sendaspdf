@@ -34,7 +34,7 @@ class SendAsPDFAjax(SendForm):
     def _show_send_form(self):
         jq = JQueryProxy()
 
-        if not 'page' in self.request.form:
+        if 'page' not in self.request.form:
             # This should not happen.
             return jq
 
@@ -90,7 +90,7 @@ class SendAsPDFAjax(SendForm):
 
     def _download(self):
         jq = JQueryProxy()
-        if not 'page' in self.request.form:
+        if 'page' not in self.request.form:
             # This should not happen.
             return jq
 
