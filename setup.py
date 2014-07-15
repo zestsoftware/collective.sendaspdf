@@ -35,7 +35,10 @@ setup(name='collective.sendaspdf',
       ],
       extras_require={
           'test': ['pdfminer',
-                   'Products.PloneTestCase']
+                   'Products.PloneTestCase',
+                   'zope.app.testing',
+                   'zope.securitypolicy',
+                   ],
           },
       entry_points="""
       # -*- Entry points: -*-
