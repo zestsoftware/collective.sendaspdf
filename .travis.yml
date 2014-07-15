@@ -16,10 +16,10 @@ install:
   - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf || true
 
 script:
+  - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf http://www.google.com google.pdf
   - bin/test -m collective.sendaspdf
   - pyflakes collective
   - pep8 collective 
-  - parts/wkhtmltopdf/wkhtmltopdf http://www.google.com google.pdf
 
 notifications:
   irc:
