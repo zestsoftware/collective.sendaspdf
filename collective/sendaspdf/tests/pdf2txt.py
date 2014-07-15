@@ -2,7 +2,8 @@
 # https://github.com/euske/pdfminer/blob/master/tools/pdf2txt.py
 
 from pdfminer.pdfinterp import PDFResourceManager
-from pdfminer.pdfinterp import process_pdf
+from pdfminer.pdfinterp import PDFPageInterpreter
+from pdfminer.pdfpage import PDFPage
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 
@@ -18,9 +19,11 @@ def display_pdf(content):
     outfp = StringIO()
     device = TextConverter(
         rsrcmgr, outfp, codec=codec, laparams=laparams)
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
 
     try:
-        process_pdf(rsrcmgr, device, fp)
+        for page in PDFPage.get_pages(fp):
+            interpreter.process_page(page)
     except:
         print 'Unable to process the PDF file'
         print content

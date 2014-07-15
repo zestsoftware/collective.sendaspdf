@@ -33,6 +33,9 @@ setup(name='collective.sendaspdf',
           'setuptools',
           'jquery.pyproxy>=0.3',
       ],
+      extras_require={
+          'test': ['pdfminer==20140328']
+          },
       entry_points="""
       # -*- Entry points: -*-
 
