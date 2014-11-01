@@ -132,7 +132,7 @@ def extract_from_url(url, context_url):
     if not url.startswith(context_url):
         return None, None
 
-    carac_class = '[A-Za-z0-9_ %/\\.\\-:]'
+    carac_class = '[A-Za-z0-9_ %/\\.\\-:+]'
 
     reg = r'^' + context_url + '/? ' + \
           '?((@@)?(' + carac_class + '*)/?)?' + \
