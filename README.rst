@@ -118,8 +118,8 @@ After version 2.5 (*well, starting at 2.6*), we'll only ensure
 compatibility with Plone 4 (at least in the tests).
 
 
-For developpers
-===============
+For developers
+==============
 
 You can find some extra doc in
 ``collective/sendaspdf/tests.adapter.txt``. It explains how to define
