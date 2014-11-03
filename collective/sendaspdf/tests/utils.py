@@ -1,5 +1,5 @@
 # This file is taken from Products.PasswordResetTool
-# We copied it here to avoid test problems is the product
+# We copied it here to avoid test problems if the product
 # is not installed in the buildout.
 # The product can be found here: http://plone.org/products/passwordresettool
 
