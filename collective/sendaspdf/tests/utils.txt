@@ -1,13 +1,13 @@
 Utils package
 =============
 
-This test suite will test some functions from utils that need a Plone
+This test suite will test some functions from ``utils`` that need a Plone
 site set-up::
 
     >>> self.setup_data()
     >>> from collective.sendaspdf import utils
 
-We need a bit more advanced architecture here::
+We need a bit more structure here::
 
     >>> _ = self.create_folder(self.portal, 'folder1')
     >>> _ = self.create_folder(self.portal, 'folder2')
@@ -26,8 +26,8 @@ And some pages/images::
     ...     _ = self.create_image('blink.png', 'image/png', folder)
 
 
-utils.extract_from_url:
------------------------
+``utils.extract_from_url``
+--------------------------
 
 More tests from the function's doctests.
 
@@ -40,8 +40,8 @@ The system can recognise parameters with special characters::
      {'came_from': 'http://127.0.0.1:8080/hostedhrm/nerull-ii/nerull-ii/test-floating-contract?widget_id=plonehrmAbsenceWidget&mode=percentage&UID=ea267a725dc3ea79b4e67902d221e04e'})
 
 
-utils.get_object_from_url
--------------------------
+``utils.get_object_from_url``
+-----------------------------
 
 This function retrieves a Plone object that is linked with a relative path.
 It returns a tuple containing:
@@ -49,7 +49,6 @@ It returns a tuple containing:
  - the view that was called on the object (if existing)
  - the image size if the image was scaled
  - the path that the function was not able to parse.
-
 
 First, an example with simple links::
 
@@ -62,7 +61,6 @@ First, an example with simple links::
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'folder1.2', 'a-new-page'))
     (<ATDocument at /plone/folder1/folder1.2/a-new-page>, None, None, None)
 
-
 If the link is broken, we get a tuple of Nones::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('this-page-does-not-exist', ))
@@ -71,25 +69,22 @@ If the link is broken, we get a tuple of Nones::
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'this-page-does-not-exist', ))
     (None, None, None, None)
 
-
 As usual with Zope, there's some dark Acquisition magic taking effect::
 
     >>> _ = self.create_page(None, 'My page', folder1)
     >>> utils.get_object_from_url(folder11['a-new-page'], ('my-page', ))
     (<ATDocument at /plone/folder1/my-page used for /plone/folder1/folder1.1/a-new-page>, None, None, None)
 
-
-This system can also handle data existing in skin folder (depending on the
+This system can also handle data existing in a skin folder (depending on the
 Plone version, the name displayed may change so we use ellipsis to
 keep the tests running, the important thing is that it's getting the
-FS image object) ::
+image object from the filesystem) ::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('pinkie.gif', ))
     (<FSImage at /plone/...pinkie.gif...>, None, None, None)
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'pinkie.gif', ))
     (<FSImage at /plone/...pinkie.gif...>, None, None, None)
-
 
 If we link to a particular view of a link document, it will appear in
 the second position of the tuple::
@@ -104,13 +99,11 @@ the second position of the tuple::
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'folder1.2', 'a-new-page', '@@send_as_pdf', ))
     (<ATDocument at /plone/folder1/folder1.2/a-new-page>, '@@send_as_pdf', None, ())
 
-
 If there's some extra things after the view name, they'll be left in
 the last part of the tuple::
 
     >>> utils.get_object_from_url(folder11['a-new-page'], ('..', 'folder1.2', 'a-new-page', '@@send_as_pdf', 'more', 'things', 'after', ))
     (<ATDocument at /plone/folder1/folder1.2/a-new-page>, '@@send_as_pdf', None, ('more', 'things', 'after'))
-
 
 This is mainly used for images inserted in Plone 4 with TinyMCE, the
 URL is ``<path_to_my_image>@@images/image/thumb``.
@@ -122,7 +115,6 @@ hack :/ ::
     ... else:
     ...     utils.get_object_from_url(folder11['a-new-page'], ('blink.png', '@@images', 'image', 'thumb', ))
     (<ATImage at /plone/folder1/folder1.1/blink.png>, '@@images', None, ('image', 'thumb'))
-
 
 With Plone 3, the path was ``<path_to_my_image>image_thumb``. In that
 case, the size appears in the third argument of the tuple::
