@@ -43,8 +43,7 @@ will be sent to the transformer::
 
     >>> self.browser.open('http://nohost/plone/plone-fr')
     >>> self.browser.getLink('Download as PDF').click()
-    ['--toc-header-text', 'Table of content',
-     '--margin-right', '10',
+    ['--margin-right', '10',
      '--margin-left', '10',
      '--margin-bottom', '10',
      '--margin-top', '10']
