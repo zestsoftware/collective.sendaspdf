@@ -176,7 +176,7 @@ jQuery(document).ready(function() {
 	 * so if you have a solution to give an ID or at least
 	 * a CSS class to a portal_action, feel free to help :)
 	 */
-	$('.documentActions a[href*=send_as_pdf?page_url=]').click(show_send_form);
-	$('.documentActions a[href*=download_as_pdf?page_url=]').click(download_pdf);
+	$('.documentActions a[href*="send_as_pdf?page_url="]').click(show_send_form);
+	$('.documentActions a[href*="download_as_pdf?page_url="]').click(download_pdf);
     })(jQuery)
 });
