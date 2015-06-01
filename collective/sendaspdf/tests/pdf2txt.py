@@ -34,7 +34,6 @@ def display_pdf(content):
         fp.close()
     except:
         print 'Unable to process the PDF file'
-        print content
 
     device.close()
 
