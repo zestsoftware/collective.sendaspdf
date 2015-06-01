@@ -23,8 +23,7 @@ And we set up the site's data::
 
     >>> self.setup_data()
 
-
-We can not declare our adapter in 'tests.zcml' as it's not recognized
+We can not declare our adapter in ``tests.zcml`` as it's not recognized
 when running the full test suite::
 
     >>> try:
@@ -58,9 +57,8 @@ check that quickly::
     >>> self.browser.getControl(name="generate_toc:boolean").value = [True]
     >>> self.browser.getControl(name='form.button.save').click()
 
-
 And now if we click again on the download link for a page, the top
-margin will change and the option to generate a toc will be set::
+margin will change and the option to generate a ToC will be set::
 
     >>> self.browser.open('http://nohost/plone/plone-fr')
     >>> self.browser.getLink('Download as PDF').click()
@@ -70,6 +68,7 @@ margin will change and the option to generate a toc will be set::
      '--margin-bottom', '10',
      '--margin-top', '30',
      '--toc']
+
 
 Overriding options in the request
 ---------------------------------
@@ -108,7 +107,6 @@ PDF with options. Those parameters are simple GET parameters::
     >>> make_download_link('http://nohost/plone/', {'book': 1})
     'http://nohost/plone/download_as_pdf?book=1&page_url=http://nohost/plone/'
 
-
 First we'll play with the non-valued options. If they are present in
 the request (whatever the value), they will be passed to the
 transformer::
@@ -120,8 +118,7 @@ transformer::
      '--margin-bottom', '10', '--margin-top', '30',
      '--toc', '--book']
 
-
-The book option is now available. It is possible to specify an option
+The ``book`` option is now available. It is possible to specify an option
 named ``--no-opt`` that will delete the option if specified in the tool.
 For example if we do not want to generate a table of contents::
 
@@ -130,7 +127,6 @@ For example if we do not want to generate a table of contents::
      '--margin-right', '10', '--margin-left', '10',
      '--margin-bottom', '10', '--margin-top', '30',
      '--book']
-
 
 The valued options work the same way except that the value passed in
 the request is taken into account. Here we'll override the margin-top
@@ -167,7 +163,6 @@ in ``tests.zcml`` by adding::
 
       <adapter factory=".tests.folder_adapter.FolderOptionsMaker" />
 
-
 Let's first check that our adapter can be called::
 
     >>> adapter = ISendAsPDFOptionsMaker(self.portal)
@@ -192,7 +187,6 @@ Adapters must define two methods:
      'book': 1, '--no-toc': 1,
      'header-center': 'This was added by a custom adapter'}
 
-
 Options given by the adapter will automatically apply when downloading
 a PDF::
 
@@ -205,8 +199,8 @@ a PDF::
      '--toc', '--book']
 
 As we can see, the ``margin-top`` defined in the tool was not
-overriden by the setting in our adapter. This is due to the fact the
-``overrideAll`` returns False.
+overridden by the setting in our adapter. This is due to the fact the
+``overrideAll`` returns ``False``.
 The ``--toc`` option is still present (it is defined in the tool) even
 if our adapter specifies a ``--no-toc`` option.
 
@@ -220,7 +214,6 @@ In the same idea, it will not override an option specified in the request::
      '--margin-right', '10', '--margin-left', '10',
      '--margin-bottom', '10', '--margin-top', '12',
      '--toc', '--book']
-
 
 If the request specifies not to use the book style, the adapter option
 will not be taken into account::
@@ -253,7 +246,6 @@ the ones defined in the request or the tool::
      '--margin-bottom', '10', '--margin-top', '42',
      '--book']
 
-
 The ``--no-book`` option from the request was not taken into
 account as our adapter specifies that the ``book`` option must be set.
 
@@ -262,6 +254,7 @@ that no table of contents should be generated for folders.
 
 The ``margin-top`` option is also taken from the adapter and overrides
 the ones specified in the request and the tool.
+
 
 Caveats / things to remember
 ----------------------------
@@ -288,14 +281,12 @@ If we do it the other way around, then the adapter will not be called::
      '--margin-bottom', '10', '--margin-top', '30',
      '--toc']
 
-
 The order of importance for the options is:
  - request > tool > adapter (if the adapter does not override)
  - adapter > request > tool (if the adapter does override)
 
-
 For non-valued options, giving a value that would be evaluated as
-False will not remove it, you have to specify the ``--no-xxx`` option::
+``False`` will not remove it, you have to specify the ``--no-xxx`` option::
 
     >>> self.browser.open(make_download_link('http://nohost/plone/plone-fr/', {'toc': 0}))
     ['--toc-header-text', 'Table of content',
@@ -307,7 +298,6 @@ False will not remove it, you have to specify the ``--no-xxx`` option::
     ['--toc-header-text', 'Table of content',
      '--margin-right', '10', '--margin-left', '10',
      '--margin-bottom', '10', '--margin-top', '30']
-
 
 To finish, we unpatch what we did at the beginning::
 

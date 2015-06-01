@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel">
+
+  <configlet
+    title="Send as PDF"
+    action_id="sendaspdf"
+    appId="collective.sendaspdf"
+    remove="True">
+      <permission>Manage portal</permission>
+  </configlet>
+
+</object>

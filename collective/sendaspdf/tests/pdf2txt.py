@@ -22,8 +22,16 @@ def display_pdf(content):
     interpreter = PDFPageInterpreter(rsrcmgr, device)
 
     try:
-        for page in PDFPage.get_pages(fp):
+        pagenos = set()
+        for page in PDFPage.get_pages(
+                fp,
+                pagenos,
+                maxpages=0,
+                password='',
+                caching=True,
+                check_extractable=True):
             interpreter.process_page(page)
+        fp.close()
     except:
         print 'Unable to process the PDF file'
         print content

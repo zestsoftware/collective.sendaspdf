@@ -3,6 +3,11 @@ Changelog
 
 2.11 (unreleased)
 -----------------
+- Fix timeout as the Popen kill method was never called
+  [avoinea]
+
+- Add uninstall profile in order to clean and easily uninstall this package
+  [avoinea]
 
 - In the test buildout, use wkhtmltopdf 0.12.1-dev (OSX) or 0.12.0 (Linux).
   [maurits, jean]

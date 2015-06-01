@@ -45,9 +45,9 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
 
     # We'll use those pages taken from Wikipedia pages about Plone
     # to create some pages in the system.
-    # We chose english for its lack of accentued characters, french
-    # because it mixes normal and accentued characters and Japanese
-    # for the use of non-latin characters.
+    # We chose English for its lack of accented characters, French
+    # because it mixes normal and accented characters and Japanese
+    # for the use of non-Latin characters.
     # (my apologies to Japanese people if I make the text sound weird
     # by cutting it at 80 characters, I don't really have a clue about
     # what the text means).
@@ -235,9 +235,9 @@ class SendAsPDFTestCase(ptc.FunctionalTestCase):
 
     def list_available_controls(self, form_name, before=None, hidden=[]):
         """
-        Before can be used to print something before the form
-        That can be usefull for example when the first line printed
-        start with a non-deterministic value as you can not
+        'before' can be used to print something before the form.
+        That can be useful for example when the first line printed
+        starts with a non-deterministic value as you cannot
         use an ellipsis.
         """
 
