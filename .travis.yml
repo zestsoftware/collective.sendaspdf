@@ -12,8 +12,8 @@ install:
   - python bootstrap.py
   - bin/buildout
   - ls -l ./parts/wkhtmltopdf/
-  - ls -l ./parts/wkhtmltopdf/wkhtmltox/bin
-  - ./parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf || true
+  - ls -l ./parts/wkhtmltopdf/bin
+  - ./parts/wkhtmltopdf/bin/wkhtmltopdf || true
 
 script:
   - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf http://www.google.com google.pdf
