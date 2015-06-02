@@ -10,10 +10,11 @@ install:
   - $(which echo) -e "[buildout]\nextends = buildout.d/travis.cfg" > buildout.cfg
   - sudo apt-get install -qq pep8 pyflakes
   - python bootstrap.py
-  - bin/buildout
+  - bin/buildout install wkhtmltopdf wkhtmltopdf_install
   - ls -l ./parts/wkhtmltopdf/
   - ls -l ./parts/wkhtmltopdf/bin
   - ./parts/wkhtmltopdf/bin/wkhtmltopdf || true
+  - bin/buildout
 
 script:
   - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf http://www.google.com google.pdf
