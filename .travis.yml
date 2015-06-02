@@ -11,13 +11,14 @@ install:
   - sudo apt-get install -qq pep8 pyflakes
   - python bootstrap.py
   - bin/buildout install wkhtmltopdf wkhtmltopdf_install
-  - ls -l ./parts/wkhtmltopdf/
-  - ls -l ./parts/wkhtmltopdf/bin
-  - ./parts/wkhtmltopdf/bin/wkhtmltopdf || true
+  - ls -l parts/wkhtmltopdf/
+  - ls -l parts/wkhtmltopdf/bin
+  - ls -l parts/wkhtmltopdf/bin/wkhtmltopdf || true
+  - parts/wkhtmltopdf/bin/wkhtmltopdf || true
+  - parts/wkhtmltopdf/bin/wkhtmltopdf http://www.google.com google.pdf || true
   - bin/buildout
 
 script:
-  - ./parts/wkhtmltopdf/bin/wkhtmltopdf http://www.google.com google.pdf
   - bin/test -m collective.sendaspdf
   - pyflakes collective
   - pep8 collective 
