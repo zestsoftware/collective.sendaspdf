@@ -17,7 +17,7 @@ install:
   - bin/buildout
 
 script:
-  - parts/wkhtmltopdf/wkhtmltox/bin/wkhtmltopdf http://www.google.com google.pdf
+  - ./parts/wkhtmltopdf/bin/wkhtmltopdf http://www.google.com google.pdf
   - bin/test -m collective.sendaspdf
   - pyflakes collective
   - pep8 collective 
