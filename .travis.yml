@@ -5,7 +5,7 @@ python:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y xz-utils libxrender1
-  - curl -o wkhtmltopdf.deb http://downloads.sourceforge.net/project/wkhtmltopdf/archive/0.12.2/wkhtmltox-0.12.2_linux-trusty-i386.deb
+  - curl --location --output wkhtmltopdf.deb http://downloads.sourceforge.net/project/wkhtmltopdf/archive/0.12.2/wkhtmltox-0.12.2_linux-trusty-i386.deb
   - sudo dpkg --install wkhtmltopdf.deb
   - wkhtmltopdf http://www.google.com google.pdf
 
