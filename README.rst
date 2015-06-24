@@ -10,10 +10,11 @@ It relies on either of two products to generate the PDF files:
 
 - ``xhtml2pdf``: http://www.xhtml2pdf.com/
 
-- ``wkhtmltopdf``: http://code.google.com/p/wkhtmltopdf/
+- ``wkhtmltopdf``: http://wkhtmltopdf.org/
 
 The site manager can easily choose which solution he prefers for
 the generation.
+
 
 Installing
 ==========
@@ -39,44 +40,41 @@ rendered.
 To install ``wkhtmltopdf``, go to the projects page and download an
 executable version for your OS. Install it so the command
 ``wkhtmltopdf`` is in the PATH.
-You can also update your buildout to automatically download 
-``wkhtmltopdf`` and have it used by your instance using the following
-recipes::
 
-  [buildout]
-  parts =
-      ...
-      wkhtmltopdf
-      wkhtmltopdf_executable
+You can also update your buildout to automatically download and
+install ``wkhtmltopdf`` and have it used by your instance.  This may
+be tricky.  Look at our own `collective.sendaspdf buildout`_ for how
+to do this.
+
+.. _`collective.sendaspdf buildout`: https://github.com/zestsoftware/collective.sendaspdf/
+
+If ``wkhtmltopdf`` is not on your path, you can set an environment
+variable in your buildout config::
 
   [instance]
   ...
   zserver-threads = 7
   environment-vars =
       ...
-      WKHTMLTOPDF_PATH ${wkhtmltopdf:location}/wkhtmltopdf
+      WKHTMLTOPDF_PATH /path/to/your/wkhtmltopdf
 
-  [wkhtmltopdf]
-  recipe = hexagonit.recipe.download
-  url = http://wkhtmltopdf.googlecode.com/files/wkhtmltopdf-0.9.9-static-amd64.tar.bz2
-
-  [wkhtmltopdf_executable]
-  recipe = collective.recipe.cmd
-  on_install = true
-  on_update = true
-  cmds =
-       cd ${buildout:directory}/parts/wkhtmltopdf
-       mv wkhtmltopdf-amd64 wkhtmltopdf
-       chmod +x wkhtmltopdf
-
-As you can see in this configuration, the ``zserver-threads`` number has
-been pushed to 7. This avoids troubles with threads locks when
-multiple PDFs are rendered at the same time.
+Additionally, as you can see in this configuration, the
+``zserver-threads`` number has been pushed to 7.  This avoids troubles
+with threads locks when multiple PDFs are rendered at the same time.
 7 threads work fine when rendering 5 PDFs of the same page at the same
 time.
 
-You might have some changes to do depending on the architecture you
-are using (this example is for the amd64 architecture)
+
+jquery.pyproxy dependency
+=========================
+
+We have jquery.pyproxy_ as dependency.  It will work without it: we do
+not install it by default.  If you install it yourself, the links to
+send or download as pdf will use ajax, making the interaction a bit
+faster and more userfriendly.
+
+.. _jquery.pyproxy: https://pypi.python.org/pypi/jquery.pyproxy
+
 
 Configuring
 ===========
@@ -84,7 +82,7 @@ Configuring
 Go to the Plone control panel. You will find a 'Send as PDF' link that
 sends you to the products configuration page.
 
-This page proposes a few settings:
+This page proposes a few settings, among which:
 
 - the tool used to render the PDF files.
 
@@ -110,19 +108,20 @@ For wkhtmltopdf user, two extra options are available:
 
 xhtml2pdf always use the print CSS.
 
+
 Compatibility
 =============
 
-This product has been tested with Plone 3 and Plone 4.
-After version 2.5 (*well, starting at 2.6*), we'll only ensure
-compatibility with Plone 4 (at least in the tests).
+This product has been tested with Plone 3 and Plone 4.  Starting at
+version 2.6, we will only ensure compatibility with Plone 4, at least
+in the tests.
 
 
 For developers
 ==============
 
-You can find some extra doc in
-``collective/sendaspdf/tests.adapter.txt``. It explains how to define
+You can find some extra documentation in
+``collective/sendaspdf/tests/adapter.txt``.  It explains how to define
 custom options in the request or with an adapter.
 
 
