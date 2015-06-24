@@ -30,4 +30,12 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:upgradeStep
+      title="Set correct control panel image"
+      description="png on Plone 4, gif on Plone 3"
+      source="*"
+      destination="1000"
+      handler="collective.sendaspdf.upgrades.update_control_panel"
+      profile="collective.sendaspdf:default" />
+
 </configure>

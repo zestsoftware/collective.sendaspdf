@@ -4,6 +4,12 @@ Changelog
 3.0 (unreleased)
 ----------------
 
+- Added upgrade step: put our control panel action in the Products
+  (addons) category.  And give it a proper icon (gif on Plone 3, png
+  on Plone 4).  Set the default on install to png so it is best for
+  Plone 4.
+  [maurits]
+
 - Fixed javascript error for undefined tinymce due to typo.  Note that
   on Plone 4 we currently cannot load TinyMCE.
   [maurits]
