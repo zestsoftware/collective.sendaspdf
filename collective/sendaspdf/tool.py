@@ -68,7 +68,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
         default='salt_as_pdf',
         widget=atapi.StringWidget(
             label=_(u'label_salt',
-                    default=u'SALT used when hasing users\' e-mails'))),
+                    default=u'SALT used when hashing e-mails of users'))),
 
     atapi.StringField(
         name='mail_title',
@@ -100,7 +100,7 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
             label=_(u'label_print_css_always',
                     default=u'Always use print CSS'),
             description=_(u'help_print_css_always',
-                          default=u'Always use the print CSS (only valid'
+                          default=u'Always use the print CSS (only valid '
                           'with wkhtmltopdf, xhtml2pdf will use the '
                           'print CSS whatever you chose)')),
         schemata='wk'),
