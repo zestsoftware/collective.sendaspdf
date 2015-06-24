@@ -72,29 +72,25 @@ def html_to_pdf(source, export_dir, filename,
                                 stdin=TemporaryFile(),
                                 stdout=TemporaryFile(),
                                 stderr=TemporaryFile())
-        timer = Timer(10,
-                      lambda p: p.kill,
-                      [proc])
+        timer = Timer(10, proc.kill)
         timer.start()
         proc.communicate()
         timer.cancel()
-    except:
-        logger.error('Running wkhtmltopdf failed. Please check that '
-                     'you use a version compatible with your OS and '
-                     'the version is 0.9.')
+    except Exception, err:
+        logger.error('Running wkhtmltopdf failed. wkhtmltopdf cmd: %s. '
+                     'Error: %s', args, err)
         return None, ['pdf_generation_failed']
 
     try:
         os.remove('%s/%s' % (export_dir, html_filename))
-    except IOError:
-        logger.error('Temp file does not exist: %s/%s' % (
-            export_dir,
-            html_filename))
+    except IOError, err:
+        logger.error('Temp file does not exist: %s. wkhtmltopdf cmd: %s',
+                     err, args)
 
     try:
         pdf_file = file('%s/%s' % (export_dir, filename), 'r')
-    except IOError:
-        logger.error('No PDF output file')
+    except IOError, err:
+        logger.error('No PDF output file: %s. wkhtmltopdf cmd: %s', err, args)
         return None, ['pdf_generation_failed']
 
     return pdf_file, None

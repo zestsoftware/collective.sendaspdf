@@ -91,7 +91,7 @@ class BaseView(BrowserView):
         the 'page_url' key.
         """
 
-        if not 'page_url' in self.request.form:
+        if 'page_url' not in self.request.form:
             self.errors.append('no_source')
             return
 
@@ -149,7 +149,7 @@ class BaseView(BrowserView):
             # available.
             return {}, None
 
-        return  adapter.getOptions(), adapter.overrideAll()
+        return adapter.getOptions(), adapter.overrideAll()
 
     def get_extra_options(self):
         """ Fetches the options defined in the request, the tool
@@ -180,7 +180,9 @@ class BaseView(BrowserView):
                 if opts.get('--no-%s' % opt_name):
                     break
 
-                if opts.get(opt_name, None):
+                # Check for None or False.  A zero may be a perfectly
+                # valid option value that we want to add.
+                if opts.get(opt_name, None) not in (None, False):
                     options.append('--%s' % opt_name)
                     break
         # Then we check values that expect a value.
@@ -267,7 +269,7 @@ class BaseView(BrowserView):
         """
         base_class = 'field'
         error_class = ' error'
-        if not fieldname in self.error_mapping:
+        if fieldname not in self.error_mapping:
             if fieldname in self.errors:
                 base_class += error_class
             return base_class
@@ -281,7 +283,7 @@ class BaseView(BrowserView):
         """ Check that the filename given in the request
         can be accessed by the user.
         """
-        if not 'pdf_name' in self.request.form:
+        if 'pdf_name' not in self.request.form:
             # Should not happen.
             self.errors.append('file_not_specified')
             return
@@ -293,7 +295,7 @@ class BaseView(BrowserView):
             self.errors.append('file_unauthorized')
             return
 
-        if not filename in os.listdir(self.tempdir):
+        if filename not in os.listdir(self.tempdir):
             self.errors.append('file_not_found')
             self.request.response.setStatus(404)
             return

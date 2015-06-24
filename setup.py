@@ -33,6 +33,13 @@ setup(name='collective.sendaspdf',
           'setuptools',
           'jquery.pyproxy>=0.3',
       ],
+      extras_require={
+          'test': ['pdfminer',
+                   'Products.PloneTestCase',
+                   'zope.app.testing',
+                   'zope.securitypolicy',
+                   ],
+          },
       entry_points="""
       # -*- Entry points: -*-
 

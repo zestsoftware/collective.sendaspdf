@@ -3,8 +3,21 @@ Changelog
 
 2.11 (unreleased)
 -----------------
+- Fix timeout as the Popen kill method was never called
+  [avoinea]
 
-- Nothing changed yet.
+- Add uninstall profile in order to clean and easily uninstall this package
+  [avoinea]
+
+- In the test buildout, use wkhtmltopdf 0.12.1-dev (OSX) or 0.12.0 (Linux).
+  [maurits, jean]
+
+- Make it compatible with wkhtmltopdf 0.12.0 and improved logging on errors
+  [avoinea]
+
+- Added possibility of disabling auto cleanup step. Can be set in the
+  plone control panel. Default is enabled.
+  [olimpiurob]
 
 
 2.10 (2014-01-20)
