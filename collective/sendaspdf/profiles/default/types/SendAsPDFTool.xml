@@ -6,7 +6,7 @@
  <property i18n:translate="sendaspdftool-contenttype-title"
            name="title">SendAsPDFTool</property>
  <property name="description"></property>
- <property name="icon_expr">string:${portal_url}/pdf_icon.png</property>
+ <property name="content_icon">pdf_icon.png</property>
  <property name="content_meta_type">SendAsPDFTool</property>
  <property name="product">collective.sendaspdf</property>
  <property name="factory">addSendAsPDFTool</property>
