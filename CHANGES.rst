@@ -4,6 +4,9 @@ Changelog
 3.0 (unreleased)
 ----------------
 
+- Fixed killing wkhtmltopdf when it takes too long.
+  [maurits]
+
 - Added upgrade step: put our control panel action in the Products
   (addons) category.  And give it a proper icon (gif on Plone 3, png
   on Plone 4).  Set the default on install to png so it is best for

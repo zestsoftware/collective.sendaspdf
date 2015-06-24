@@ -1,6 +1,7 @@
 # Defines the html_to_pdf method using WKHTMLTOPDF:
 # http://code.google.com/p/wkhtmltopdf/
 import os
+import signal
 import subprocess
 import logging
 
@@ -72,7 +73,14 @@ def html_to_pdf(source, export_dir, filename,
                                 stdin=TemporaryFile(),
                                 stdout=TemporaryFile(),
                                 stderr=TemporaryFile())
-        timer = Timer(10, proc.kill)
+
+        if hasattr(proc, 'kill'):
+            # Plone 4
+            timer = Timer(10, proc.kill)
+        else:
+            # Plone 3
+            timer = Timer(10, lambda pid: os.kill(pid, signal.SIGKILL),
+                          [proc.pid])
         timer.start()
         proc.communicate()
         timer.cancel()
