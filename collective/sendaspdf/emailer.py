@@ -135,13 +135,16 @@ def prepare_mail_message(msg, attachment, filename):
 
 
 def send_message(mfrom, mto, subject, message, attachment, filename):
-    """
+    """Send an email.
+
+    Return True when all is fine, False on problems.
     """
     message = prepare_mail_message(message, attachment, filename)
 
     mail_host = get_mail_host()
     if mail_host is None:
-        return
+        logger.warn('Could not send email: mail host not defined.')
+        return False
 
     mfrom = su(mfrom)
     mto = su(mto)
@@ -166,5 +169,8 @@ def send_message(mfrom, mto, subject, message, attachment, filename):
     except (socket.error, SMTPException):
         logger.warn('Could not send email to %s with subject %s',
                     mto, subject)
+        return False
     except:
         raise
+    # sent successfully
+    return True

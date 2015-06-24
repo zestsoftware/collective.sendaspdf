@@ -95,12 +95,14 @@ class SendForm(BaseView):
         pdf_file = file('%s/%s' % (self.tempdir,
                                    form['pdf_name']),
                         'r')
-        send_message(mfrom,
-                     mto,
-                     form['title'],
-                     form['text'],
-                     pdf_file,
-                     self.pdf_tool.filename_in_mail)
+        success = send_message(
+            mfrom,
+            mto,
+            form['title'],
+            form['text'],
+            pdf_file,
+            self.pdf_tool.filename_in_mail)
+        return success
 
     def get_editor(self):
         """ Get's the editor to use in the send form.
@@ -136,10 +138,15 @@ class SendForm(BaseView):
             # button.
             self.check_form()
             if not self.errors:
-                self.process_form()
-                msg = _(u'msg_success',
-                        default=u'The e-mail has been sent')
-                msg_type = 'info'
+                success = self.process_form()
+                if success:
+                    msg = _(u'msg_success',
+                            default=u'The e-mail has been sent')
+                    msg_type = 'info'
+                else:
+                    msg = _(u'msg_send_fail',
+                            default=u'Could not send the e-mail')
+                    msg_type = 'error'
             else:
                 msg = _(u'msg_error',
                         default=u'Errors appeared while processing your form')

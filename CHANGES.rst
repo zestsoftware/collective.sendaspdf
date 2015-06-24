@@ -4,6 +4,9 @@ Changelog
 2.11 (unreleased)
 -----------------
 
+- Warn when sending mail failed.
+  [maurits]
+
 - Added option to rewrite https links.  If style sheets or images are
   not visible in the pdf, this option may help.  This is a simple
   replacement of ``https://`` in the entire page source, so we may
