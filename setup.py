@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='collective.sendaspdf',
-      version='3.0',
+      version='3.1.dev0',
       description="An open source product for Plone to download or email a " +
                   "page seen by the user as a PDF file.",
       long_description=(open("README.rst").read() + "\n" +
