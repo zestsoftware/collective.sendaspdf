@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0 (unreleased)
+3.0 (2015-06-24)
 ----------------
 
 - Fixed killing wkhtmltopdf when it takes too long.
