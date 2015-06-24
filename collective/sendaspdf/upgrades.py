@@ -13,15 +13,11 @@ def update_control_panel_and_tool(context):
     Products category.
 
     For the tool: set the content icon properly, again gif versus png.
+
+    For Plone 3, we do not touch the icons.  You might have a wrong
+    icon then, but only when you install sendaspdf for the first time,
+    which is more likely to happen on Plone 4.
     """
-    try:
-        # Plone 4 or higher
-        import plone.app.upgrade
-        plone.app.upgrade  # pyflakes
-        icon = 'string:${portal_url}/pdf_icon.png'
-    except ImportError:
-        # Plone 3
-        icon = 'string:${portal_url}/pdf_icon.gif'
     controlPanel = getToolByName(context, 'portal_controlpanel')
     action = controlPanel.getActionObject('Plone/sendaspdf')
     if action is not None:
@@ -29,6 +25,18 @@ def update_control_panel_and_tool(context):
         logger.info('Set sendaspdf controlpanel category to Products.')
     else:
         action = controlPanel.getActionObject('Products/sendaspdf')
+
+    try:
+        # Plone 4 or higher
+        import plone.app.upgrade
+        plone.app.upgrade  # pyflakes
+        icon = 'string:${portal_url}/pdf_icon.png'
+    except ImportError:
+        # Plone 3
+        # icon = 'string:${portal_url}/pdf_icon.gif'
+        # Actually, we will do nothing anymore.
+        return
+
     if action.icon_expr.text != icon:
         action.icon_expr.text = icon
         logger.info('Set sendaspdf controlpanel icon expression to %r', icon)
