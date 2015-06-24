@@ -9,7 +9,12 @@ Changelog
 - Add uninstall profile in order to clean and easily uninstall this package
   [avoinea]
 
-- In the test buildout, use wkhtmltopdf 0.12.1-dev (OSX) or 0.12.0 (Linux).
+- In the test buildout, use wkhtmltopdf 0.12.2.1 (OSX) or 0.12.2
+  (Linux).  Our test buildout does some funky stuff to install the
+  package in a directory within the buildout.  You may want to just
+  manually install the package for your OS instead.  We do that in
+  Travis.  We are experiencing problems with the 64 bit version, so we
+  are using the 32 bit version.
   [maurits, jean]
 
 - Make it compatible with wkhtmltopdf 0.12.0 and improved logging on errors
