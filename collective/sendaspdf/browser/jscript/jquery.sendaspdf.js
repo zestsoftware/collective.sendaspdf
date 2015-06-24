@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
 	function submit_send_form(e) {
 	    e.preventDefault();
 
-	    if (typeof(tinymce) != 'indefined') {
+	    if (typeof(tinymce) != 'undefined') {
 		tinymce.EditorManager.activeEditor.save();
 	    }
 

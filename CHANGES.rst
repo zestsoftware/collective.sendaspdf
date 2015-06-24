@@ -4,6 +4,10 @@ Changelog
 2.11 (unreleased)
 -----------------
 
+- Fixed javascript error for undefined tinymce due to typo.  Note that
+  on Plone 4 we currently cannot load TinyMCE.
+  [maurits]
+
 - Warn when sending mail failed.
   [maurits]
 
