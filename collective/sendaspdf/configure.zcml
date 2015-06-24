@@ -35,7 +35,7 @@
       description="png on Plone 4, gif on Plone 3"
       source="*"
       destination="1000"
-      handler="collective.sendaspdf.upgrades.update_control_panel"
+      handler="collective.sendaspdf.upgrades.update_control_panel_and_tool"
       profile="collective.sendaspdf:default" />
 
 </configure>

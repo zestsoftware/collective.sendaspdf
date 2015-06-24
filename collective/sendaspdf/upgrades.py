@@ -4,13 +4,15 @@ from Products.CMFCore.utils import getToolByName
 logger = logging.getLogger('collective.sendaspdf')
 
 
-def update_control_panel(context):
-    """Update our control panel action.
+def update_control_panel_and_tool(context):
+    """Update our control panel action and tool.
 
     It may need a different icon expression (gif versus png).
 
     We first added it in the Plone category, but it should be in the
     Products category.
+
+    For the tool: set the content icon properly, again gif versus png.
     """
     try:
         # Plone 4 or higher
@@ -30,3 +32,14 @@ def update_control_panel(context):
     if action.icon_expr.text != icon:
         action.icon_expr.text = icon
         logger.info('Set sendaspdf controlpanel icon expression to %r', icon)
+
+    # Now the tool.
+    types = getToolByName(context, 'portal_types')
+    typeinfo = types.getTypeInfo('SendAsPDFTool')
+    if typeinfo is None:
+        return
+    if hasattr(typeinfo, 'icon_expr'):
+        # Plone 4
+        if typeinfo.icon_expr_object.text != icon:
+            typeinfo.icon_expr_object.text = icon
+            logger.info('Set sendaspdf tool icon expression to %r', icon)
