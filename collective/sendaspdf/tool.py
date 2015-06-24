@@ -63,6 +63,21 @@ sendAsPDFSchema = ATDocumentSchema.copy() + atapi.Schema((
                           default=u'Automatic cleanup of temporarily '
                           'generated pdf files'))),
 
+    atapi.BooleanField(
+        name='rewrite_https_links',
+        default=False,
+        widget=atapi.BooleanWidget(
+            label=_(u'label_rewrite_https_links',
+                    default=u'Rewrite https links'),
+            description=_(
+                u'help_rewrite_https_links',
+                default=u'Replace https links by http links. '
+                        u'If style sheets or images are not visible '
+                        u'in the pdf, this option may help. '
+                        u'This is a simple replacement of "https://" '
+                        u'in the entire page source, so we may replace '
+                        u'more than you want.'))),
+
     atapi.StringField(
         name='salt',
         default='salt_as_pdf',

@@ -233,6 +233,11 @@ class BaseView(BrowserView):
         # that case we need to encode it.
         if isinstance(source, unicode):
             source = source.encode('utf-8')
+        # Should we rewrite https links?  This option was added later,
+        # so we check if the field is there.
+        if getattr(self.pdf_tool, 'rewrite_https_links', False):
+            print "Replacing {0} https links.".format(source.count('https://'))
+            source = source.replace('https://', 'http://')
         export_file, err = transform_module.html_to_pdf(
             source,
             self.tempdir,

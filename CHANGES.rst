@@ -3,6 +3,14 @@ Changelog
 
 2.11 (unreleased)
 -----------------
+
+- Added option to rewrite https links.  If style sheets or images are
+  not visible in the pdf, this option may help.  This is a simple
+  replacement of ``https://`` in the entire page source, so we may
+  replace more than you want.
+  Issue #19
+  [maurits]
+
 - Fix timeout as the Popen kill method was never called
   [avoinea]
 

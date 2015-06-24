@@ -137,6 +137,9 @@ Now we'll check that the default settings are there and correct::
     auto_cleanup_pdf:boolean: True (checkbox)
     [<ItemControl name='auto_cleanup_pdf:boolean' type='checkbox' optionValue='on' selected=True>]
     auto_cleanup_pdf:boolean:default:  (hidden)
+    rewrite_https_links:boolean: False (checkbox)
+    [<ItemControl name='rewrite_https_links:boolean' type='checkbox' optionValue='on' selected=False>]
+    rewrite_https_links:boolean:default:  (hidden)
     salt: salt_as_pdf (text)
     mail_title:  (text)
     mail_content_text_format: text/html (hidden)
